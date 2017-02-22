@@ -1,0 +1,44 @@
+<% layout('template') -%>
+<title>Login</title>
+<div id="navbar-gap">
+<section id="contact" class="contact" >
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 text-center">
+        <p class="small-tag"><%= __('Already a member') %></p>
+        <h2 class="section-title"><%= __('Login') %></h2>
+      </div>
+    </div>
+    <div class="row">
+
+      <div class="col-lg-6 col-md-offset-3">
+        <% if (msg.length > 0) { %>
+          <div class="alert alert-danger alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <%= msg %>
+          </div>
+            <% } %>
+        <form method="post">
+          <div class="form-group">
+            <label name="username">Email </label>
+            <input type="Email" class="form-control" required="true" name="email" placeholder="youremail@domain.com">
+          </div>
+          <div class="form-group">
+            <label name="password"><%= __('Password') %> </label>
+            <input type="password" class="form-control" required="true" name="password">
+          </div>
+        </div>
+
+        <div class="col-lg-6 col-md-offset-3">
+          <div class="form-group">
+            <button type="submit" class="btn btn-default btn-block"><%= __('Login') %></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+</div>

@@ -1,0 +1,61 @@
+<% layout('/admin/template') -%>
+<title>Add Project</title>
+<div class="page-heading">
+    <h3>
+        <%= __('Add new Project') %>
+    </h3>
+    <ul class="breadcrumb">
+        <li>
+            <a href="/admin">Dashboard</a>
+        </li>
+        <li>
+            <a href="/admin/projectList"><%= __('Projects List') %></a>
+        </li>
+        <li class="active"><%= __('Add new Project') %> </li>
+    </ul>
+</div>
+<div class="wrapper">
+<div class="row">
+  <div class="col-lg-12">
+    <section class="panel">
+      <header class="panel-heading">
+<%= __('Add new Project') %>
+      </header>
+      <div class="panel-body">
+        <% if (msg.length > 0) { %>
+          <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+
+            <%= msg %>
+
+            </div>
+            <% } %>
+            <% if (error.length > 0) { %>
+              <div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+
+                <%= error %>
+
+                </div>
+                <% } %>
+            <form role="form" method="post">
+              <div class="form-group">
+                <label for="name"><%= __('Project Name') %></label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Vinhomes Central Park,...">
+                <label for="name"><%= __('Address') %></label>
+                <input type="text" class="form-control" id="address" name="address" placeholder="208 Nguyen Huu Canh Street, Ward 22, Binh Thanh District, Ho Chi Minh City">
+                <label for="name"><%= __('Owner') %></label>
+                <input type="text" class="form-control" id="owner" name="owner" placeholder="Vingroup, Him Lam,...">
+              </div>
+              <button type="submit" class="btn btn-primary"><%= __('Submit') %></button>
+            </form>
+
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>

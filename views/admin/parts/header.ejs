@@ -1,0 +1,107 @@
+<section>
+    <!-- left side start-->
+    <div class="left-side sticky-left-side">
+
+        <!--logo and iconic logo start-->
+        <div class="logo">
+            <a class="navbar-brand default-logo" href="/admin">Admin</a>
+        </div>
+
+        <div class="logo-icon text-center">
+            <a class="navbar-brand default-logo" href="/"></a>
+        </div>
+        <!--logo and iconic logo end-->
+
+        <div class="left-side-inner">
+
+            <!-- visible to small devices only -->
+            <div class="visible-xs hidden-sm hidden-md hidden-lg">
+                <div class="media logged-user">
+                    <div class="media-body">
+                        <h4><a href="#"><%= user.name %>/a></h4>
+                        <span>"Hello There..."</span>
+                    </div>
+                </div>
+
+                <h5 class="left-nav-title">Account Information</h5>
+                <ul class="nav nav-pills nav-stacked custom-nav">
+                  <li><a href="/profile"><i class="fa fa-user"></i>  Profile</a></li>
+                  <li><a href="/"><i class="fa fa-cog"></i>  Main Page</a></li>
+                  <li><a href="/logout"><i class="fa fa-sign-out"></i> Log Out</a></li>
+                </ul>
+            </div>
+
+            <!--sidebar nav start-->
+            <ul class="nav nav-pills nav-stacked custom-nav">
+                <li><a href="/admin"><i class="fa fa-home"></i> <span>Dashboard</span></a></li>
+                <li class="menu-list"><a href=""><i class="fa fa-user-o"></i> <span><%= __('Users') %></span></a>
+                    <ul class="sub-menu-list">
+                        <li><a href="/admin/userList"><%= __('Users List') %></a></li>
+                    </ul>
+                </li>
+                <li class="menu-list"><a href=""><i class="fa fa-list"></i> <span><%= __('Products') %></span></a>
+                    <ul class="sub-menu-list">
+                        <li><a href="/admin/productList"><%= __('Products List') %></a></li>
+                    </ul>
+                </li>
+                <li class="menu-list"><a href=""><i class="fa fa-odnoklassniki"></i> <span><%= __('Customers') %></span></a>
+                    <ul class="sub-menu-list">
+                        <li><a href="/admin/customerList"><%= __('Customers List') %></a></li>
+                    </ul>
+                </li>
+
+                <li class="menu-list"><a href=""><i class="fa fa-map-o"></i> <span><%= __('Projects List') %></span></a>
+                    <ul class="sub-menu-list">
+                        <li><a href="/admin/projectList"><%= __('Projects List') %></a></li>
+                    </ul>
+                </li>
+                <li class="menu-list"><a href=""><i class="fa fa-money"></i> <span><%= __('Finance') %></span></a>
+                </li>
+
+            </ul>
+            <!--sidebar nav end-->
+
+        </div>
+    </div>
+    <!-- left side end-->
+
+    <!-- main content start-->
+    <div class="main-content" >
+
+        <!-- header section start-->
+        <div class="header-section">
+
+            <!--toggle button start-->
+            <a class="toggle-btn"><i class="fa fa-bars"></i></a>
+            <!--toggle button end-->
+
+            <!--notification menu start -->
+            <div class="menu-right">
+                <ul class="notification-menu">
+                    <li>
+                        <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            <%= user.name %>
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-usermenu pull-right">
+                            <li><a href="/profile"><i class="fa fa-user"></i>Profile</a></li>
+                            <li><a href="/"><i class="fa fa-cog"></i><%= __('Home') %></a></li>
+                            <li><a href="/logout"><i class="fa fa-sign-out"></i><%= __('Logout') %></a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            <%= __('Language') %>
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-usermenu pull-right">
+                            <li><a href="/admin/en"><img src="../images/flags/us.png"> English</a></li>
+                            <li><a href="/admin/vi"><img src="../images/flags/vn.png"> Tiếng Việt</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <!--notification menu end -->
+
+        </div>
+        <!-- header section end-->

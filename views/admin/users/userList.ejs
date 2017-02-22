@@ -1,0 +1,80 @@
+<% layout('/admin/template') -%>
+<title>Users List</title>
+<div class="page-heading">
+    <h3>
+        <%= __('Users List') %>
+    </h3>
+    <ul class="breadcrumb">
+        <li>
+            <a href="/admin">Dashboard</a>
+        </li>
+        <li class="active"><%= __('Users List') %></li>
+    </ul>
+</div>
+<div class="wrapper">
+
+<div class="row">
+<div class="col-sm-12">
+<section class="panel">
+<header class="panel-heading">
+    <%= __('List') %>
+    <span class="tools pull-right">
+        <a href="javascript:;" class="fa fa-chevron-down"></a>
+        <a href="javascript:;" class="fa fa-times"></a>
+     </span>
+</header>
+<div class="panel-body">
+  <div class="clearfix">
+      <div class="btn-group">
+          <a href="/admin/addUser" id="editable-sample_new" class="btn btn-primary">
+            <%= __('Add new') %> <i class="fa fa-plus"></i>
+          </a>
+      </div>
+    </div>
+<div class="adv-table">
+<table class="display table table-bordered" id="hidden-table-info">
+<thead>
+<tr>
+    <th class="hidden-phone">Email</th>
+    <th class="hidden-phone"><%= __('Name') %></th>
+    <th class="hidden-phone"><%= __('Role') %></th>
+    <th class="hidden-phone"><%= __('Edit') %></th>
+    <th class="hidden-phone"><%= __('Delete') %></th>
+    <th class="hidden-phone" style="display:none;">Address</th>
+    <th class="hidden-phone" style="display:none;">Phone</th>
+    <th class="hidden-phone" style="display:none;">Updated At</th>
+
+</tr>
+</thead>
+<tbody>
+  <% for (var i = 0; i < users.length; i++) { %>
+<tr class="gradeA">
+    <td><%= users[i].email %></td>
+    <td><%= users[i].name %></td>
+    <td class="hidden-phone"><%= users[i].role %></td>
+    <% if (users[i].role == "Administrator") { %>
+    <td class="hidden-phone">N/A</td>
+    <% } else { %>
+      <td class="hidden-phone"><a href="#"><%= __('Edit') %></a></td>
+      <% } %>
+      <% if (users[i].role == "Administrator") { %>
+      <td class="hidden-phone">N/A</td>
+      <% } else if (users[i]._id == user._id) { %>
+        <td class="hidden-phone">N/A</td>
+        <% } else { %>
+        <td class="hidden-phone"><a href="#"><%= __('Delete') %></a></td>
+        <% } %>
+    <td class="center hidden-phone" style="display: none;"><%= users[i].address %></td>
+    <td class="center hidden-phone" style="display: none;"><%= users[i].phone %></td>
+    <td class="center hidden-phone" style="display: none;"><%= users[i].updatedAt %></td>
+</tr>
+<% } %>
+</tbody>
+</table>
+
+</div>
+</div>
+</section>
+</div>
+</div>
+</div>

@@ -1,0 +1,92 @@
+<% layout('/admin/template') -%>
+<title>Add Product</title>
+<script type="text/javascript">
+
+function updateText(type) {
+ var id = type+'Text';
+ document.getElementById(id).value = document.getElementById(type).value;
+}
+</script>
+<div class="page-heading">
+  <h3>
+    <%= __('Add new Product') %>
+  </h3>
+  <ul class="breadcrumb">
+    <li>
+      <a href="/admin">Dashboard</a>
+    </li>
+    <li>
+      <a href="/admin/productList"><%= __('Products List') %></a>
+    </li>
+    <li class="active"> <%= __('Add new Product') %> </li>
+  </ul>
+</div>
+<div class="wrapper">
+  <div class="row">
+    <div class="col-lg-12">
+      <section class="panel">
+        <header class="panel-heading">
+          <%= __('Add new Product') %>
+        </header>
+        <div class="panel-body">
+          <% if (msg.length > 0) { %>
+            <div class="alert alert-success alert-dismissible">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+
+              <%= msg %>
+
+            </div>
+            <% } %>
+            <% if (error.length > 0) { %>
+              <div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+
+                <%= error %>
+
+              </div>
+              <% } %>
+              <form method="post">
+                <div class="form-group">
+                  <label for="name"><%= __('Project') %></label>
+                  <select class="form-control" data-style="btn-info" id="name" name="name" onchange="updateText('name')">
+                    <optgroup label="------------------">
+                      <% for (var i = 0; i < project.length; i++) { %>
+                      <option name="pro" value="<%= project[i].name %>"><%= project[i].name %></option>
+                      <% } %>
+                    </optgroup>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="code"><%= __('Apt. Code') %></label>
+                  <input type="text" class="form-control" id="code" name="code" placeholder="C03.12-09, P05.19-5,..." required="true">
+                </div>
+                <div class="form-group">
+                  <label for="rooms"><%= __('Rooms') %></label>
+                  <input type="number" class="form-control" id="rooms" name="rooms" placeholder="1, 2, 3, 4,..." required="true" step="0.01">
+                </div>
+                <div class="form-group">
+                  <label for="area"><%= __('Area') %> (m<sup>2</sup>):</label>
+                  <input type="number" class="form-control" id="area" name="area" placeholder="100, 105.5, 89.7,..." step="0.01" required="true">
+                </div>
+                <div class="form-group">
+                  <label for="sellPrice"><%= __('Sell Price') %></label>
+                  <input type="number" class="form-control" id="sellPrice" name="sellPrice" placeholder="3.4, 4.5,..." step="0.01" required="true">
+                </div>
+                <div class="form-group">
+                  <label for="rentPrice"><%= __('Rent Price') %></label>
+                  <input type="number" class="form-control" id="rentPrice" name="rentPrice" placeholder="1200, 1500,..." step="0.01" required="true">
+                </div>
+                <div class="form-group">
+                <button type="submit" class="btn btn-primary"><%= __('Submit') %></button>
+              </div>
+              </form>
+
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>

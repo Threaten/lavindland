@@ -1,0 +1,81 @@
+<% layout('/admin/template') -%>
+<title>Customers List</title>
+<div class="page-heading">
+    <h3>
+      <%= __('Customers List') %>
+    </h3>
+    <ul class="breadcrumb">
+        <li>
+            <a href="/admin">Dashboard</a>
+        </li>
+        <li class="active"><%= __('Customers List') %> </li>
+    </ul>
+</div>
+<div class="wrapper">
+
+<div class="row">
+<div class="col-sm-12">
+<section class="panel">
+<header class="panel-heading">
+    <%= __('List') %>
+    <span class="tools pull-right">
+        <a href="javascript:;" class="fa fa-chevron-down"></a>
+        <a href="javascript:;" class="fa fa-times"></a>
+     </span>
+</header>
+<div class="panel-body">
+  <div class="clearfix">
+      <div class="btn-group">
+          <a href="/admin/addCustomer" id="editable-sample_new" class="btn btn-primary">
+              <%= __('Add new') %> <i class="fa fa-plus"></i>
+          </a>
+      </div>
+    </div>
+<div class="adv-table">
+<table class="display table table-bordered" id="hidden-table-info4">
+<thead>
+<tr>
+    <th><%= __('Name') %></th>
+    <th><%= __('Address') %></th>
+    <th class="hidden-phone"><%= __('Phone') %></th>
+    <th class="hidden-phone">Email</th>
+    <th class="hidden-phone"><%= __('Potential') %></th>
+    <th class="hidden-phone"><%= __('Edit') %></th>
+    <th class="hidden-phone"><%= __('Delete') %></th>
+    <th class="hidden-phone" style="display:none;">Date of Birth:</th>
+    <th class="hidden-phone" style="display:none;">Notes:</th>
+    <th class="hidden-phone" style="display:none;">Created At:</th>
+    <th class="hidden-phone" style="display:none;">Updated At:</th>
+    <th class="hidden-phone" style="display:none;">Added By:</th>
+</tr>
+</thead>
+<tbody>
+  <% for (var i = 0; i < customers.length; i++) { %>
+<tr class="gradeA">
+    <td><%= customers[i].name %></td>
+    <td><%= customers[i].address %></td>
+    <td class="hidden-phone"><%= customers[i].phone %></td>
+    <td class="hidden-phone"><%= customers[i].email %></td>
+    <% if (customers[i].potential) { %>
+      <td class="center hidden-phone"><input type="checkbox" disabled="true" checked></td>
+    <% } else { %>
+      <td class="center hidden-phone"><input type="checkbox" disabled="true"></td>
+    <% } %>
+    <td class="center hidden-phone"><a href="/admin/editProduct/<%= customers[i]._id %>"><%= __('Edit') %></a></td>
+    <td class="center hidden-phone"><a href="/admin/deleteProduct/<%= customers[i]._id %>"><%= __('Delete') %></a></td>
+    <td class="center hidden-phone" style="display: none;"><%= customers[i].dob %></td>
+    <td class="center hidden-phone" style="display: none;"><%= customers[i].note %></td>
+    <td class="center hidden-phone" style="display: none;"><%= customers[i].createdAt %></td>
+    <td class="center hidden-phone" style="display: none;"><%= customers[i].updatedAt %></td>
+    <th class="hidden-phone" style="display:none;"><%= customers[i].addedBy %></th>
+</tr>
+<% } %>
+</tbody>
+</table>
+
+</div>
+</div>
+</section>
+</div>
+</div>
+</div>
