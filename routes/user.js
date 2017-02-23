@@ -27,25 +27,11 @@ router.get('/login', function(req, res) {
   res.render('users/login', { msg: req.flash('msg')});
 });
 
-router.post('/login', function(req, res, next) {
-        passport.authenticate('login', function(err, user, info) {
-            if (err)
-                return next(err);
-            if(!user)
-                req.flash('msg', res.__('Wrong Credentials'));
-            req.logIn(user, function(err) {
-                if (err)
-                    return next(err);
-                if (!err)
-                    if (user.group == "staff") {
-                      return res.redirect('/');
-                    } else if (user.group == "user") {
-                      return res.redirect('/profile');
-                    }
-
-            });
-        })(req, res, next);
-});
+router.post('/login', passport.authenticate('login', {
+  successRedirect: '/',
+  failureRedirect: '/login',
+  failureFlash: true
+}));
 
 router.get('/register', function(req, res, cb) {
   res.render('users/register', {
@@ -102,7 +88,7 @@ router.post('/register', function(req, res, cb) {
         //         if (err) { return console.error(err); }
         //     return res.redirect('/register');
         // });
-        return res.redirect('/register');
+        return res.redirect('/');
     });
   };
 });

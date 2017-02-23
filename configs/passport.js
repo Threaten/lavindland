@@ -5,13 +5,13 @@ var strategy = require('passport-local').Strategy;
 var User = require('../models/user');
 
 //Serialize and deserialize
-passport.serializeUser(function(user, cb) {
-  cb(null, user._id);
+passport.serializeUser(function(user, done) {
+  done(null, user.id);
 });
 
-passport.deserializeUser(function(id, cb) {
-  User.findById(id, function(err, user) {
-    cb(err, user);
+passport.deserializeUser(function(id, done) {
+  User.findById(id, function (err, user) {
+    done(err, user);
   });
 });
 
@@ -25,11 +25,11 @@ passport.use('login', new strategy({
     if (err) return cb(err);
 
     if(!user) {
-      return cb(null, false);
+      return cb(null, false, req.flash('msg', "Wrong Credentials"));
     }
 
     if(!user.checkPassword(password)) {
-      return cb(null, false);
+      return cb(null, false, req.flash('msg', "Wrong Credentials"));
     }
 
     if(!user.isVerified) {

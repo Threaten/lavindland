@@ -48,5 +48,7 @@
 	"Potential": "Potential",
 	"Yes": "Yes",
 	"No": "No",
-	"Email": "Email"
+	"Email": "Email",
+	"Default Password": "(The password will be 1 by default)",
+	"Add new Staff": "Add new Staff"
 }

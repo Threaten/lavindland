@@ -13,12 +13,10 @@ router.get('/', function (req, res, cb) {
 
 router.get('/en', function (req, res) {
   res.cookie('i18n', 'en');
-  res.redirect('/');
-});
+return res.redirect(req.get('referer'));});
 
 router.get('/vi', function (req, res) {
   res.cookie('i18n', 'vi');
-  res.redirect('/');
-});
+return res.redirect(req.get('referer'));});
 
 module.exports = router;

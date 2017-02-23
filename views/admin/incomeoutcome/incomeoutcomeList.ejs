@@ -1,0 +1,62 @@
+<% layout('/admin/template') -%>
+<title>Finance List</title>
+<div class="page-heading">
+    <h3>
+      <%= __('Finance List') %>
+    </h3>
+    <ul class="breadcrumb">
+        <li>
+            <a href="/admin">Dashboard</a>
+        </li>
+        <li class="active"><%= __('Finance List') %> </li>
+    </ul>
+</div>
+<div class="wrapper">
+
+<div class="row">
+<div class="col-sm-12">
+<section class="panel">
+<header class="panel-heading">
+    <%= __('List') %>
+    <span class="tools pull-right">
+        <a href="javascript:;" class="fa fa-chevron-down"></a>
+        <a href="javascript:;" class="fa fa-times"></a>
+     </span>
+</header>
+<div class="panel-body">
+  <div class="clearfix">
+      <div class="btn-group">
+          <a href="/admin/addCustomer" id="editable-sample_new" class="btn btn-primary">
+              <%= __('Add new') %> <i class="fa fa-plus"></i>
+          </a>
+          <i>&nbsp<i>
+          <a href="/admin/addCustomer" style="background:red" id="editable-sample_new" class="btn btn-primary">
+              <%= __('Add new') %> <i class="fa fa-plus"></i>
+          </a>
+      </div>
+    </div>
+    <section class="desk-com" style="margin-top:10px">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="description">
+              <!-- Nav tabs -->
+              <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#description" aria-controls="home" role="tab" data-toggle="tab">Income</a></li>
+                <li role="presentation"><a href="#reviews" aria-controls="messages" role="tab" data-toggle="tab">Outcome</a></li>
+              </ul>
+
+              <!-- Tab panes -->
+              <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="description">
+                </div>
+                <div role="tabpanel" class="tab-pane" id="reviews">
+                </div>
+
+
+              		</section>
+</div>
+</section>
+</div>
+</div>
+</div>

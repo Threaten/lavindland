@@ -13,7 +13,6 @@ var userSchema = mongoose.Schema({
   passwordResetToken: {type: String, default: ''},
   passwordResetExpires: {tyep: Date, default: ''},
   isVerified: {type: Boolean, default: false},
-  username: {type: String, unique: true, lowercase: true},
   authToken: {type: String, required: true, unique: true},
   role: {type: String, default: 'user', required:true},
   group: {type: String, default: 'user', required: true}
