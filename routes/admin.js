@@ -271,33 +271,33 @@ router.post('/addCustomer', requireGroup('staff'), function(req, res, cb) {
 /*
 Income
 */
-router.get('/finance', requireGroup('staff'), function (req, res, cb) {
+// router.get('/finance', requireGroup('staff'), function (req, res, cb) {
+//
+//
+//     var incomeModel = mongoose.model('Income');
+//     var outcomeModel = mongoose.model('Outcome');
+//
+//     incomeModel
+//     .find()
+//     .sort( { updatedAt: -1 } )
+//     .populate('issuedBy')
+//     .exec(function (err, income) {
+//       if (err) return cb(err)
+//       outcomeModel
+//       .find()
+//       .sort( { updatedAt: -1 } )
+//       .populate('issuedBy')
+//       .exec(function (err, outcome) {
+//         if(err) return cb(err);
+//         res.render('admin/incomeoutcome/incomeoutcomeList', {
+//           income: income,
+//           outcome: outcome
+//         });
+//       });
+//     });
+// });
 
-
-    var incomeModel = mongoose.model('Income');
-    var outcomeModel = mongoose.model('Outcome');
-
-    incomeModel
-    .find()
-    .sort( { updatedAt: -1 } )
-    .populate('issuedBy')
-    .exec(function (err, income) {
-      if (err) return cb(err)
-      outcomeModel
-      .find()
-      .sort( { updatedAt: -1 } )
-      .populate('issuedBy')
-      .exec(function (err, outcome) {
-        if(err) return cb(err);
-        res.render('admin/incomeoutcome/incomeoutcomeList', {
-          income: income,
-          outcome: outcome
-        });
-      });
-    });
-});
-
-router.get('/incomeList', requireGroup('staff'), function (req, res, cb) {
+router.get('/incomeList', requireRole("Administrator"), requireGroup('staff'), function (req, res, cb) {
 
 
     var incomeModel = mongoose.model('Income');
@@ -314,7 +314,7 @@ router.get('/incomeList', requireGroup('staff'), function (req, res, cb) {
     });
 
 
-router.get('/outcomeList', requireGroup('staff'), function (req, res, cb) {
+router.get('/outcomeList', requireRole("Administrator"), requireGroup('staff'), function (req, res, cb) {
 
 
     var outcomeModel = mongoose.model('Outcome');
