@@ -1,0 +1,264 @@
+<% layout('/admin/template') -%>
+<title>Finance List</title>
+<script  type="text/javascript">
+function getdate() {
+    var tt = document.getElementById('tDate').value;
+
+    var date = new Date(tt);
+    var newdate = new Date(date);
+
+    newdate.setDate(newdate.getDate() + 1);
+
+    var dd = newdate.getDate();
+    var mm = newdate.getMonth() + 1;
+    var y = newdate.getFullYear();
+
+    var someFormattedDate = mm + '/' + dd + '/' + y;
+    document.getElementById('tempDate').value = someFormattedDate;
+}
+
+
+function maxDate() {
+var today = new Date();
+var dd = today.getDate();
+var mm = today.getMonth()+1; //January is 0!
+var yyyy = today.getFullYear();
+ if(dd<10){
+        dd='0'+dd
+    }
+    if(mm<10){
+        mm='0'+mm
+    }
+
+today = yyyy+'-'+mm+'-'+dd;
+document.getElementById("fDate").setAttribute("max", today);
+document.getElementById("tDate").setAttribute("max", today);
+}
+</script>
+<div class="page-heading">
+    <h3>
+      <%= __('Finance List') %>
+    </h3>
+    <ul class="breadcrumb">
+        <li>
+            <a href="/admin">Dashboard</a>
+        </li>
+        <li class="active"><%= __('Finance List') %> </li>
+    </ul>
+</div>
+<div class="wrapper">
+
+<div class="row">
+<div class="col-sm-12">
+<section class="panel">
+<header class="panel-heading">
+    <%= __('Finance') %>
+    <span class="tools pull-right">
+        <a href="javascript:;" class="fa fa-chevron-down"></a>
+        <a href="javascript:;" class="fa fa-times"></a>
+     </span>
+</header>
+<div class="panel-body">
+    <form method="post">
+    <label><%= __('From Date') %>: </label>&nbsp;<input type="date" required="true" id="fDate" name="fDate" max='2000-13-13' min='1899-01-01' onclick="maxDate()"></input>&nbsp;&nbsp<label><%= __('To Date') %>: </label>&nbsp;<input type="date" require="true" onchange="getdate()" id="tDate" name="tDate" onclick="maxDate()">&nbsp;&nbsp;&nbsp;<input type="text" id="tempDate" hidden name="tempDate"/><button type="submit" class="btn btn-primary"><%= __('Submit1') %></button>
+</form>
+<div style="margin-top:20px">
+    <header class="panel-heading">
+        <% if (fDate != null && tDate != null) {%>
+        <%= __('Statistic from') %> <%= fDate.toDateString() %> <%= __('to') %> <%= tDate.toDateString() %>
+    <%  } %>
+    </header>
+    <table class="table">
+    <thead>
+    <tr>
+    <th style="width:200px">#</th>
+    <th style="width:200px"><%= __('Income') %></th>
+    <th style="width:200px"><%= __('Outcome') %></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+    <td><%= __('Number of Transactions') %></td>
+    <% if (incomeTransaction == null) {%>
+        <td>0</td>
+    <% } else { %>
+    <td><%= incomeTransaction %></td>
+        <% } %>
+        <% if (outcomeTransaction == null) {%>
+            <td>0</td>
+        <% } else { %>
+        <td><%= outcomeTransaction %></td>
+            <% } %>
+    </tr>
+    <tr>
+    <td><%= __('Total') %> (VND)</td>
+    <% if (totalIncome == null) {%>
+        <td>0</td>
+    <% } else { %>
+    <td><%= totalIncome %></td>
+        <% } %>
+        <% if (totalOutcome == null) {%>
+            <td>0</td>
+        <% } else { %>
+        <td><%= totalOutcome %></td>
+            <% } %>
+    </tr>
+    <tr>
+    <td><%= __('Balance') %></td>
+    <% if (balance == null) {%>
+        <td colspan="2">0</td>
+    <% } else { %>
+        <% if (balance > 0) { %>
+            <td colspan="2"><font color="#009900" size="4px" weight="bold"><%= balance %><font></td>
+        <% } else { %>
+            <td colspan="2"><font color="red" size="4px" weight="bold"><%= balance %><font></td>
+            <% } %>
+        <% } %>
+    </tr>
+    </tbody>
+    </table>
+</div>
+<% if (income1 != null && outcome1 != null) { %>
+<div style="margin-top:20px">
+    <section class="desk-com" style="margin-top:10px">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="description">
+          <!-- Nav tabs -->
+          <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="#description" aria-controls="home" role="tab" data-toggle="tab"><%= __('Income') %></a></li>
+            <li role="presentation"><a href="#reviews" aria-controls="messages" role="tab" data-toggle="tab"><%= __('Outcome') %></a></li>
+          </ul>
+
+          <!-- Tab panes -->
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="description">
+              <div class="adv-table">
+              <table class="display table table-bordered" id="hidden-table-info5">
+              <thead>
+              <tr>
+                  <th><%= __('Issued By') %></th>
+                  <th><%= __('Amount') %></th>
+                  <th class="hidden-phone"><%= __('Content') %></th>
+                  <th class="hidden-phone"><%= __('Time') %></th>
+                  <th class="hidden-phone"><%= __('Edit') %></th>
+                  <th class="hidden-phone"><%= __('Delete') %></th>
+                  <th class="hidden-phone" style="display:none;">Notes:</th>
+              </tr>
+              </thead>
+              <tbody>
+                <% for (var i = 0; i < income1.length; i++) { %>
+              <tr class="gradeA">
+                  <td><%= income1[i].issuedBy.email %></td>
+                  <td><%= income1[i].amount %></td>
+                  <td class="hidden-phone"><%= income1[i].content %></td>
+                  <td class="hidden-phone" style="width:150px"><%= income1[i].updatedAt.toUTCString() %></td>
+                  <td class="center hidden-phone"><a href="/admin/editProduct/<%= income1[i]._id %>"><%= __('Edit') %></a></td>
+                  <td class="center hidden-phone"><a href="/admin/deleteProduct/<%= income1[i]._id %>"><%= __('Delete') %></a></td>
+                  <td class="center hidden-phone" style="display: none;"><%= income1[i].note %></td>
+              </tr>
+              <% } %>
+              </tbody>
+              </table>
+
+              </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="reviews">
+              <div class="adv-table">
+              <table class="display table table-bordered" id="hidden-table-info6">
+              <thead>
+              <tr>
+                  <th><%= __('Issued By') %></th>
+                  <th><%= __('Amount') %></th>
+                  <th class="hidden-phone"><%= __('Content') %></th>
+                  <th class="hidden-phone"><%= __('Time') %></th>
+                  <th class="hidden-phone"><%= __('Edit') %></th>
+                  <th class="hidden-phone"><%= __('Delete') %></th>
+                  <th class="hidden-phone" style="display:none;">Notes:</th>
+              </tr>
+              </thead>
+              <tbody>
+                <% for (var i = 0; i < outcome1.length; i++) { %>
+              <tr class="gradeA">
+                  <td><%= outcome1[i].issuedBy.email %></td>
+                  <td><%= outcome1[i].amount %></td>
+                  <td class="hidden-phone"><%= outcome1[i].content %></td>
+                  <td class="hidden-phone" style="width:150px"><%= outcome1[i].updatedAt.toUTCString() %></td>
+                  <td class="center hidden-phone"><a href="/admin/editProduct/<%= outcome1[i]._id %>"><%= __('Edit') %></a></td>
+                  <td class="center hidden-phone"><a href="/admin/deleteProduct/<%= outcome1[i]._id %>"><%= __('Delete') %></a></td>
+                  <td class="center hidden-phone" style="display: none;"><%= outcome1[i].note %></td>
+              </tr>
+              <% } %>
+              </tbody>
+              </table>
+
+              </div>
+            </div>
+
+                </section>
+</div>
+<% } else { %>
+    <div style="margin-top:20px">
+        <section class="desk-com" style="margin-top:10px">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="description">
+              <!-- Nav tabs -->
+              <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#description" aria-controls="home" role="tab" data-toggle="tab"><%= __('Income') %></a></li>
+                <li role="presentation"><a href="#reviews" aria-controls="messages" role="tab" data-toggle="tab"><%= __('Outcome') %></a></li>
+              </ul>
+
+              <!-- Tab panes -->
+              <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="description">
+                  <div class="adv-table">
+                  <table class="display table table-bordered" id="hidden-table-info5">
+                  <thead>
+                  <tr>
+                      <th><%= __('Issued By') %></th>
+                      <th><%= __('Amount') %></th>
+                      <th class="hidden-phone"><%= __('Content') %></th>
+                      <th class="hidden-phone"><%= __('Time') %></th>
+                      <th class="hidden-phone"><%= __('Edit') %></th>
+                      <th class="hidden-phone"><%= __('Delete') %></th>
+                      <th class="hidden-phone" style="display:none;">Notes:</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+
+                  </tbody>
+                  </table>
+
+                  </div>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="reviews">
+                  <div class="adv-table">
+                  <table class="display table table-bordered" id="hidden-table-info6">
+                  <thead>
+                  <tr>
+                      <th><%= __('Issued By') %></th>
+                      <th><%= __('Amount') %></th>
+                      <th class="hidden-phone"><%= __('Content') %></th>
+                      <th class="hidden-phone"><%= __('Time') %></th>
+                      <th class="hidden-phone"><%= __('Edit') %></th>
+                      <th class="hidden-phone"><%= __('Delete') %></th>
+                      <th class="hidden-phone" style="display:none;">Notes:</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+
+                  </tbody>
+                  </table>
+
+                  </div>
+                </div>
+
+                    </section>
+    </div>
+    <% } %>
+</section>
+
+</div>
+</div>
+</div>

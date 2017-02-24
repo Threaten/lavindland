@@ -53,10 +53,12 @@ app.use(session({
   secret: config.key,
   store: new connectMongo({ url: config.database, autoReconnect: true})
 }));
-app.use(flash());
+
 //passport
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use(flash());
 //globalize user variable
 app.use(function(req, res, cb) {
   res.locals.user = req.user;

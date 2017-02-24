@@ -1,11 +1,14 @@
 var router = require('express').Router();
 var async = require('async');
 var crypto = require('crypto');
+var mongoose = require('mongoose');
 
 var User = require('../models/user');
 var Project = require('../models/project');
 var Product = require('../models/product');
 var Customer = require('../models/customer');
+var Income = require('../models/income');
+var Outcome = require('../models/outcome');
 
 
 function requireGroup(group) {
@@ -28,6 +31,7 @@ function requireRole(role) {
 
 router.get('/', requireGroup("staff"), function (req, res, cb) {
   res.setLocale(req.cookies.i18n);
+  console.log(req.user);
   res.render('admin/dashboard/index', {
     i18n: res
   })
@@ -212,7 +216,7 @@ router.get('/customerList', requireGroup('staff'), function (req, res, cb) {
   if (req.user.role == "Administrator" || req.user.role == "Sales Administrator") {
     Customer
     .find()
-    .populate('user')
+    .populate('addedBy')
     .exec(function(err, customers) {
       if (err) return cb(err);
       res.render('admin/customers/customerList', {
@@ -222,7 +226,7 @@ router.get('/customerList', requireGroup('staff'), function (req, res, cb) {
   } else if (req.user.role == "Sales") {
     Customer
     .find({ addedBy: req.user._id})
-    .populate('user')
+    .populate('addedBy')
     .exec(function(err, customers) {
       if (err) return cb(err);
       res.render('admin/customers/customerList', {
@@ -269,30 +273,229 @@ Income
 */
 router.get('/finance', requireGroup('staff'), function (req, res, cb) {
 
-    if (req.user.role == "Administrator" || req.user.role == "Sales Administrator") {
-      Customer
-      .find()
-      .populate('user')
-      .exec(function(err, customers) {
-        if (err) return cb(err);
-        res.render('admin/incomeoutcome/incomeoutcomeList', {
-          customers: customers
-        });
-      });
-    } else if (req.user.role == "Sales") {
-      Customer
-      .find({ addedBy: req.user._id})
-      .populate('user')
-      .exec(function(err, customers) {
-        if (err) return cb(err);
-        res.render('admin/incomeoutcome/incomeoutcomeList', {
-          customers: customers
-        });
-      });
-    }
 
+    var incomeModel = mongoose.model('Income');
+    var outcomeModel = mongoose.model('Outcome');
+
+    incomeModel
+    .find()
+    .sort( { updatedAt: -1 } )
+    .populate('issuedBy')
+    .exec(function (err, income) {
+      if (err) return cb(err)
+      outcomeModel
+      .find()
+      .sort( { updatedAt: -1 } )
+      .populate('issuedBy')
+      .exec(function (err, outcome) {
+        if(err) return cb(err);
+        res.render('admin/incomeoutcome/incomeoutcomeList', {
+          income: income,
+          outcome: outcome
+        });
+      });
+    });
 });
 
+router.get('/incomeList', requireGroup('staff'), function (req, res, cb) {
+
+
+    var incomeModel = mongoose.model('Income');
+    incomeModel
+    .find()
+    .sort( { updatedAt: -1 } )
+    .populate('issuedBy')
+    .exec(function (err, income) {
+      if (err) return cb(err)
+        res.render('admin/incomeoutcome/incomeList', {
+          income: income
+                });
+      });
+    });
+
+
+router.get('/outcomeList', requireGroup('staff'), function (req, res, cb) {
+
+
+    var outcomeModel = mongoose.model('Outcome');
+    outcomeModel
+    .find()
+    .sort( { updatedAt: -1 } )
+    .populate('issuedBy')
+    .exec(function (err, outcome) {
+      if (err) return cb(err)
+        res.render('admin/incomeoutcome/outcomeList', {
+          outcome: outcome
+                });
+      });
+    });
+
+
+
+router.get('/addIncome', requireRole("Administrator"), requireGroup('staff'), function(req, res, cb) {
+  res.render('admin/incomeoutcome/addIncome', {error: req.flash('error'), msg: req.flash('OK')});
+});
+
+router.post('/addIncome', requireRole("Administrator"), requireGroup('staff'), function(req, res, cb) {
+  var income = new Income();
+  income.issuedBy = req.user._id;
+  income.amount = req.body.amount;
+  income.content = req.body.content;
+
+  income.save(function(err) {
+    if (err) {
+      req.flash('error', 'Error');
+      return res.redirect('/admin/addIncome');
+    }
+    req.flash('OK', 'Income added');
+    return res.redirect('/admin/incomeList');
+  });
+});
+
+
+
+
+/*
+Outcome
+*/
+
+router.get('/addOutcome', requireRole("Administrator"), requireGroup('staff'), function(req, res, cb) {
+  res.render('admin/incomeoutcome/addOutcome', {error: req.flash('error'), msg: req.flash('OK')});
+});
+
+router.post('/addOutcome', requireRole("Administrator"), requireGroup('staff'), function(req, res, cb) {
+  var outcome = new Outcome();
+  outcome.issuedBy = req.user._id;
+  outcome.amount = req.body.amount;
+  outcome.content = req.body.content;
+
+  outcome.save(function(err) {
+    if (err) {
+      req.flash('error', 'Error');
+      return res.redirect('/admin/addOutcome');
+    }
+    req.flash('OK', 'Outcome added');
+    return res.redirect('/admin/outcomeList');
+  });
+});
+
+/*
+Profit
+*/
+
+router.get('/profit', requireRole("Administrator"), requireGroup('staff'), function (req, res, cb) {
+  var totalIncome;
+  var totalOutcome;
+  var incomeTransaction;
+  var outcomeTransaction;
+  var balance;
+  var totalTransaction;
+  var income1;
+  var outcome1;
+  var fDate;
+  var tDate;
+
+  res.render('admin/incomeoutcome/profitByDate', {
+    incomeTransaction: incomeTransaction,
+    outcomeTransaction: outcomeTransaction,
+    totalIncome: totalIncome,
+    totalOutcome: totalOutcome,
+    balance: balance,
+    totalTransaction: totalTransaction,
+    income1: income1,
+    outcome1: outcome1,
+    fDate: fDate,
+    tDate: tDate
+
+  });
+});
+
+router.post('/profit', requireRole("Administrator"), requireGroup('staff'), function (req, res, cb) {
+  var totalIncome;
+  var totalOutcome;
+  var incomeTransaction;
+  var outcomeTransaction;
+  var balance;
+  var totalTransaction;
+  var incomeModel = mongoose.model('Income');
+  var outcomeModel = mongoose.model('Outcome');
+  var fDate = new Date(req.body.fDate)
+  var tDate = new Date(req.body.tDate)
+  Income.aggregate(
+    [{
+        $match: {
+            updatedAt: {
+              $gte: new Date(req.body.fDate),
+              $lte: new Date(req.body.tempDate)
+            }
+        }
+    }, {
+        $group: {
+            _id: null,
+            Total: {
+                $sum: "$amount"
+            },
+            NoOfTransactions: {
+                $sum: 1
+            }
+        }
+    }], function (err, income) {
+      totalIncome = income[0].Total;
+      Outcome.aggregate(
+        [{
+            $match: {
+                updatedAt: {
+                  $gte: new Date(req.body.fDate),
+                  $lte: new Date(req.body.tempDate)
+                }
+            }
+        }, {
+            $group: {
+                _id: null,
+                Total: {
+                    $sum: "$amount"
+                },
+                NoOfTransactions: {
+                    $sum: 1
+                }
+            }
+        }], function (err, outcome) {
+          incomeModel
+            .find({ 'updatedAt': { $gte: new Date(req.body.fDate), $lte: new Date(req.body.tempDate) }})
+            .populate('issuedBy')
+            .exec(function (err, income1) {
+            if (err) return cb(err);
+            outcomeModel
+            .find({ 'updatedAt': { $gte: new Date(req.body.fDate), $lte: new Date(req.body.tempDate) }})
+            .populate('issuedBy')
+            .exec(function (err, outcome1) {
+              if(err) return cb(err);
+              incomeTransaction = income[0].NoOfTransactions;
+              outcomeTransaction = outcome[0].NoOfTransactions;
+              totalIncome = income[0].Total;
+              totalOutcome = outcome[0].Total;
+              balance = totalIncome - totalOutcome;
+              totalTransaction = incomeTransaction + outcomeTransaction;
+              res.render('admin/incomeoutcome/profitByDate', {
+                incomeTransaction: incomeTransaction,
+                outcomeTransaction: outcomeTransaction,
+                totalIncome: totalIncome,
+                totalOutcome: totalOutcome,
+                balance: balance,
+                totalTransaction: totalTransaction,
+                income1: income1,
+                outcome1: outcome1,
+                fDate: fDate,
+                tDate: tDate
+              });
+            });
+          });
+        }
+    )
+    }
+)
+
+})
 
 
 module.exports = router;

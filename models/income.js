@@ -3,7 +3,7 @@ var schema = mongoose.Schema;
 
 
 var incomeSchema = new schema({
-  issuedBy: { type: schema.Types.ObjectId, ref: 'User' },
+  issuedBy: { type: schema.Types.ObjectId, ref: 'user' },
   amount: {type: Number, default: 0},
   content: { type: String, default :''},
   note: { type: String, default: ''}

@@ -26,33 +26,132 @@
 <div class="panel-body">
   <div class="clearfix">
       <div class="btn-group">
-          <a href="/admin/addCustomer" id="editable-sample_new" class="btn btn-primary">
-              <%= __('Add new') %> <i class="fa fa-plus"></i>
+          <a href="/admin/addIncome" id="editable-sample_new" class="btn btn-primary">
+              <%= __('Add new Income') %> <i class="fa fa-plus"></i>
           </a>
           <i>&nbsp<i>
-          <a href="/admin/addCustomer" style="background:red" id="editable-sample_new" class="btn btn-primary">
-              <%= __('Add new') %> <i class="fa fa-plus"></i>
+          <a href="/admin/addOutcome" style="background:red" id="editable-sample_new" class="btn btn-primary">
+              <%= __('Add new Outcome') %> <i class="fa fa-plus"></i>
           </a>
       </div>
     </div>
     <section class="desk-com" style="margin-top:10px">
-      <div class="container">
         <div class="row">
           <div class="col-sm-12">
             <div class="description">
               <!-- Nav tabs -->
               <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#description" aria-controls="home" role="tab" data-toggle="tab">Income</a></li>
-                <li role="presentation"><a href="#reviews" aria-controls="messages" role="tab" data-toggle="tab">Outcome</a></li>
+                <li role="presentation" class="active"><a href="#description" aria-controls="home" role="tab" data-toggle="tab"><%= __('Income') %></a></li>
+                <li role="presentation"><a href="#reviews" aria-controls="messages" role="tab" data-toggle="tab"><%= __('Outcome') %></a></li>
               </ul>
 
               <!-- Tab panes -->
               <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="description">
+                  <% if (income != null) { %>
+                  <div class="adv-table">
+                  <table class="display table table-bordered" id="hidden-table-info5">
+                  <thead>
+                  <tr>
+                      <th><%= __('Issued By') %></th>
+                      <th><%= __('Amount') %></th>
+                      <th class="hidden-phone"><%= __('Content') %></th>
+                      <th class="hidden-phone"><%= __('Time') %></th>
+                      <th class="hidden-phone"><%= __('Edit') %></th>
+                      <th class="hidden-phone"><%= __('Delete') %></th>
+                      <th class="hidden-phone" style="display:none;">Notes:</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                    <% for (var i = 0; i < income.length; i++) { %>
+                  <tr class="gradeA">
+                      <td><%= income[i].issuedBy.email %></td>
+                      <td><%= income[i].amount %></td>
+                      <td class="hidden-phone"><%= income[i].content %></td>
+                      <td class="hidden-phone" style="width:150px"><%= income[i].updatedAt.toUTCString() %></td>
+                      <td class="center hidden-phone"><a href="/admin/editProduct/<%= income[i]._id %>"><%= __('Edit') %></a></td>
+                      <td class="center hidden-phone"><a href="/admin/deleteProduct/<%= income[i]._id %>"><%= __('Delete') %></a></td>
+                      <td class="center hidden-phone" style="display: none;"><%= income[i].note %></td>
+                  </tr>
+                  <% } %>
+                  </tbody>
+                  </table>
+
+                  </div>
+                  <% } else { %>
+                    <div class="adv-table">
+                    <table class="display table table-bordered" id="hidden-table-info6">
+                    <thead>
+                    <tr>
+                        <th><%= __('Issued By') %></th>
+                        <th><%= __('Amount') %></th>
+                        <th class="hidden-phone"><%= __('Content') %></th>
+                        <th class="hidden-phone"><%= __('Time') %></th>
+                        <th class="hidden-phone"><%= __('Edit') %></th>
+                        <th class="hidden-phone"><%= __('Delete') %></th>
+                        <th class="hidden-phone" style="display:none;">Notes:</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                    </table>
+
+                    </div>
+                  <% } %>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="reviews">
-                </div>
+                  <% if (outcome != null) { %>
+                  <div class="adv-table">
+                  <table class="display table table-bordered" id="hidden-table-info5">
+                  <thead>
+                  <tr>
+                      <th><%= __('Issued By') %></th>
+                      <th><%= __('Amount') %></th>
+                      <th class="hidden-phone"><%= __('Content') %></th>
+                      <th class="hidden-phone"><%= __('Time') %></th>
+                      <th class="hidden-phone"><%= __('Edit') %></th>
+                      <th class="hidden-phone"><%= __('Delete') %></th>
+                      <th class="hidden-phone" style="display:none;">Notes:</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                    <% for (var i = 0; i < outcome.length; i++) { %>
+                  <tr class="gradeA">
+                      <td><%= outcome[i].issuedBy.email %></td>
+                      <td><%= outcome[i].amount %></td>
+                      <td class="hidden-phone"><%= outcome[i].content %></td>
+                      <td class="hidden-phone" style="width:150px"><%= outcome[i].updatedAt.toUTCString() %></td>
+                      <td class="center hidden-phone"><a href="/admin/editProduct/<%= outcome[i]._id %>"><%= __('Edit') %></a></td>
+                      <td class="center hidden-phone"><a href="/admin/deleteProduct/<%= outcome[i]._id %>"><%= __('Delete') %></a></td>
+                      <td class="center hidden-phone" style="display: none;"><%= outcome[i].note %></td>
+                  </tr>
+                  <% } %>
+                  </tbody>
+                  </table>
 
+                  </div>
+                  <% } else { %>
+                    <div class="adv-table">
+                    <table class="display table table-bordered" id="hidden-table-info6">
+                    <thead>
+                    <tr>
+                        <th><%= __('Issued By') %></th>
+                        <th><%= __('Amount') %></th>
+                        <th class="hidden-phone"><%= __('Content') %></th>
+                        <th class="hidden-phone"><%= __('Time') %></th>
+                        <th class="hidden-phone"><%= __('Edit') %></th>
+                        <th class="hidden-phone"><%= __('Delete') %></th>
+                        <th class="hidden-phone" style="display:none;">Notes:</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                    </table>
+
+                    </div>
+                  <% } %>
+                </div>
 
               		</section>
 </div>

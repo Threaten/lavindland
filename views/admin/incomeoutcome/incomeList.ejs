@@ -1,0 +1,104 @@
+<% layout('/admin/template') -%>
+<title>Income List</title>
+<div class="page-heading">
+    <h3>
+      <%= __('Income List') %>
+    </h3>
+    <ul class="breadcrumb">
+        <li>
+            <a href="/admin">Dashboard</a>
+        </li>
+        <li class="active"><%= __('Income List') %> </li>
+    </ul>
+</div>
+<div class="wrapper">
+
+<div class="row">
+<div class="col-sm-12">
+<section class="panel">
+<header class="panel-heading">
+    <%= __('List') %>
+    <span class="tools pull-right">
+        <a href="javascript:;" class="fa fa-chevron-down"></a>
+        <a href="javascript:;" class="fa fa-times"></a>
+     </span>
+</header>
+<div class="panel-body">
+  <div class="clearfix">
+      <div class="btn-group">
+          <a href="/admin/addIncome" id="editable-sample_new" class="btn btn-primary">
+              <%= __('Add new') %> <i class="fa fa-plus"></i>
+          </a>
+          <i>&nbsp<i>
+      </div>
+      <% if (income != null) { %>
+      <div class="adv-table">
+      <table class="display table table-bordered" id="hidden-table-info5">
+      <thead>
+      <tr>
+          <th><%= __('Issued By') %></th>
+          <th><%= __('Amount') %></th>
+          <th class="hidden-phone"><%= __('Content') %></th>
+          <th class="hidden-phone"><%= __('Time') %></th>
+          <th class="hidden-phone"><%= __('Edit') %></th>
+          <th class="hidden-phone"><%= __('Delete') %></th>
+          <th class="hidden-phone" style="display:none;">Notes:</th>
+      </tr>
+      </thead>
+      <tbody>
+        <% for (var i = 0; i < income.length; i++) { %>
+      <tr class="gradeA">
+          <td><%= income[i].issuedBy.email %></td>
+          <td><%= income[i].amount %></td>
+          <td class="hidden-phone"><%= income[i].content %></td>
+          <td class="hidden-phone" style="width:150px"><%= income[i].updatedAt.toUTCString() %></td>
+          <td class="center hidden-phone"><a href="/admin/editProduct/<%= income[i]._id %>"><%= __('Edit') %></a></td>
+          <td class="center hidden-phone"><a href="/admin/deleteProduct/<%= income[i]._id %>"><%= __('Delete') %></a></td>
+          <td class="center hidden-phone" style="display: none;"><%= income[i].note %></td>
+      </tr>
+      <% } %>
+      </tbody>
+      </table>
+
+      </div>
+      <% } else { %>
+        <div class="adv-table">
+        <table class="display table table-bordered" id="hidden-table-info6">
+        <thead>
+        <tr>
+            <th><%= __('Issued By') %></th>
+            <th><%= __('Amount') %></th>
+            <th class="hidden-phone"><%= __('Content') %></th>
+            <th class="hidden-phone"><%= __('Time') %></th>
+            <th class="hidden-phone"><%= __('Edit') %></th>
+            <th class="hidden-phone"><%= __('Delete') %></th>
+            <th class="hidden-phone" style="display:none;">Notes:</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+        </table>
+
+        </div>
+      <% } %>
+    </div>
+    <section class="desk-com" style="margin-top:10px">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="description">
+              <!-- Nav tabs -->
+
+
+              <!-- Tab panes -->
+              <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="description">
+
+                </div>
+
+              		</section>
+</div>
+</section>
+</div>
+</div>
+</div>

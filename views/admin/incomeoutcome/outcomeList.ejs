@@ -1,0 +1,90 @@
+<% layout('/admin/template') -%>
+<title>Outcome List</title>
+<div class="page-heading">
+    <h3>
+      <%= __('Outcome List') %>
+    </h3>
+    <ul class="breadcrumb">
+        <li>
+            <a href="/admin">Dashboard</a>
+        </li>
+        <li class="active"><%= __('Outcome List') %> </li>
+    </ul>
+</div>
+<div class="wrapper">
+
+<div class="row">
+<div class="col-sm-12">
+<section class="panel">
+<header class="panel-heading">
+    <%= __('List') %>
+    <span class="tools pull-right">
+        <a href="javascript:;" class="fa fa-chevron-down"></a>
+        <a href="javascript:;" class="fa fa-times"></a>
+     </span>
+</header>
+<div class="panel-body">
+  <div class="clearfix">
+      <div class="btn-group">
+          <a href="/admin/addOutcome" id="editable-sample_new" class="btn btn-primary">
+              <%= __('Add new') %> <i class="fa fa-plus"></i>
+          </a>
+          <i>&nbsp<i>
+      </div>
+      <% if (outcome != null) { %>
+      <div class="adv-table">
+      <table class="display table table-bordered" id="hidden-table-info5">
+      <thead>
+      <tr>
+          <th><%= __('Issued By') %></th>
+          <th><%= __('Amount') %></th>
+          <th class="hidden-phone"><%= __('Content') %></th>
+          <th class="hidden-phone"><%= __('Time') %></th>
+          <th class="hidden-phone"><%= __('Edit') %></th>
+          <th class="hidden-phone"><%= __('Delete') %></th>
+          <th class="hidden-phone" style="display:none;">Notes:</th>
+      </tr>
+      </thead>
+      <tbody>
+        <% for (var i = 0; i < outcome.length; i++) { %>
+      <tr class="gradeA">
+          <td><%= outcome[i].issuedBy.email %></td>
+          <td><%= outcome[i].amount %></td>
+          <td class="hidden-phone"><%= outcome[i].content %></td>
+          <td class="hidden-phone" style="width:150px"><%= outcome[i].updatedAt.toUTCString() %></td>
+          <td class="center hidden-phone"><a href="/admin/editProduct/<%= outcome[i]._id %>"><%= __('Edit') %></a></td>
+          <td class="center hidden-phone"><a href="/admin/deleteProduct/<%= outcome[i]._id %>"><%= __('Delete') %></a></td>
+          <td class="center hidden-phone" style="display: none;"><%= outcome[i].note %></td>
+      </tr>
+      <% } %>
+      </tbody>
+      </table>
+
+      </div>
+      <% } else { %>
+        <div class="adv-table">
+        <table class="display table table-bordered" id="hidden-table-info6">
+        <thead>
+        <tr>
+            <th><%= __('Issued By') %></th>
+            <th><%= __('Amount') %></th>
+            <th class="hidden-phone"><%= __('Content') %></th>
+            <th class="hidden-phone"><%= __('Time') %></th>
+            <th class="hidden-phone"><%= __('Edit') %></th>
+            <th class="hidden-phone"><%= __('Delete') %></th>
+            <th class="hidden-phone" style="display:none;">Notes:</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+        </table>
+
+        </div>
+      <% } %>
+    </div>
+</div>
+</section>
+</div>
+</div>
+</div>

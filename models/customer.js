@@ -3,7 +3,7 @@ var schema = mongoose.Schema;
 
 
 var customerSchema = new schema({
-  addedBy: { type: schema.Types.ObjectId, ref: 'User' },
+  addedBy: { type: schema.Types.ObjectId, ref: 'user' },
   name: { type: String, default: " " },
   phone: { type: String, default: " " },
   address: { type: String, default: " " },
