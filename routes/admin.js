@@ -31,7 +31,6 @@ function requireRole(role) {
 
 router.get('/', requireGroup("staff"), function (req, res, cb) {
   res.setLocale(req.cookies.i18n);
-  console.log(req.user);
   res.render('admin/dashboard/index', {
     i18n: res
   })
@@ -87,18 +86,6 @@ router.post('/addUser', requireRole("Administrator"), requireGroup('staff'), fun
         } else {
           user.save(function(err, user) {
             if (err) return cb(err);
-        //     req.flash('msg',  "An email has been sent to " + email + ". Please check your email.");
-        //     req.flash('mail', email);
-        //     var authenticationURL = 'https://serene-brook-72340.herokuapp.com/emailVerification/?token=' + user.authToken;
-        //     sendgrid.send({
-        //     to:       user.email,
-        //     from:     'threaten.bussiness@gmail.com',
-        //     subject:  'Please verify your account',
-        //     html:     '<a target=_blank href=\"' + authenticationURL + '\">We have recently received your register at our service. To cotinue, please verify your account by clicking this link</a>'
-        //     }, function(err, json) {
-        //         if (err) { return console.error(err); }
-        //     return res.redirect('/register');
-        // });
         return res.redirect('/admin/userList');
     });
   };
@@ -107,6 +94,44 @@ router.post('/addUser', requireRole("Administrator"), requireGroup('staff'), fun
   }
   ]);
   });
+
+  router.get('/editUser/:id',requireRole("Administrator"), requireGroup('staff'), function(req, res, cb) {
+    res.render('admin/users/addUser', {error: req.flash('error'), msg: req.flash('OK')});
+  });
+
+  router.post('/addUser', requireRole("Administrator"), requireGroup('staff'), function(req, res, cb) {
+    async.waterfall([
+      function(callback) {
+
+        var user = new User();
+        user.name = req.body.name;
+        user.email = req.body.email;
+        user.address = req.body.address;
+        user.phone = req.body.phone;
+        user.group = "staff";
+        user.role = req.body.role;
+        user.password = req.body.password;
+        user.isVerified = true;
+        var seed = crypto.randomBytes(20);
+        var authToken = crypto.createHash('sha1').update(seed + req.body.email).digest('hex');
+        user.authToken = authToken;
+
+        User.findOne({ email: req.body.email}, function(err, userExisted) {
+          if (userExisted) {
+            req.flash('error', "Account with the provided Email is existed");
+            //console.log(req.body.email + " is existed");
+            return res.redirect('/admin/addUser');
+          } else {
+            user.save(function(err, user) {
+              if (err) return cb(err);
+          return res.redirect('/admin/userList');
+      });
+    };
+    });
+
+    }
+    ]);
+    });
 
 
 /*
