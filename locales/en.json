@@ -71,5 +71,17 @@
 	"Total": "Total (VND)",
 	"Balance": "Balance",
 	"Income List": "Income List",
-	"Outcome List": "Outcome List"
+	"Outcome List": "Outcome List",
+	"Edit Project": "Edit Project",
+	"Delete Project": "Delete Project",
+	"Edit Customer": "Edit Customer",
+	"Delete Customer": "Delete Customer",
+	"Edit Product": "Edit Product",
+	"Delete Product": "Delete Product",
+	"Edit Staff": "Edit Staff",
+	"Delete Staff": "Delete Staff",
+	"Edit Income": "Edit Income",
+	"Delete Income": "Delete Income",
+	"Edit Outcome": "Edit Outcome",
+	"Delete Outcome": "Delete Outcome"
 }

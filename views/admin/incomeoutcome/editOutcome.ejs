@@ -1,8 +1,8 @@
 <% layout('/admin/template') -%>
-<title>Add Income</title>
+<title>Edit Outcome</title>
 <div class="page-heading">
     <h3>
-        <%= __('Add new Income') %>
+        <%= __('Edit Outcome') %>
     </h3>
     <ul class="breadcrumb">
         <li>
@@ -11,7 +11,7 @@
         <li>
             <a href="/admin/projectList"><%= __('Finance') %></a>
         </li>
-        <li class="active"><%= __('Add new Income') %> </li>
+        <li class="active"><%= __('Edit Outcome') %> </li>
     </ul>
 </div>
 <div class="wrapper">
@@ -19,7 +19,7 @@
   <div class="col-lg-12">
     <section class="panel">
       <header class="panel-heading">
-<%= __('Add new Income') %>
+<%= __('Edit Outcome') %>
       </header>
       <div class="panel-body">
         <% if (msg.length > 0) { %>
@@ -45,9 +45,9 @@
             <form role="form" method="post">
               <div class="form-group">
                 <label for="amount"><%= __('Amount') %></label>
-                <input type="numbet" class="form-control" id="amount" required name="amount" placeholder="...VND">
+                <input type="numbet" class="form-control" id="amount" required value="<%= income.amount %>" name="amount" placeholder="...VND">
                 <label for="content"><%= __('Content') %></label>
-                <input type="text" class="form-control" id="content" required name="content" placeholder="Vingroup, Him Lam,...">
+                <input type="text" class="form-control" id="content" required value="<%= income.content %>" name="content" placeholder="Vingroup, Him Lam,...">
               </div>
               <button type="submit" class="btn btn-primary"><%= __('Submit') %></button>
             </form>

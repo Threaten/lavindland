@@ -1,17 +1,17 @@
 <% layout('/admin/template') -%>
-<title>Add Income</title>
+<title>Delete Project</title>
 <div class="page-heading">
     <h3>
-        <%= __('Add new Income') %>
+        <%= __('Delete Project') %>
     </h3>
     <ul class="breadcrumb">
         <li>
             <a href="/admin">Dashboard</a>
         </li>
         <li>
-            <a href="/admin/projectList"><%= __('Finance') %></a>
+            <a href="/admin/projectList"><%= __('Projects List') %></a>
         </li>
-        <li class="active"><%= __('Add new Income') %> </li>
+        <li class="active"><%= __('Delete Project') %> </li>
     </ul>
 </div>
 <div class="wrapper">
@@ -19,7 +19,7 @@
   <div class="col-lg-12">
     <section class="panel">
       <header class="panel-heading">
-<%= __('Add new Income') %>
+<%= __('Delete Project') %>
       </header>
       <div class="panel-body">
         <% if (msg.length > 0) { %>
@@ -44,12 +44,14 @@
                 <% } %>
             <form role="form" method="post">
               <div class="form-group">
-                <label for="amount"><%= __('Amount') %></label>
-                <input type="numbet" class="form-control" id="amount" required name="amount" placeholder="...VND">
-                <label for="content"><%= __('Content') %></label>
-                <input type="text" class="form-control" id="content" required name="content" placeholder="Vingroup, Him Lam,...">
+                <label for="name"><%= __('Project Name') %></label>
+                <input type="text" class="form-control" id="name" name="name" disabled value="<%= project.name %>" placeholder="Vinhomes Central Park,...">
+                <label for="name"><%= __('Address') %></label>
+                <input type="text" class="form-control" id="address" name="address" disabled value="<%= project.address %>" placeholder="208 Nguyen Huu Canh Street, Ward 22, Binh Thanh District, Ho Chi Minh City">
+                <label for="name"><%= __('Owner') %></label>
+                <input type="text" class="form-control" id="owner" name="owner" disabled value="<%= project.owner %>" placeholder="Vingroup, Him Lam,...">
               </div>
-              <button type="submit" class="btn btn-primary"><%= __('Submit') %></button>
+              <button type="submit" class="btn btn-primary"><%= __('Delete') %></button>
             </form>
 
           </div>

@@ -72,5 +72,17 @@
 	"Balance": "Số dư",
 	"Statistics from": "Thống kê từ",
 	"Income List": "Danh sách thu",
-	"Outcome List": "Danh sách chi"
+	"Outcome List": "Danh sách chi",
+	"Edit Project": "Thay đổi dự án",
+	"Delete Project": "Xoá dự ánán",
+	"Edit Customer": "Thay đổi khách hàng",
+	"Delete Customer": "Xoá khách hàng",
+	"Edit Product": "Thay đổi sản phẩm",
+	"Delete Product": "Xoá sản phẩm",
+	"Edit Staff": "Thay đổi nhân viên",
+	"Delete Staff": "Xoá nhân viên",
+	"Edit Income": "Thay đổi thu",
+	"Delete Income": "Xoá thu",
+	"Edit Outcome": "Thay đổi chi",
+	"Delete Outcome": "Xoá chi"
 }

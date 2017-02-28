@@ -52,8 +52,8 @@
           <td><%= income[i].amount %></td>
           <td class="hidden-phone"><%= income[i].content %></td>
           <td class="hidden-phone" style="width:150px"><%= income[i].updatedAt.toUTCString() %></td>
-          <td class="center hidden-phone"><a href="/admin/editProduct/<%= income[i]._id %>"><%= __('Edit') %></a></td>
-          <td class="center hidden-phone"><a href="/admin/deleteProduct/<%= income[i]._id %>"><%= __('Delete') %></a></td>
+          <td class="center hidden-phone"><a href="/admin/editIncome/<%= income[i]._id %>"><%= __('Edit') %></a></td>
+          <td class="center hidden-phone"><a href="/admin/deleteIncome/<%= income[i]._id %>"><%= __('Delete') %></a></td>
           <td class="center hidden-phone" style="display: none;"><%= income[i].note %></td>
       </tr>
       <% } %>

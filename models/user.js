@@ -15,7 +15,10 @@ var userSchema = mongoose.Schema({
   isVerified: {type: Boolean, default: false},
   authToken: {type: String, required: true, unique: true},
   role: {type: String, default: 'user', required:true},
-  group: {type: String, default: 'user', required: true}
+  group: {type: String, default: 'user', required: true},
+  updatedBy: {type: String, default: ''},
+  deleted: {type: Boolean, default: false},
+  deletedBy: {type: String, default: ''}
 }, {timestamps: true});
 
 /* Password Encryption using BCrypt */

@@ -61,8 +61,8 @@
     <% } else { %>
       <td class="center hidden-phone"><input type="checkbox" disabled="true"></td>
     <% } %>
-    <td class="center hidden-phone"><a href="/admin/editProduct/<%= customers[i]._id %>"><%= __('Edit') %></a></td>
-    <td class="center hidden-phone"><a href="/admin/deleteProduct/<%= customers[i]._id %>"><%= __('Delete') %></a></td>
+    <td class="center hidden-phone"><a href="/admin/editCustomer/<%= customers[i]._id %>"><%= __('Edit') %></a></td>
+    <td class="center hidden-phone"><a href="/admin/deleteCustomer/<%= customers[i]._id %>"><%= __('Delete') %></a></td>
     <td class="center hidden-phone" style="display: none;"><%= customers[i].dob %></td>
     <td class="center hidden-phone" style="display: none;"><%= customers[i].note %></td>
     <td class="center hidden-phone" style="display: none;"><%= customers[i].createdAt %></td>

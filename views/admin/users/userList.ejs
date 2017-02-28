@@ -55,14 +55,14 @@
     <% if (users[i].role == "Administrator") { %>
     <td class="hidden-phone">N/A</td>
     <% } else { %>
-      <td class="hidden-phone"><a href="#"><%= __('Edit') %></a></td>
+      <td class="hidden-phone"><a href="/admin/editUser/<%= users[i]._id %>"><%= __('Edit') %></a></td>
       <% } %>
       <% if (users[i].role == "Administrator") { %>
       <td class="hidden-phone">N/A</td>
       <% } else if (users[i]._id == user._id) { %>
         <td class="hidden-phone">N/A</td>
         <% } else { %>
-        <td class="hidden-phone"><a href="#"><%= __('Delete') %></a></td>
+        <td class="hidden-phone"><a href="/admin/deleteUser/<%= users[i]._id %>"><%= __('Delete') %></a></td>
         <% } %>
     <td class="center hidden-phone" style="display: none;"><%= users[i].address %></td>
     <td class="center hidden-phone" style="display: none;"><%= users[i].phone %></td>

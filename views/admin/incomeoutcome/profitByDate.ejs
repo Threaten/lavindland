@@ -153,8 +153,8 @@ document.getElementById("tDate").setAttribute("max", today);
                   <td><%= income1[i].amount %></td>
                   <td class="hidden-phone"><%= income1[i].content %></td>
                   <td class="hidden-phone" style="width:150px"><%= income1[i].updatedAt.toUTCString() %></td>
-                  <td class="center hidden-phone"><a href="/admin/editProduct/<%= income1[i]._id %>"><%= __('Edit') %></a></td>
-                  <td class="center hidden-phone"><a href="/admin/deleteProduct/<%= income1[i]._id %>"><%= __('Delete') %></a></td>
+                  <td class="center hidden-phone"><a href="/admin/editIncome/<%= income1[i]._id %>"><%= __('Edit') %></a></td>
+                  <td class="center hidden-phone"><a href="/admin/deleteIncome/<%= income1[i]._id %>"><%= __('Delete') %></a></td>
                   <td class="center hidden-phone" style="display: none;"><%= income1[i].note %></td>
               </tr>
               <% } %>
@@ -184,8 +184,8 @@ document.getElementById("tDate").setAttribute("max", today);
                   <td><%= outcome1[i].amount %></td>
                   <td class="hidden-phone"><%= outcome1[i].content %></td>
                   <td class="hidden-phone" style="width:150px"><%= outcome1[i].updatedAt.toUTCString() %></td>
-                  <td class="center hidden-phone"><a href="/admin/editProduct/<%= outcome1[i]._id %>"><%= __('Edit') %></a></td>
-                  <td class="center hidden-phone"><a href="/admin/deleteProduct/<%= outcome1[i]._id %>"><%= __('Delete') %></a></td>
+                  <td class="center hidden-phone"><a href="/admin/editOutcome/<%= outcome1[i]._id %>"><%= __('Edit') %></a></td>
+                  <td class="center hidden-phone"><a href="/admin/deleteOutcome/<%= outcome1[i]._id %>"><%= __('Delete') %></a></td>
                   <td class="center hidden-phone" style="display: none;"><%= outcome1[i].note %></td>
               </tr>
               <% } %>
