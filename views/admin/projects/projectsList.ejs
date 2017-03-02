@@ -49,16 +49,10 @@
     <td><%= projects[i].name %></td>
     <td><%= projects[i].address %></td>
     <td class="hidden-phone"><%= projects[i].owner %></td>
-    <% if (user.role == "Administrator") { %>
       <td class="hidden-phone"><a href="/admin/editProject/<%= projects[i]._id %>"><%= __('Edit') %></a></td>
-    <% } else { %>
-      <td class="hidden-phone">N/A</td>
-      <% } %>
-      <% if (user.role == "Administrator") { %>
+
         <td class="hidden-phone"><a href="/admin/deleteProject/<%= projects[i]._id %>"><%= __('Delete') %></a></td>
-        <% } else { %>
-          <td class="hidden-phone">N/A</td>
-        <% } %>
+        
     <td class="center hidden-phone" style="display: none;"><%= projects[i].note %></td>
 </tr>
 <% } %>
