@@ -86,7 +86,7 @@
 	"Edit Outcome": "Thay đổi chi",
 	"Delete Outcome": "Xoá chi",
 	"Add Role": "Thêm vai trò",
-	"Role List": "Danh sách vai trò",
+	"Role List": "Danh sách chức vụ",
 	"View": "Xem",
 	"Add": "Thêm",
 	"Roles": "Vai trò",
@@ -95,5 +95,6 @@
 	"Manager": "Quản lý?. (Quản lý có quyền xem toàn bộ khách hàng)",
 	"Edit Role": "Thay đổi chức vụ",
 	"Delete Role": "Xoá chức vụ",
-	"Role List": "Danh sách chức vụ"
+	"Roles List": "Danh sách chức vụ",
+	"isManager": "Quản lý"
 }

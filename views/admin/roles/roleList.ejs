@@ -35,8 +35,8 @@
   <table class="display table table-bordered" id="hidden-table-info7">
 <thead>
 <tr>
-  <th class="hidden-phone"><%= __('Name') %></th>
-  <th class="hidden-phone"><%= __('Address') %></th>
+  <th class="hidden-phone"><%= __('Role') %></th>
+  <th class="hidden-phone"><%= __('isManager') %></th>
     <th class="hidden-phone"><%= __('Edit') %></th>
     <th class="hidden-phone"><%= __('Delete') %></th>
     <th class="hidden-phone" style="display:none;">Note</th>
@@ -46,7 +46,11 @@
   <% for (var i = 0; i < roles.length; i++) { %>
 <tr class="gradeA">
     <td><%= roles[i].role %></td>
-    <td><%= roles[i].isManager %></td>
+    <% if (roles[i].isManager) { %>
+    <td><input type="checkbox" checked/></td>
+    <% } else { %>
+      <td><input type="checkbox"/></td>
+      <% } %>
       <td class="hidden-phone"><a href="/admin/editRole/<%= roles[i]._id %>"><%= __('Edit') %></a></td>
 
         <td class="hidden-phone"><a href="/admin/deleteRole/<%= roles[i]._id %>"><%= __('Delete') %></a></td>

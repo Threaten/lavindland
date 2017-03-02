@@ -94,5 +94,6 @@
 	"Manager": "Manager (Manager can see all Customers.)",
 	"Edit Role": "Edit Role",
 	"Delete Role": "Delete Role",
-	"Roles List": "Roles List"
+	"Roles List": "Roles List",
+	"isManager": "Manager"
 }
