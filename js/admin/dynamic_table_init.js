@@ -68,6 +68,13 @@ function fnFormatDetails6 ( oTable, nTr )
     return sOut;
 }
 
+function fnFormatDetails7 ( oTable, nTr )
+{
+    var aData = oTable.fnGetData( nTr );
+    var sOut = '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">';
+    return sOut;
+}
+
 $(document).ready(function() {
 
     $('#dynamic-table').dataTable( {
@@ -365,6 +372,52 @@ $(document).ready(function() {
             /* Open this row */
             this.src = "../images/details_close.png";
             oTable.fnOpen( nTr, fnFormatDetails6(oTable, nTr), 'details' );
+        }
+    } );
+} );
+
+
+
+
+
+
+$(document).ready(function() {
+
+    $('#dynamic-table').dataTable( {
+        "aaSorting": [[ 4, "desc" ]]
+    } );
+    /*
+     * Insert a 'details' column to the table
+     */
+    
+
+    /*
+     * Initialse DataTables, with no sorting on the 'details' column
+     */
+    var oTable = $('#hidden-table-info7').dataTable( {
+        "aoColumnDefs": [
+            { "bSortable": false, "aTargets": [ 0 ] }
+        ],
+        "aaSorting": [[1, 'asc']]
+    });
+
+    /* Add event listener for opening and closing details
+     * Note that the indicator for showing which row is open is not controlled by DataTables,
+     * rather it is done here
+     */
+    $(document).on('click','#hidden-table-info7 tbody td img',function () {
+        var nTr = $(this).parents('tr')[0];
+        if ( oTable.fnIsOpen(nTr) )
+        {
+            /* This row is already open - close it */
+            this.src = "../images/details_open.png";
+            oTable.fnClose( nTr );
+        }
+        else
+        {
+            /* Open this row */
+            this.src = "../images/details_close.png";
+            oTable.fnOpen( nTr, fnFormatDetails7(oTable, nTr), 'details' );
         }
     } );
 } );

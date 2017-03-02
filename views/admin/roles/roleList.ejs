@@ -1,0 +1,65 @@
+<% layout('/admin/template') -%>
+<title>Roles List</title>
+<div class="page-heading">
+    <h3>
+        <%= __('Roles List') %>
+    </h3>
+    <ul class="breadcrumb">
+        <li>
+            <a href="/admin">Dashboard</a>
+        </li>
+        <li class="active"><%= __('Roles List') %></li>
+    </ul>
+</div>
+<div class="wrapper">
+
+<div class="row">
+<div class="col-sm-12">
+<section class="panel">
+<header class="panel-heading">
+    <%= __('List') %>
+    <span class="tools pull-right">
+        <a href="javascript:;" class="fa fa-chevron-down"></a>
+        <a href="javascript:;" class="fa fa-times"></a>
+     </span>
+</header>
+<div class="panel-body">
+  <div class="clearfix">
+      <div class="btn-group">
+          <a href="/admin/addRole" id="editable-sample_new" class="btn btn-primary">
+            <%= __('Add new') %> <i class="fa fa-plus"></i>
+          </a>
+      </div>
+    </div>
+<div class="adv-table">
+  <table class="display table table-bordered" id="hidden-table-info7">
+<thead>
+<tr>
+  <th class="hidden-phone"><%= __('Name') %></th>
+  <th class="hidden-phone"><%= __('Address') %></th>
+    <th class="hidden-phone"><%= __('Edit') %></th>
+    <th class="hidden-phone"><%= __('Delete') %></th>
+    <th class="hidden-phone" style="display:none;">Note</th>
+</tr>
+</thead>
+<tbody>
+  <% for (var i = 0; i < roles.length; i++) { %>
+<tr class="gradeA">
+    <td><%= roles[i].role %></td>
+    <td><%= roles[i].isManager %></td>
+      <td class="hidden-phone"><a href="/admin/editRole/<%= roles[i]._id %>"><%= __('Edit') %></a></td>
+
+        <td class="hidden-phone"><a href="/admin/deleteRole/<%= roles[i]._id %>"><%= __('Delete') %></a></td>
+
+    <td class="center hidden-phone" style="display: none;"><%= roles[i].permission %></td>
+</tr>
+<% } %>
+</tbody>
+</table>
+
+</div>
+</div>
+</section>
+</div>
+</div>
+</div>

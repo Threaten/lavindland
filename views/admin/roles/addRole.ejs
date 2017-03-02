@@ -1,0 +1,135 @@
+<% layout('/admin/template') -%>
+<title>Add Role</title>
+<div class="page-heading">
+    <h3>
+        <%= __('Add Role') %>
+    </h3>
+    <ul class="breadcrumb">
+        <li>
+            <a href="/admin">Dashboard</a>
+        </li>
+        <li>
+            <a href="/admin/projectList"><%= __('Role List') %></a>
+        </li>
+        <li class="active"><%= __('Add Role') %> </li>
+    </ul>
+</div>
+<div class="wrapper">
+<div class="row">
+  <div class="col-lg-12">
+    <section class="panel">
+      <header class="panel-heading">
+<%= __('Add Role') %>
+      </header>
+      <div class="panel-body">
+        <% if (msg.length > 0) { %>
+          <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+
+            <%= msg %>
+
+            </div>
+            <% } %>
+            <% if (error.length > 0) { %>
+              <div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+
+                <%= error %>
+
+                </div>
+                <% } %>
+            <form role="form" method="post">
+              <div class="form-group">
+                <label for="name"><%= __('Name') %></label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Nguyen Van A,...">
+                <div>
+                <label for="isManager"><%= __('Manager') %></label><br/>
+                <label><%= __('Yes') %></label><input type="checkbox" id="isManager" name="isManager">
+              </div>
+                <label for="user"><b><%= __('Users') %></b></label>
+                <div id="user">
+                  <label><%= __('View') %></label> <input type="checkbox" id="canViewUser" name="canViewUser">
+                  <label>             </label>
+                  <label><%= __('Add') %></label> <input type="checkbox" id="canAddUser" name="canAddUser">
+                  <label>             </label>
+                  <label><%= __('Edit') %></label> <input type="checkbox" id="canEditUser" name="canEditUser">
+                  <label>             </label>
+                  <label><%= __('Delete') %></label> <input type="checkbox" id="canDeleteUser" name="canDeleteUser">
+                </div>
+                <label for="customer"><b><%= __('Customers') %></b></label>
+                <div id="customer">
+                  <label><%= __('View') %></label> <input type="checkbox" id="canViewCustomer" name="canViewCustomer">
+                  <label>             </label>
+                  <label><%= __('Add') %></label> <input type="checkbox" id="canAddCustomer" name="canAddCustomer">
+                  <label>             </label>
+                  <label><%= __('Edit') %></label> <input type="checkbox" id="canEditCustomer" name="canEditCustomer">
+                  <label>             </label>
+                  <label><%= __('Delete') %></label> <input type="checkbox" id="canDeleteCustomer" name="canDeleteCustomer">
+                </div>
+                <label for="project"><b><%= __('Projects') %></b></label>
+                <div id="project">
+                  <label><%= __('View') %></label> <input type="checkbox" id="canViewProject" name="canViewProject">
+                  <label>             </label>
+                  <label><%= __('Add') %></label> <input type="checkbox" id="canAddProject" name="canAddProject">
+                  <label>             </label>
+                  <label><%= __('Edit') %></label> <input type="checkbox" id="canEditProject" name="canEditProject">
+                  <label>             </label>
+                  <label><%= __('Delete') %></label> <input type="checkbox" id="canDeleteProject" name="canDeleteProject">
+                </div>
+                <label for="product"><b><%= __('Products') %></b></label>
+                <div id="product">
+                  <label><%= __('View') %></label> <input type="checkbox" id="canViewProduct" name="canViewProduct">
+                  <label>             </label>
+                  <label><%= __('Add') %></label> <input type="checkbox" id="canAddProduct" name="canAddProduct">
+                  <label>             </label>
+                  <label><%= __('Edit') %></label> <input type="checkbox" id="canEditProduct" name="canEditProduct">
+                  <label>             </label>
+                  <label><%= __('Delete') %></label> <input type="checkbox" id="canDeleteProduct" name="canDeleteProduct">
+                  <label>             </label>
+                  <label><%= __('Sell') %></label> <input type="checkbox" id="canSellProduct" name="canSellProduct">
+                  <label>             </label>
+                  <label><%= __('Rent') %></label> <input type="checkbox" id="canRentProduct" name="canRentProduct">
+                </div>
+                <label for="income1"><b><%= __('Income') %></b></label>
+                <div id="income1">
+                  <label><%= __('View') %></label> <input type="checkbox" id="canViewIncome" name="canViewIncome">
+                  <label>             </label>
+                  <label><%= __('Add') %></label> <input type="checkbox" id="canAddIncome" name="canAddIncome">
+                  <label>             </label>
+                  <label><%= __('Edit') %></label> <input type="checkbox" id="canEditIncome" name="canEditIncome">
+                  <label>             </label>
+                  <label><%= __('Delete') %></label> <input type="checkbox" id="canDeleteIncome" name="canDeleteIncome">
+                </div>
+                <label for="outcome"><b><%= __('Outcome') %></b></label>
+                <div id="outcome">
+                  <label><%= __('View') %></label> <input type="checkbox" id="canViewOutcome" name="canViewOutcome">
+                  <label>             </label>
+                  <label><%= __('Add') %></label> <input type="checkbox" id="canAddOutcome" name="canAddOutcome">
+                  <label>             </label>
+                  <label><%= __('Edit') %></label> <input type="checkbox" id="canEditOutcome" name="canEditOutcome">
+                  <label>             </label>
+                  <label><%= __('Delete') %></label> <input type="checkbox" id="canDeleteOutcome" name="canDeleteOutcome">
+                </div>
+                <label for="role"><b><%= __('Roles') %></b></label>
+                <div id="role">
+                  <label><%= __('View') %></label> <input type="checkbox" id="canViewRole" name="canViewRole">
+                  <label>             </label>
+                  <label><%= __('Add') %></label> <input type="checkbox" id="canAddRole" name="canAddRole">
+                  <label>             </label>
+                  <label><%= __('Edit') %></label> <input type="checkbox" id="canEditRole" name="canEditRole">
+                  <label>             </label>
+                  <label><%= __('Delete') %></label> <input type="checkbox" id="canDeleteRole" name="canDeleteRole">
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary"><%= __('Submit') %></button>
+            </form>
+
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>

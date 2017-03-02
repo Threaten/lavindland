@@ -73,9 +73,7 @@ function updateText(type) {
                   <label for="name"><%= __('Role') %></label>
                   <select class="form-control" data-style="btn-info" disabled id="role" value="<%= user.role %>" name="role" onchange="updateText('role')">
                     <optgroup label="------------------">
-                      <option name="pro" value="Administrator">Administrator</option>
-                      <option name="pro" value="Sales Administrator">Sales Administrator</option>
-                      <option name="pro" value="Sales">Sales</option>
+                      <option name="pro" value="Administrator"><%= user.role.role %></option>
 
                     </optgroup>
                   </select>

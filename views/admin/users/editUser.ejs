@@ -73,9 +73,13 @@ function updateText(type) {
                   <label for="name"><%= __('Role') %></label>
                   <select class="form-control" data-style="btn-info" id="role" value="<%= user.role %>" name="role" onchange="updateText('role')">
                     <optgroup label="------------------">
-                      <option name="pro" value="Administrator">Administrator</option>
-                      <option name="pro" value="Sales Administrator">Sales Administrator</option>
-                      <option name="pro" value="Sales">Sales</option>
+                      <% for (var i = 0; i < roles.length; i++) { %>
+                        <% if (user.role.role == roles[i].role) { %>
+                      <option name="pro" selected value="<%= roles[i].role %>"><%= roles[i].role %></option>
+                      <% } else { %>
+                        <option name="pro" value="<%= roles[i].role %>"><%= roles[i].role %></option>
+                        <% } %>
+                      <% } %>
 
                     </optgroup>
                   </select>

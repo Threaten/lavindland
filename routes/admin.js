@@ -9,7 +9,11 @@ var Product = require('../models/product');
 var Customer = require('../models/customer');
 var Income = require('../models/income');
 var Outcome = require('../models/outcome');
+var Role = require('../models/role');
 
+var permissions = [];
+var roleName;
+var isManager;
 
 function requireGroup(group) {
   return function(req, res, next) {
@@ -20,16 +24,43 @@ function requireGroup(group) {
   }
 }
 
-function requireRole(role) {
+function requireRole() {
   return function(req, res, next) {
-    if(req.user && req.user.role == role)
-    next();
-    else
-    res.sendStatus(403);
-  }
+    Role.findOne({ _id: req.user.role }, function (err, role) {
+      // var permissions = [];
+      // var roleName;
+      // var isManager;
+      for (var i =0; i < role.permission.length; i++) {
+       permissions.push(role.permission[i].name);
+    }
+
+    roleName = role.role;
+    isManager = role.isManager;
+    // console.log(permissions);
+    // console.log(roleName);
+    // console.log(isManager);
+  })
+    if(permissions.indexOf('/'+req.path.split('/')[1]) > -1) {
+      next();
+    } else {
+      res.sendStatus(403);
+    }
+}
 }
 
+// function test() {
+//   return function(req, res, next) {
+//   var a = ['/addProduct', '/editProduct'];
+//     if(a.indexOf('/'+req.path.split('/')[1]) > -1) {
+//       next();
+//     } else {
+//       res.sendStatus(403);
+//     }
+//   }
+// }
+
 router.get('/', requireGroup("staff"), function (req, res, cb) {
+
   res.setLocale(req.cookies.i18n);
   res.render('admin/dashboard/index', {
     i18n: res
@@ -38,40 +69,55 @@ router.get('/', requireGroup("staff"), function (req, res, cb) {
 
 router.get('/en', function (req, res) {
   res.cookie('i18n', 'en');
-  return res.redirect(req.get('referer'));
+  //return res.redirect(req.get('referer'));
+  return res.redirect('/admin/');
 });
 
 router.get('/vi', function (req, res) {
   res.cookie('i18n', 'vi');
-  return res.redirect(req.get('referer'));
+  //return res.redirect(req.get('referer'));
+  return res.redirect('/admin/');
 });
 
-router.get('/userList', requireGroup("staff"), function (req, res, cb) {
+router.get('/userList',requireRole(), requireGroup("staff"), function (req, res, cb) {
   User
   .find({ 'deleted': false })
+  .populate('role')
   .exec(function(err, users) {
     if (err) return cb(err);
+    console.log(isManager);
     res.render('admin/users/userList', {
+      roleName: roleName,
       users: users
     });
   });
 });
 
-router.get('/addUser',requireRole("Administrator"), requireGroup('staff'), function(req, res, cb) {
-  res.render('admin/users/addUser', {error: req.flash('error'), msg: req.flash('OK')});
+router.get('/addUser',requireRole(), requireGroup('staff'), function(req, res, cb) {
+  Role
+  .find()
+  .exec(function (err, roles) {
+    res.render('admin/users/addUser', {roles: roles, error: req.flash('error'), msg: req.flash('OK')});
+  })
 });
 
-router.post('/addUser', requireRole("Administrator"), requireGroup('staff'), function(req, res, cb) {
+router.post('/addUser', requireRole(), requireGroup('staff'), function(req, res, cb) {
   async.waterfall([
-    function(callback) {
+    function (result) {
+      Role.findOne({ role: req.body.role }, function (err, roles) {
+        if (err) return cb(err);
+        result(null, roles);
+      });
+    },
+    function(roles, result) {
 
       var user = new User();
+      user.role = roles._id;
       user.name = req.body.name;
       user.email = req.body.email;
       user.address = req.body.address;
       user.phone = req.body.phone;
       user.group = "staff";
-      user.role = req.body.role;
       user.password = req.body.password;
       user.isVerified = true;
       var seed = crypto.randomBytes(20);
@@ -97,57 +143,66 @@ router.post('/addUser', requireRole("Administrator"), requireGroup('staff'), fun
 
 
 
-    router.get('/editUser/:id', requireRole("Administrator"), requireGroup('staff'), function(req, res, cb) {
-      User.findOne({ _id: req.params.id }, function(err, user) {
+    router.get('/editUser/:id', requireRole(), requireGroup('staff'), function(req, res, cb) {
+      Role
+      .find()
+      .exec(function (err, roles) {
+      User
+      .findOne({ _id: req.params.id })
+      .populate('role')
+      .exec(function(err, user) {
         res.render('admin/users/editUser',
         {
+          roles: roles,
           user: user,
           error: req.flash('error'),
           msg: req.flash('OK')
         });
       });
-
+    });
     });
 
-    router.post('/editUser/:id', requireRole("Administrator"), requireGroup('staff'), function(req, res ,cb) {
-      async.waterfall([
-        function(callback) {
-          User.findOne({ _id: req.params.id }, function(err, user) {
-          user.name = req.body.name;
-          user.email = req.body.email;
-          user.address = req.body.address;
-          user.phone = req.body.phone;
-          user.group = "staff";
-          user.role = req.body.role;
-          user.password = req.body.password;
-          user.isVerified = true;
-          var seed = crypto.randomBytes(20);
-          var authToken = crypto.createHash('sha1').update(seed + req.body.email).digest('hex');
-          user.authToken = authToken;
-          user.updatedBy = req.user.email;
+    router.post('/editUser/:id', requireRole(), requireGroup('staff'), function(req, res ,cb) {
+            async.waterfall([
+              function (result) {
+                Role.findOne({ role: req.body.role }, function (err, roles) {
+                  if (err) return cb(err);
+                  result(null, roles);
+                });
+              },
+              function(roles, result) {
+                User.findOne({ _id: req.params.id }, function(err, user) {
+                user.role = roles._id;
+                user.name = req.body.name;
+                user.email = req.body.email;
+                user.address = req.body.address;
+                user.phone = req.body.phone;
+                user.group = "staff";
+                user.password = req.body.password;
+                user.isVerified = true;
+                var seed = crypto.randomBytes(20);
+                var authToken = crypto.createHash('sha1').update(seed + req.body.email).digest('hex');
+                user.authToken = authToken;
 
-          User.findOne({ _id: req.body._id}, function(err, userExisted) {
-            if (userExisted) {
-              req.flash('error', "Account with the provided Email is existed");
-              //console.log(req.body.email + " is existed");
-              return res.redirect(req.get('referer'));
-            } else {
-              user.save(function(err, user) {
-                if (err) {
-                  req.flash('error', "Account with the provided Email is existed");
-                  return cb(err);
-                }
-            return res.redirect('/admin/userList');
-        });
-      };
-      });
-    });
-      }
-      ]);
-      });
+                user.save(function(err) {
+                  if (err) {
+                    req.flash('error', "Account with the provided Email is existed.");
+                    return res.redirect(req.get('referer'));
 
-    router.get('/deleteUser/:id', requireRole("Administrator"), requireGroup('staff'), function(req, res, cb) {
-      User.findOne({ _id: req.params.id }, function(err, user) {
+                  }
+                  req.flash('OK', "Added");
+                  return res.redirect('/admin/userList');
+                });
+              });
+            }
+            ]);
+            });
+
+    router.get('/deleteUser/:id', requireRole(), requireGroup('staff'), function(req, res, cb) {
+      User
+      .findOne({ _id: req.params.id })
+      .populate('role')
+      .exec(function(err, user) {
         res.render('admin/users/deleteUser',
         {
           user: user,
@@ -158,7 +213,7 @@ router.post('/addUser', requireRole("Administrator"), requireGroup('staff'), fun
 
     });
 
-    router.post('/deleteUser/:id', requireRole("Administrator"), requireGroup('staff'), function(req, res ,cb) {
+    router.post('/deleteUser/:id', requireRole(), requireGroup('staff'), function(req, res ,cb) {
       async.waterfall([
         function(callback) {
           User.findOne({ _id: req.params.id }, function(err, user) {
@@ -191,7 +246,7 @@ router.post('/addUser', requireRole("Administrator"), requireGroup('staff'), fun
 Products
 */
 
-router.get('/productList', requireGroup('staff'), function (req, res) {
+router.get('/productList', requireRole(),requireGroup('staff'), function (req, res) {
   Product
     .find({ 'deleted': false})
     .populate('project')
@@ -204,7 +259,7 @@ router.get('/productList', requireGroup('staff'), function (req, res) {
     });
 })
 
-router.get('/addProduct/', requireRole("Administrator"), requireGroup('staff'), function(req, res, cb) {
+router.get('/addProduct/', requireRole(), requireGroup('staff'), function(req, res, cb) {
   Project
   .find({ 'deleted': false})
   .exec(function(err, project) {
@@ -217,7 +272,7 @@ router.get('/addProduct/', requireRole("Administrator"), requireGroup('staff'), 
   });
 });
 
-router.post('/addProduct/', requireRole("Administrator"), requireGroup('staff'), function(req, res, cb) {
+router.post('/addProduct/',  requireRole(), requireGroup('staff'), function(req, res, cb) {
       async.waterfall([
 
         function(result) {
@@ -240,6 +295,8 @@ router.post('/addProduct/', requireRole("Administrator"), requireGroup('staff'),
           product.save(function(err) {
             if (err) {
               req.flash('error', "Error");
+              return res.redirect(req.get('referer'));
+
             }
             req.flash('OK', "Added");
             return res.redirect('/admin/addProduct');
@@ -249,7 +306,7 @@ router.post('/addProduct/', requireRole("Administrator"), requireGroup('staff'),
 });
 
 
-router.get('/editProduct/:id', requireRole("Administrator"), requireGroup('staff'), function(req, res, cb) {
+router.get('/editProduct/:id', requireRole(), requireGroup('staff'), function(req, res, cb) {
   Project
   .find({ 'deleted': false})
   .exec(function(err, projects) {
@@ -268,7 +325,7 @@ router.get('/editProduct/:id', requireRole("Administrator"), requireGroup('staff
 });
 });
 
-router.post('/editProduct/:id', requireRole("Administrator"), requireGroup('staff'), function(req, res ,cb) {
+router.post('/editProduct/:id', requireRole(), requireGroup('staff'), function(req, res ,cb) {
   async.waterfall([
 
     function(result) {
@@ -291,6 +348,8 @@ router.post('/editProduct/:id', requireRole("Administrator"), requireGroup('staf
       product.save(function(err) {
         if (err) {
           req.flash('error', "Error");
+          return res.redirect(req.get('referer'));
+
         }
         req.flash('OK', "Added");
         return res.redirect('/admin/productList');
@@ -300,7 +359,7 @@ router.post('/editProduct/:id', requireRole("Administrator"), requireGroup('staf
   ]);
 });
 
-router.get('/deleteProduct/:id', requireRole("Administrator"), requireGroup('staff'), function(req, res, cb) {
+router.get('/deleteProduct/:id', requireRole(), requireGroup('staff'), function(req, res, cb) {
   Project
   .find({ 'deleted': false})
   .exec(function(err, projects) {
@@ -319,7 +378,7 @@ router.get('/deleteProduct/:id', requireRole("Administrator"), requireGroup('sta
   });
   });
 
-router.post('/deleteProduct/:id', requireRole("Administrator"), requireGroup('staff'), function(req, res ,cb) {
+router.post('/deleteProduct/:id', requireRole(), requireGroup('staff'), function(req, res ,cb) {
   async.waterfall([
 
     function(result) {
@@ -336,6 +395,8 @@ router.post('/deleteProduct/:id', requireRole("Administrator"), requireGroup('st
       product.save(function(err) {
         if (err) {
           req.flash('error', "Error");
+          return res.redirect(req.get('referer'));
+
         }
         req.flash('OK', "Added");
         return res.redirect('/admin/productList');
@@ -351,7 +412,7 @@ router.post('/deleteProduct/:id', requireRole("Administrator"), requireGroup('st
 Project
 */
 
-router.get('/projectList', requireGroup('staff'), function (req, res, cb) {
+router.get('/projectList',requireRole(), requireGroup('staff'), function (req, res, cb) {
   Project
   .find({ 'deleted': false})
   .exec(function(err, projects) {
@@ -362,11 +423,11 @@ router.get('/projectList', requireGroup('staff'), function (req, res, cb) {
   });
 });
 
-router.get('/addProject',requireRole("Administrator"), requireGroup('staff'), function(req, res, cb) {
+router.get('/addProject',requireRole(), requireGroup('staff'), function(req, res, cb) {
   res.render('admin/projects/addProject', {error: req.flash('error'), msg: req.flash('OK')});
 });
 
-router.post('/addProject', requireRole("Administrator"), requireGroup('staff'), function(req, res, cb) {
+router.post('/addProject', requireRole(), requireGroup('staff'), function(req, res, cb) {
   var project = new Project();
   project.name = req.body.name;
   project.address = req.body.address;
@@ -384,7 +445,7 @@ router.post('/addProject', requireRole("Administrator"), requireGroup('staff'), 
   });
 });
 
-router.get('/editProject/:id', requireRole("Administrator"), requireGroup('staff'), function(req, res, cb) {
+router.get('/editProject/:id', requireRole(), requireGroup('staff'), function(req, res, cb) {
   Project.findOne({ _id: req.params.id }, function(err, project) {
     res.render('admin/projects/editProject',
     {
@@ -396,7 +457,7 @@ router.get('/editProject/:id', requireRole("Administrator"), requireGroup('staff
 
 });
 
-router.post('/editProject/:id', requireRole("Administrator"), requireGroup('staff'), function(req, res ,cb) {
+router.post('/editProject/:id', requireRole(), requireGroup('staff'), function(req, res ,cb) {
   Project.findOne({ _id: req.params.id }, function(err, project) {
     if (err) return cb(err);
     if (req.body.name) project.name = req.body.name;
@@ -414,7 +475,7 @@ router.post('/editProject/:id', requireRole("Administrator"), requireGroup('staf
   });
 });
 
-router.get('/deleteProject/:id', requireRole("Administrator"), requireGroup('staff'), function(req, res, cb) {
+router.get('/deleteProject/:id', requireRole(), requireGroup('staff'), function(req, res, cb) {
   Project.findOne({ _id: req.params.id }, function(err, project) {
     res.render('admin/projects/deleteProject',
     {
@@ -426,7 +487,7 @@ router.get('/deleteProject/:id', requireRole("Administrator"), requireGroup('sta
 
 });
 
-router.post('/deleteProject/:id', requireRole("Administrator"), requireGroup('staff'), function(req, res ,cb) {
+router.post('/deleteProject/:id', requireRole(), requireGroup('staff'), function(req, res ,cb) {
   Project.findOne({ _id: req.params.id }, function(err, project) {
     if (err) return cb(err);
     Product.find({ project: req.params.id }, function (err, products) {
@@ -457,8 +518,8 @@ router.post('/deleteProject/:id', requireRole("Administrator"), requireGroup('st
 /*
 Customers
 */
-router.get('/customerList', requireGroup('staff'), function (req, res, cb) {
-  if (req.user.role == "Administrator" || req.user.role == "Sales Administrator") {
+router.get('/customerList', requireRole(),requireGroup('staff'), function (req, res, cb) {
+  if (isManager) {
     Customer
     .find({ 'deleted': false })
     .populate('addedBy')
@@ -468,7 +529,7 @@ router.get('/customerList', requireGroup('staff'), function (req, res, cb) {
         customers: customers
       });
     });
-  } else if (req.user.role == "Sales") {
+  } else {
     Customer
     .find({ addedBy: req.user._id})
     .populate('addedBy')
@@ -482,11 +543,11 @@ router.get('/customerList', requireGroup('staff'), function (req, res, cb) {
 
 });
 
-router.get('/addCustomer', requireGroup('staff'), function(req, res, cb) {
+router.get('/addCustomer',requireRole(), requireGroup('staff'), function(req, res, cb) {
   res.render('admin/customers/addCustomer', {error: req.flash('error'), msg: req.flash('OK')});
 });
 
-router.post('/addCustomer', requireGroup('staff'), function(req, res, cb) {
+router.post('/addCustomer', requireRole(),requireGroup('staff'), function(req, res, cb) {
   var customer = new Customer();
   customer.name = req.body.name;
   customer.address = req.body.address;
@@ -511,7 +572,7 @@ router.post('/addCustomer', requireGroup('staff'), function(req, res, cb) {
 });
 
 
-router.get('/editCustomer/:id', requireRole("Administrator"), requireGroup('staff'), function(req, res, cb) {
+router.get('/editCustomer/:id', requireRole(), requireGroup('staff'), function(req, res, cb) {
   Customer.findOne({ _id: req.params.id }, function(err, customer) {
     res.render('admin/customers/editCustomer',
     {
@@ -523,7 +584,7 @@ router.get('/editCustomer/:id', requireRole("Administrator"), requireGroup('staf
 
 });
 
-router.post('/editCustomer/:id', requireRole("Administrator"), requireGroup('staff'), function(req, res ,cb) {
+router.post('/editCustomer/:id', requireRole(), requireGroup('staff'), function(req, res ,cb) {
   Customer.findOne({ _id: req.params.id }, function(err, customer) {
     if (err) return cb(err);
     customer.name = req.body.name;
@@ -548,7 +609,7 @@ router.post('/editCustomer/:id', requireRole("Administrator"), requireGroup('sta
   });
 });
 
-router.get('/deleteCustomer/:id', requireRole("Administrator"), requireGroup('staff'), function(req, res, cb) {
+router.get('/deleteCustomer/:id', requireRole(), requireGroup('staff'), function(req, res, cb) {
   Customer.findOne({ _id: req.params.id }, function(err, customer) {
     res.render('admin/customers/deleteCustomer',
     {
@@ -560,7 +621,7 @@ router.get('/deleteCustomer/:id', requireRole("Administrator"), requireGroup('st
 
 });
 
-router.post('/deleteCustomer/:id', requireRole("Administrator"), requireGroup('staff'), function(req, res ,cb) {
+router.post('/deleteCustomer/:id', requireRole(), requireGroup('staff'), function(req, res ,cb) {
   Customer.findOne({ _id: req.params.id }, function(err, customer) {
     if (err) return cb(err);
         customer.deleted = true;
@@ -610,7 +671,7 @@ Income
 //     });
 // });
 
-router.get('/incomeList', requireRole("Administrator"), requireGroup('staff'), function (req, res, cb) {
+router.get('/incomeList', requireRole(), requireGroup('staff'), function (req, res, cb) {
 
 
     var incomeModel = mongoose.model('Income');
@@ -627,7 +688,7 @@ router.get('/incomeList', requireRole("Administrator"), requireGroup('staff'), f
     });
 
 
-router.get('/outcomeList', requireRole("Administrator"), requireGroup('staff'), function (req, res, cb) {
+router.get('/outcomeList', requireRole(), requireGroup('staff'), function (req, res, cb) {
 
 
     var outcomeModel = mongoose.model('Outcome');
@@ -645,11 +706,11 @@ router.get('/outcomeList', requireRole("Administrator"), requireGroup('staff'), 
 
 
 
-router.get('/addIncome', requireRole("Administrator"), requireGroup('staff'), function(req, res, cb) {
+router.get('/addIncome', requireRole(), requireGroup('staff'), function(req, res, cb) {
   res.render('admin/incomeoutcome/addIncome', {error: req.flash('error'), msg: req.flash('OK')});
 });
 
-router.post('/addIncome', requireRole("Administrator"), requireGroup('staff'), function(req, res, cb) {
+router.post('/addIncome', requireRole(), requireGroup('staff'), function(req, res, cb) {
   var income = new Income();
   income.issuedBy = req.user._id;
   income.amount = req.body.amount;
@@ -665,7 +726,7 @@ router.post('/addIncome', requireRole("Administrator"), requireGroup('staff'), f
   });
 });
 
-router.get('/editIncome/:id', requireRole("Administrator"), requireGroup('staff'), function(req, res, cb) {
+router.get('/editIncome/:id', requireRole(), requireGroup('staff'), function(req, res, cb) {
   Income.findOne({ _id: req.params.id }, function(err, income) {
     res.render('admin/incomeoutcome/editIncome',
     {
@@ -677,7 +738,7 @@ router.get('/editIncome/:id', requireRole("Administrator"), requireGroup('staff'
 
 });
 
-router.post('/editIncome/:id', requireRole("Administrator"), requireGroup('staff'), function(req, res ,cb) {
+router.post('/editIncome/:id', requireRole(), requireGroup('staff'), function(req, res ,cb) {
   Income.findOne({ _id: req.params.id }, function(err, income) {
     if (err) return cb(err);
     income.amount = req.body.amount;
@@ -694,7 +755,7 @@ router.post('/editIncome/:id', requireRole("Administrator"), requireGroup('staff
   });
 });
 
-router.get('/deleteIncome/:id', requireRole("Administrator"), requireGroup('staff'), function(req, res, cb) {
+router.get('/deleteIncome/:id', requireRole(), requireGroup('staff'), function(req, res, cb) {
   Income.findOne({ _id: req.params.id }, function(err, income) {
     res.render('admin/incomeoutcome/deleteIncome',
     {
@@ -706,7 +767,7 @@ router.get('/deleteIncome/:id', requireRole("Administrator"), requireGroup('staf
 
 });
 
-router.post('/deleteIncome/:id', requireRole("Administrator"), requireGroup('staff'), function(req, res ,cb) {
+router.post('/deleteIncome/:id', requireRole(), requireGroup('staff'), function(req, res ,cb) {
   Income.findOne({ _id: req.params.id }, function(err, income) {
     if (err) return cb(err);
     income.deleted = true;
@@ -729,11 +790,11 @@ router.post('/deleteIncome/:id', requireRole("Administrator"), requireGroup('sta
 Outcome
 */
 
-router.get('/addOutcome', requireRole("Administrator"), requireGroup('staff'), function(req, res, cb) {
+router.get('/addOutcome', requireRole(), requireGroup('staff'), function(req, res, cb) {
   res.render('admin/incomeoutcome/addOutcome', {error: req.flash('error'), msg: req.flash('OK')});
 });
 
-router.post('/addOutcome', requireRole("Administrator"), requireGroup('staff'), function(req, res, cb) {
+router.post('/addOutcome', requireRole(), requireGroup('staff'), function(req, res, cb) {
   var outcome = new Outcome();
   outcome.issuedBy = req.user._id;
   outcome.amount = req.body.amount;
@@ -749,7 +810,7 @@ router.post('/addOutcome', requireRole("Administrator"), requireGroup('staff'), 
   });
 });
 
-router.get('/editOutcome/:id', requireRole("Administrator"), requireGroup('staff'), function(req, res, cb) {
+router.get('/editOutcome/:id', requireRole(), requireGroup('staff'), function(req, res, cb) {
   Outcome.findOne({ _id: req.params.id }, function(err, outcome) {
     res.render('admin/incomeoutcome/editOutcome',
     {
@@ -761,7 +822,7 @@ router.get('/editOutcome/:id', requireRole("Administrator"), requireGroup('staff
 
 });
 
-router.post('/editOutcome/:id', requireRole("Administrator"), requireGroup('staff'), function(req, res ,cb) {
+router.post('/editOutcome/:id', requireRole(), requireGroup('staff'), function(req, res ,cb) {
   Outcome.findOne({ _id: req.params.id }, function(err, outcome) {
     if (err) return cb(err);
     outcome.amount = req.body.amount;
@@ -778,7 +839,7 @@ router.post('/editOutcome/:id', requireRole("Administrator"), requireGroup('staf
   });
 });
 
-router.get('/deleteOutcome/:id', requireRole("Administrator"), requireGroup('staff'), function(req, res, cb) {
+router.get('/deleteOutcome/:id', requireRole(), requireGroup('staff'), function(req, res, cb) {
   Outcome.findOne({ _id: req.params.id }, function(err, outcome) {
     res.render('admin/incomeoutcome/deleteOutcome',
     {
@@ -790,7 +851,7 @@ router.get('/deleteOutcome/:id', requireRole("Administrator"), requireGroup('sta
 
 });
 
-router.post('/deleteOutcome/:id', requireRole("Administrator"), requireGroup('staff'), function(req, res ,cb) {
+router.post('/deleteOutcome/:id', requireRole(), requireGroup('staff'), function(req, res ,cb) {
   Outcome.findOne({ _id: req.params.id }, function(err, outcome) {
     if (err) return cb(err);
     outcome.deleted = true;
@@ -810,7 +871,7 @@ router.post('/deleteOutcome/:id', requireRole("Administrator"), requireGroup('st
 Profit
 */
 
-router.get('/profit', requireRole("Administrator"), requireGroup('staff'), function (req, res, cb) {
+router.get('/profit', requireRole(), requireGroup('staff'), function (req, res, cb) {
   var totalIncome;
   var totalOutcome;
   var incomeTransaction;
@@ -837,7 +898,7 @@ router.get('/profit', requireRole("Administrator"), requireGroup('staff'), funct
   });
 });
 
-router.post('/profit', requireRole("Administrator"), requireGroup('staff'), function (req, res, cb) {
+router.post('/profit', requireRole(), requireGroup('staff'), function (req, res, cb) {
   var totalIncome;
   var totalOutcome;
   var incomeTransaction;
@@ -925,6 +986,347 @@ router.post('/profit', requireRole("Administrator"), requireGroup('staff'), func
 )
 
 })
+
+
+
+/*
+ROLES
+*/
+
+router.get('/roleList', requireRole(), requireGroup('staff'), function (req, res, cb) {
+  Role
+  .find()
+  .exec(function (err, roles) {
+    res.render('admin/roles/roleList', {
+      roles: roles
+            });
+  })
+});
+
+router.get('/addRole',requireRole(), requireGroup('staff'), function (req, res, cb) {
+  res.render('admin/roles/addRole', {error: req.flash('error'), msg: req.flash('OK')});
+});
+
+router.post('/addRole', requireRole(), requireGroup('staff'), function (req, res, cb) {
+  var name = req.body.name;
+  var permission = [];
+  async.waterfall([
+    function(result) {
+  var role = new Role();
+
+
+  if (req.body.canViewUser) {
+    permission.push('/userList');
+  }
+  if (req.body.canAddUser) {
+    permission.push('/addUser');
+  }
+  if (req.body.canEditUser) {
+    permission.push('/editUser');
+  }
+  if (req.body.canDeleteUser) {
+    permission.push('/deleteUser');
+  }
+  /*
+  */
+  if (req.body.canViewCustomer) {
+    permission.push('/customerList');
+  }
+  if (req.body.canAddCustomer) {
+    permission.push('/addCustomer');
+  }
+  if (req.body.canEditCustomer) {
+    permission.push('/editCustomer');
+  }
+  if (req.body.canDeleteCustomer) {
+    permission.push('/deleteCustomer');
+  }
+  /*
+  */
+  if (req.body.canViewProject) {
+    permission.push('/projectList');
+  }
+  if (req.body.canAddProject) {
+    permission.push('/addProject');
+  }
+  if (req.body.canEditProject) {
+    permission.push('/editProject');
+  }
+  if (req.body.canDeleteProject) {
+    permission.push('/deleteProject');
+  }
+  /*
+  */
+  if (req.body.canViewProduct) {
+    permission.push('/productList');
+  }
+  if (req.body.canAddProduct) {
+    permission.push('/addProduct');
+  }
+  if (req.body.canEditProduct) {
+    permission.push('/editProduct');
+  }
+  if (req.body.canDeleteProduct) {
+    permission.push('/deleteProduct');
+  }
+  if (req.body.canSellProduct) {
+    permission.push('/sellProduct');
+  }
+  if (req.body.canRentProduct) {
+    permission.push('/rentProduct');
+  }
+  /*
+  */
+  if (req.body.canViewIncome) {
+    permission.push('/incomeList');
+  }
+  if (req.body.canAddIncome) {
+    permission.push('/addIncome');
+  }
+  if (req.body.canEditIncome) {
+    permission.push('/editIncome');
+  }
+  if (req.body.canDeleteIncome) {
+    permission.push('/deleteIncome');
+  }
+  /*
+  */
+  if (req.body.canViewOutcome) {
+    permission.push('/outcomeList');
+  }
+  if (req.body.canAddOutcome) {
+    permission.push('/addOutcome');
+  }
+  if (req.body.canEditOutcome) {
+    permission.push('/editOutcome');
+  }
+  if (req.body.canDeleteOutcome) {
+    permission.push('/deleteOutcome');
+  }
+  /*
+  */
+  if (req.body.canViewRole) {
+    permission.push('/roleList');
+  }
+  if (req.body.canAddRole) {
+    permission.push('/addRole');
+  }
+  if (req.body.canEditRole) {
+    permission.push('/editRole');
+  }
+  if (req.body.canDeleteRole) {
+    permission.push('/deleteRole');
+  }
+  if (req.body.isManager) {
+    role.isManager = true;
+  } else {
+    role.isManager = false;
+  }
+  role.role = name;
+ //  role.permission.push({
+ //  name: {$each : permission }
+ // });
+  role.save(function (err) {
+    if (err) return cb(err);
+    result(null, role);
+  });
+}, function (role, result) {
+    Role.findOne({ role : name}, function (err, role1) {
+      for (var i = 0; i < permission.length; i++) {
+        role1.permission.push({
+          name: permission[i]
+        });
+    }
+    role1.save(function (err) {
+      if (err) return cb(err);
+      res.redirect('/admin/roleList')
+    })
+    })
+}
+]);
+});
+
+router.get('/editRole/:id', requireRole(), requireGroup('staff'), function(req, res, cb) {
+  var permissions1 = [];
+  Role.findOne({ _id: req.params.id }, function(err, role) {
+    for (var i =0; i < role.permission.length; i++) {
+     permissions1.push(role.permission[i].name);
+  }
+    res.render('admin/roles/editRole',
+    {
+      permissions1: permissions1,
+      role: role,
+      error: req.flash('error'),
+      msg: req.flash('OK')
+    });
+  });
+
+});
+
+router.post('/editRole/:id', requireRole(), requireGroup('staff'), function (req, res, cb) {
+  var name = req.body.name;
+  var permission = [];
+  async.waterfall([
+    function(result) {
+  if (req.body.canViewUser) {
+    permission.push('/userList');
+  }
+  if (req.body.canAddUser) {
+    permission.push('/addUser');
+  }
+  if (req.body.canEditUser) {
+    permission.push('/editUser');
+  }
+  if (req.body.canDeleteUser) {
+    permission.push('/deleteUser');
+  }
+  /*
+  */
+  if (req.body.canViewCustomer) {
+    permission.push('/customerList');
+  }
+  if (req.body.canAddCustomer) {
+    permission.push('/addCustomer');
+  }
+  if (req.body.canEditCustomer) {
+    permission.push('/editCustomer');
+  }
+  if (req.body.canDeleteCustomer) {
+    permission.push('/deleteCustomer');
+  }
+  /*
+  */
+  if (req.body.canViewProject) {
+    permission.push('/projectList');
+  }
+  if (req.body.canAddProject) {
+    permission.push('/addProject');
+  }
+  if (req.body.canEditProject) {
+    permission.push('/editProject');
+  }
+  if (req.body.canDeleteProject) {
+    permission.push('/deleteProject');
+  }
+  /*
+  */
+  if (req.body.canViewProduct) {
+    permission.push('/productList');
+  }
+  if (req.body.canAddProduct) {
+    permission.push('/addProduct');
+  }
+  if (req.body.canEditProduct) {
+    permission.push('/editProduct');
+  }
+  if (req.body.canDeleteProduct) {
+    permission.push('/deleteProduct');
+  }
+  if (req.body.canSellProduct) {
+    permission.push('/sellProduct');
+  }
+  if (req.body.canRentProduct) {
+    permission.push('/rentProduct');
+  }
+  /*
+  */
+  if (req.body.canViewIncome) {
+    permission.push('/incomeList');
+  }
+  if (req.body.canAddIncome) {
+    permission.push('/addIncome');
+  }
+  if (req.body.canEditIncome) {
+    permission.push('/editIncome');
+  }
+  if (req.body.canDeleteIncome) {
+    permission.push('/deleteIncome');
+  }
+  /*
+  */
+  if (req.body.canViewOutcome) {
+    permission.push('/outcomeList');
+  }
+  if (req.body.canAddOutcome) {
+    permission.push('/addOutcome');
+  }
+  if (req.body.canEditOutcome) {
+    permission.push('/editOutcome');
+  }
+  if (req.body.canDeleteOutcome) {
+    permission.push('/deleteOutcome');
+  }
+  /*
+  */
+  if (req.body.canViewRole) {
+    permission.push('/roleList');
+  }
+  if (req.body.canAddRole) {
+    permission.push('/addRole');
+  }
+  if (req.body.canEditRole) {
+    permission.push('/editRole');
+  }
+  if (req.body.canDeleteRole) {
+    permission.push('/deleteRole');
+  }
+  Role.findOne({ role : name}, function (err, role) {
+      role.permission = [];
+ //  role.permission.push({
+ //  name: {$each : permission }
+ // });
+  role.save(function (err) {
+    if (err) return cb(err);
+    result(null, role);
+  });
+})
+}, function (role, result) {
+    Role.findOne({ role : name}, function (err, role1) {
+      for (var i = 0; i < permission.length; i++) {
+        role1.permission.push({
+          name: permission[i]
+        });
+    }
+    role1.save(function (err) {
+      if (err) return cb(err);
+      res.redirect('/admin/roleList')
+    })
+    })
+}
+]);
+});
+
+router.get('/deleteRole/:id', requireRole(), requireGroup('staff'), function(req, res, cb) {
+  var permissions1 = [];
+  Role.findOne({ _id: req.params.id }, function(err, role) {
+    for (var i =0; i < role.permission.length; i++) {
+     permissions1.push(role.permission[i].name);
+  }
+    res.render('admin/roles/deleteRole',
+    {
+      permissions1: permissions1,
+      role: role,
+      error: req.flash('error'),
+      msg: req.flash('OK')
+    });
+  });
+
+});
+
+router.post('/deleteRole/:id',requireRole(), requireGroup('staff'), function(req, res ,cb) {
+  Role.findOne({ _id: req.params.id }, function(err, role) {
+    if (err) return cb(err);
+    role.remove(function(err) {
+      if (err) {
+        req.flash('error', 'Error');
+        return res.redirect(req.get('referer'));
+      }
+      req.flash('OK', "Role deleted");
+      return res.redirect('/admin/roleList');
+    });
+
+  });
+});
 
 
 module.exports = router;

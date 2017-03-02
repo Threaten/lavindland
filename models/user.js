@@ -14,7 +14,7 @@ var userSchema = mongoose.Schema({
   passwordResetExpires: {tyep: Date, default: ''},
   isVerified: {type: Boolean, default: false},
   authToken: {type: String, required: true, unique: true},
-  role: {type: String, default: 'user', required:true},
+  role: { type: mongoose.Schema.Types.ObjectId, ref: 'Role', default: '58b641ab5757a404aa579b99' },
   group: {type: String, default: 'user', required: true},
   updatedBy: {type: String, default: ''},
   deleted: {type: Boolean, default: false},

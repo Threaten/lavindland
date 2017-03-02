@@ -84,5 +84,16 @@
 	"Edit Income": "Thay đổi thu",
 	"Delete Income": "Xoá thu",
 	"Edit Outcome": "Thay đổi chi",
-	"Delete Outcome": "Xoá chi"
+	"Delete Outcome": "Xoá chi",
+	"Add Role": "Thêm vai trò",
+	"Role List": "Danh sách vai trò",
+	"View": "Xem",
+	"Add": "Thêm",
+	"Roles": "Vai trò",
+	"Sell": "Bán",
+	"Rent": "Thuê",
+	"Manager": "Quản lý?. (Quản lý có quyền xem toàn bộ khách hàng)",
+	"Roles List": "Roles List",
+	"Edit Role": "Edit Role",
+	"Delete Role": "Delete Role"
 }

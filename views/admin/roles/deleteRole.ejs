@@ -1,0 +1,66 @@
+<% layout('/admin/template') -%>
+<title>Delete Role</title>
+<div class="page-heading">
+    <h3>
+        <%= __('Delete Role') %>
+    </h3>
+    <ul class="breadcrumb">
+        <li>
+            <a href="/admin">Dashboard</a>
+        </li>
+        <li>
+            <a href="/admin/roleList"><%= __('Role List') %></a>
+        </li>
+        <li class="active"><%= __('Delete Role') %> </li>
+    </ul>
+</div>
+<div class="wrapper">
+<div class="row">
+  <div class="col-lg-12">
+    <section class="panel">
+      <header class="panel-heading">
+<%= __('Delete Role') %>
+      </header>
+      <div class="panel-body">
+        <% if (msg.length > 0) { %>
+          <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+
+            <%= msg %>
+
+            </div>
+            <% } %>
+            <% if (error.length > 0) { %>
+              <div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+
+                <%= error %>
+
+                </div>
+                <% } %>
+            <form role="form" method="post">
+              <div class="form-group">
+                <label for="name"><b><%= __('Name') %></b></label>
+                <input type="text" class="form-control" id="name" disabled value="<%= role.role %>" name="name" placeholder="Nguyen Van A,...">
+                <div>
+                <label for="isManager"><b><%= __('Manager') %></b></label><br/>
+                <% if (role.isManager) { %>
+                <label><%= __('Yes') %></label> <input type="checkbox" disabled checked id="isManager" name="isManager">
+                <% } else { %>
+                  <label><%= __('Yes') %></label> <input type="checkbox" disabled id="isManager" name="isManager">
+
+                  <% } %>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary"><%= __('Delete') %></button>
+            </form>
+
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>

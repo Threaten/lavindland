@@ -1,0 +1,260 @@
+<% layout('/admin/template') -%>
+<title>Edit Role</title>
+<div class="page-heading">
+    <h3>
+        <%= __('Edit Role') %>
+    </h3>
+    <ul class="breadcrumb">
+        <li>
+            <a href="/admin">Dashboard</a>
+        </li>
+        <li>
+            <a href="/admin/roleList"><%= __('Role List') %></a>
+        </li>
+        <li class="active"><%= __('Edit Role') %> </li>
+    </ul>
+</div>
+<div class="wrapper">
+<div class="row">
+  <div class="col-lg-12">
+    <section class="panel">
+      <header class="panel-heading">
+<%= __('Edit Role') %>
+      </header>
+      <div class="panel-body">
+        <% if (msg.length > 0) { %>
+          <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+
+            <%= msg %>
+
+            </div>
+            <% } %>
+            <% if (error.length > 0) { %>
+              <div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+
+                <%= error %>
+
+                </div>
+                <% } %>
+            <form role="form" method="post">
+              <div class="form-group">
+                <label for="name"><b><%= __('Name') %></b></label>
+                <input type="text" class="form-control" id="name" value="<%= role.role %>" name="name" placeholder="Nguyen Van A,...">
+                <div>
+                <label for="isManager"><b><%= __('Manager') %></b></label><br/>
+                <% if (role.isManager) { %>
+                <label><%= __('Yes') %></label> <input type="checkbox" checked id="isManager" name="isManager">
+                <% } else { %>
+                  <label><%= __('Yes') %></label> <input type="checkbox" id="isManager" name="isManager">
+
+                  <% } %>
+                </div>
+                <label for="user"><b><%= __('Users') %></b></label>
+                <div id="user">
+                  <% if(permissions1.indexOf('/userList') > -1) { %>
+                  <label><%= __('View') %></label> <input type="checkbox" checked id="canViewUser" name="canViewUser">
+                <% } else { %>
+                  <label><%= __('View') %></label> <input type="checkbox" id="canViewUser" name="canViewUser">
+                  <% } %>
+                  <label>             </label>
+                  <% if(permissions1.indexOf('/addUser') > -1) { %>
+                  <label><%= __('Add') %></label> <input type="checkbox" checked id="canAddUser" name="canAddUser">
+                  <% } else { %>
+                    <label><%= __('Add') %></label> <input type="checkbox" id="canAddUser" name="canAddUser">
+                  <% } %>
+                  <label>             </label>
+                  <% if(permissions1.indexOf('/editUser') > -1) { %>
+                  <label><%= __('Edit') %></label> <input type="checkbox" checked id="canEditUser" name="canEditUser">
+                  <% } else { %>
+                    <label><%= __('Edit') %></label> <input type="checkbox" id="canEditUser" name="canEditUser">
+                  <% } %>
+                  <label>             </label>
+                  <% if(permissions1.indexOf('/deleteUser') > -1) { %>
+                  <label><%= __('Delete') %></label> <input type="checkbox" checked id="canDeleteUser" name="canDeleteUser">
+                  <% } else { %>
+                    <label><%= __('Delete') %></label> <input type="checkbox" id="canDeleteUser" name="canDeleteUser">
+                  <% } %>
+                </div>
+                <label for="customer"><b><%= __('Customers') %></b></label>
+                <div id="customer">
+                  <% if(permissions1.indexOf('/customerList') > -1) { %>
+                  <label><%= __('View') %></label> <input type="checkbox" checked id="canViewCustomer" name="canViewCustomer">
+                  <% } else { %>
+                    <label><%= __('View') %></label> <input type="checkbox" id="canViewCustomer" name="canViewCustomer">
+                  <% } %>
+                  <label>             </label>
+                  <% if(permissions1.indexOf('/addCustomer') > -1) { %>
+                  <label><%= __('Add') %></label> <input type="checkbox" checked id="canAddCustomer" name="canAddCustomer">
+                  <% } else { %>
+                    <label><%= __('Add') %></label> <input type="checkbox" id="canAddCustomer" name="canAddCustomer">
+                    <% } %>
+                  <label>             </label>
+                  <% if(permissions1.indexOf('/editCustomer') > -1) { %>
+                  <label><%= __('Edit') %></label> <input type="checkbox" checked id="canEditCustomer" name="canEditCustomer">
+                  <% } else { %>
+                    <label><%= __('Edit') %></label> <input type="checkbox" id="canEditCustomer" name="canEditCustomer">
+                    <% } %>
+                  <label>             </label>
+                  <% if(permissions1.indexOf('/deleteCustomer') > -1) { %>
+                  <label><%= __('Delete') %></label> <input type="checkbox" checked id="canDeleteCustomer" name="canDeleteCustomer">
+                  <% } else { %>
+                    <label><%= __('Delete') %></label> <input type="checkbox" id="canDeleteCustomer" name="canDeleteCustomer">
+                    <% } %>
+                </div>
+                <label for="project"><b><%= __('Projects') %></b></label>
+                <div id="project">
+                  <% if(permissions1.indexOf('/projectList') > -1) { %>
+                  <label><%= __('View') %></label> <input type="checkbox" checked id="canViewProject" name="canViewProject">
+                  <% } else { %>
+                    <label><%= __('View') %></label> <input type="checkbox" id="canViewProject" name="canViewProject">
+                    <% } %>
+                  <label>             </label>
+                  <% if(permissions1.indexOf('/addProject') > -1) { %>
+                  <label><%= __('Add') %></label> <input type="checkbox" checked id="canAddProject" name="canAddProject">
+                  <% } else { %>
+                    <label><%= __('Add') %></label> <input type="checkbox" id="canAddProject" name="canAddProject">
+                    <% } %>
+                  <label>             </label>
+                  <% if(permissions1.indexOf('/editProject') > -1) { %>
+                  <label><%= __('Edit') %></label> <input type="checkbox" checked id="canEditProject" name="canEditProject">
+                  <% } else { %>
+                    <label><%= __('Edit') %></label> <input type="checkbox" id="canEditProject" name="canEditProject">
+                    <% } %>
+                  <label>             </label>
+                  <% if(permissions1.indexOf('/deleteProject') > -1) { %>
+                  <label><%= __('Delete') %></label> <input type="checkbox" checked id="canDeleteProject" name="canDeleteProject">
+                  <% } else { %>
+                    <label><%= __('Delete') %></label> <input type="checkbox" id="canDeleteProject" name="canDeleteProject">
+                    <% } %>
+                </div>
+                <label for="product"><b><%= __('Products') %></b></label>
+                <div id="product">
+                  <% if(permissions1.indexOf('/productList') > -1) { %>
+                  <label><%= __('View') %></label> <input type="checkbox" checked id="canViewProduct" name="canViewProduct">
+                  <% } else { %>
+                    <label><%= __('View') %></label> <input type="checkbox" id="canViewProduct" name="canViewProduct">
+                    <% } %>
+                  <label>             </label>
+                  <% if(permissions1.indexOf('/addProduct') > -1) { %>
+                  <label><%= __('Add') %></label> <input type="checkbox" checked id="canAddProduct" name="canAddProduct">
+                  <% } else { %>
+                    <label><%= __('Add') %></label> <input type="checkbox" id="canAddProduct" name="canAddProduct">
+                    <% } %>
+                  <label>             </label>
+                  <% if(permissions1.indexOf('/editProduct') > -1) { %>
+                  <label><%= __('Edit') %></label> <input type="checkbox" checked id="canEditProduct" name="canEditProduct">
+                  <% } else { %>
+                    <label><%= __('Edit') %></label> <input type="checkbox" id="canEditProduct" name="canEditProduct">
+                    <% } %>
+                  <label>             </label>
+                  <% if(permissions1.indexOf('/deleteProduct') > -1) { %>
+                  <label><%= __('Delete') %></label> <input type="checkbox" checked id="canDeleteProduct" name="canDeleteProduct">
+                  <% } else { %>
+                    <label><%= __('Delete') %></label> <input type="checkbox" id="canDeleteProduct" name="canDeleteProduct">
+                  <% } %>
+                  <label>             </label>
+                  <% if(permissions1.indexOf('/sellProduct') > -1) { %>
+                  <label><%= __('Sell') %></label> <input type="checkbox" checked id="canSellProduct" name="canSellProduct">
+                  <% } else { %>
+                    <label><%= __('Sell') %></label> <input type="checkbox" id="canSellProduct" name="canSellProduct">
+                  <% } %>
+                  <label>             </label>
+                  <% if(permissions1.indexOf('/rentProduct') > -1) { %>
+                  <label><%= __('Rent') %></label> <input type="checkbox" checked id="canRentProduct" name="canRentProduct">
+                  <% } else { %>
+                    <label><%= __('Rent') %></label> <input type="checkbox" id="canRentProduct" name="canRentProduct">
+                    <% } %>
+                </div>
+                <label for="income1"><b><%= __('Income') %></b></label>
+                <div id="income1">
+                  <% if(permissions1.indexOf('/incomeList') > -1) { %>
+                  <label><%= __('View') %></label> <input type="checkbox" checked id="canViewIncome" name="canViewIncome">
+                  <% } else { %>
+                    <label><%= __('View') %></label> <input type="checkbox" id="canViewIncome" name="canViewIncome">
+                  <% } %>
+                  <label>             </label>
+                  <% if(permissions1.indexOf('/addIncome') > -1) { %>
+                  <label><%= __('Add') %></label> <input type="checkbox" checked id="canAddIncome" name="canAddIncome">
+                  <% } else { %>
+                    <label><%= __('Add') %></label> <input type="checkbox" id="canAddIncome" name="canAddIncome">
+                    <% } %>
+                  <label>             </label>
+                  <% if(permissions1.indexOf('/editIncome') > -1) { %>
+                  <label><%= __('Edit') %></label> <input type="checkbox" checked id="canEditIncome" name="canEditIncome">
+                  <% } else { %>
+                    <label><%= __('Edit') %></label> <input type="checkbox" id="canEditIncome" name="canEditIncome">
+                    <% } %>
+                  <label>             </label>
+                  <% if(permissions1.indexOf('/deleteIncome') > -1) { %>
+                  <label><%= __('Delete') %></label> <input type="checkbox" checked id="canDeleteIncome" name="canDeleteIncome">
+                  <% } else { %>
+                    <label><%= __('Delete') %></label> <input type="checkbox" id="canDeleteIncome" name="canDeleteIncome">
+                  <% } %>
+                </div>
+                <label for="outcome"><b><%= __('Outcome') %></b></label>
+                <div id="outcome">
+                  <% if(permissions1.indexOf('/outcomeList') > -1) { %>
+                  <label><%= __('View') %></label> <input type="checkbox" checked id="canViewOutcome" name="canViewOutcome">
+                  <% } else { %>
+                    <label><%= __('View') %></label> <input type="checkbox" id="canViewOutcome" name="canViewOutcome">
+                  <% } %>
+                  <label>             </label>
+                  <% if(permissions1.indexOf('/addOutcome') > -1) { %>
+                  <label><%= __('Add') %></label> <input type="checkbox" checked id="canAddOutcome" name="canAddOutcome">
+                  <% } else { %>
+                    <label><%= __('Add') %></label> <input type="checkbox"  id="canAddOutcome" name="canAddOutcome">
+                    <% } %>
+                  <label>             </label>
+                  <% if(permissions1.indexOf('/editOutcome') > -1) { %>
+                  <label><%= __('Edit') %></label> <input type="checkbox" checked id="canEditOutcome" name="canEditOutcome">
+                  <% } else { %>
+                    <label><%= __('Edit') %></label> <input type="checkbox" id="canEditOutcome" name="canEditOutcome">
+                  <% } %>
+                  <label>             </label>
+                  <% if(permissions1.indexOf('/deleteOutcome') > -1) { %>
+                  <label><%= __('Delete') %></label> <input type="checkbox" checked id="canDeleteOutcome" name="canDeleteOutcome">
+                  <% } else { %>
+                    <label><%= __('Delete') %></label> <input type="checkbox" id="canDeleteOutcome" name="canDeleteOutcome">
+                    <% } %>
+                </div>
+                <label for="role"><b><%= __('Roles') %></b></label>
+                <div id="role">
+                  <% if(permissions1.indexOf('/roleList') > -1) { %>
+                  <label><%= __('View') %></label> <input type="checkbox" checked id="canViewRole" name="canViewRole">
+                  <% } else { %>
+                    <label><%= __('View') %></label> <input type="checkbox" id="canViewRole" name="canViewRole">
+                  <% } %>
+                  <label>             </label>
+                  <% if(permissions1.indexOf('/addRole') > -1) { %>
+                  <label><%= __('Add') %></label> <input type="checkbox" checked id="canAddRole" name="canAddRole">
+                  <% } else { %>
+                    <label><%= __('Add') %></label> <input type="checkbox" id="canAddRole" name="canAddRole">
+                    <% } %>
+                  <label>             </label>
+                  <% if(permissions1.indexOf('/editRole') > -1) { %>
+                  <label><%= __('Edit') %></label> <input type="checkbox" checked id="canEditRole" name="canEditRole">
+                  <% } else { %>
+                    <label><%= __('Edit') %></label> <input type="checkbox" id="canEditRole" name="canEditRole">
+                    <% } %>
+                  <label>             </label>
+                  <% if(permissions1.indexOf('/deleteRole') > -1) { %>
+                  <label><%= __('Delete') %></label> <input type="checkbox" checked id="canDeleteRole" name="canDeleteRole">
+                  <% } else { %>
+                    <label><%= __('Delete') %></label> <input type="checkbox" id="canDeleteRole" name="canDeleteRole">
+                    <% } %>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary"><%= __('Submit') %></button>
+            </form>
+
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
