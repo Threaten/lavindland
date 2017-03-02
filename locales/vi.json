@@ -93,7 +93,7 @@
 	"Sell": "Bán",
 	"Rent": "Thuê",
 	"Manager": "Quản lý?. (Quản lý có quyền xem toàn bộ khách hàng)",
-	"Roles List": "Roles List",
-	"Edit Role": "Edit Role",
-	"Delete Role": "Delete Role"
+	"Edit Role": "Thay đổi chức vụ",
+	"Delete Role": "Xoá chức vụ",
+	"Role List": "Danh sách chức vụ",
 }

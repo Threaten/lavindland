@@ -85,11 +85,14 @@
 	"Edit Outcome": "Edit Outcome",
 	"Delete Outcome": "Delete Outcome",
 	"Add Role": "Add Role",
-	"Role List": "Role List",
+	"Role List": "Roles List",
 	"View": "View",
 	"Add": "Add",
 	"Roles": "Roles",
 	"Sell": "Sell",
 	"Rent": "Rent",
-	"Manager": "Manager (Manager can see all Customers.)"
+	"Manager": "Manager (Manager can see all Customers.)",
+	"Edit Role": "Edit Role",
+	"Delete Role": "Delete Role",
+	"Roles List": "Roles List"
 }
