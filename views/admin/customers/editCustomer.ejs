@@ -53,7 +53,7 @@
                 <label for="email"><%= __('Email') %></label>
                 <input type="email" class="form-control" id="email" name="email" required value="<%= customer.email %>" placeholder="youremail@example.com">
                 <label for="dob"><%= __('Date of Birth') %></label>
-                <input type="date" class="form-control" id="dob" name="dob" required value="<%= customer.dob %>" placeholder="1/1/1990">
+                <input type="date" class="form-control" id="dob" name="dob" required value="<%= customer.dob.toISOString().slice(0,10) %>" placeholder="1/1/1990">
                 <label for="potential"><%= __('Potential') %></label>
                 <div id="potential">
                   <% if (customer.potential) { %>

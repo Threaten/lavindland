@@ -26,25 +26,34 @@ function requireGroup(group) {
 
 function requireRole() {
   return function(req, res, next) {
-    Role.findOne({ _id: req.user.role }, function (err, role) {
-      // var permissions = [];
-      // var roleName;
-      // var isManager;
-      for (var i =0; i < role.permission.length; i++) {
-       permissions.push(role.permission[i].name);
-    }
+    async.waterfall([
+      function (result) {
+        Role.findOne({ _id: req.user.role }, function (err, role) {
+          // var permissions = [];
+          // var roleName;
+          // var isManager;
+          for (var i =0; i < role.permission.length; i++) {
+           permissions.push(role.permission[i].name);
+        }
 
-    roleName = role.role;
-    isManager = role.isManager;
+        roleName = role.role;
+        isManager = role.isManager;
+        result(null, permissions);
+      })
+    },
+      function (permissions, result) {
+        console.log(permissions);
+        if(permissions.indexOf('/'+req.path.split('/')[1]) > -1) {
+          next();
+        } else {
+          res.sendStatus(403);
+        }
+      }
+    ])
+
     // console.log(permissions);
     // console.log(roleName);
     // console.log(isManager);
-  })
-    if(permissions.indexOf('/'+req.path.split('/')[1]) > -1) {
-      next();
-    } else {
-      res.sendStatus(403);
-    }
 }
 }
 
@@ -294,6 +303,7 @@ router.post('/addProduct/',  requireRole(), requireGroup('staff'), function(req,
 
           product.save(function(err) {
             if (err) {
+
               req.flash('error', "Error");
               return res.redirect(req.get('referer'));
 
@@ -559,10 +569,11 @@ router.post('/addCustomer', requireRole(),requireGroup('staff'), function(req, r
   } else {
     customer.potential = false;
   }
-  customer.addedBy = req.user.email;
+  customer.addedBy = req.user._id;
 
   customer.save(function(err) {
     if (err) {
+      console.log(err);
       req.flash('error', 'Error');
       return res.redirect('/admin/addCustomer');
     }
