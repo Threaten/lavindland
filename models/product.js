@@ -8,12 +8,18 @@ var productSchema = new schema({
   status: String,
   rooms: Number,
   area: String,
-  rentPrice: String,
-  sellPrice: String,
-  note: String,
+  rentPrice: Number,
+  sellPrice: Number,
+  staffCommissionRent: Number,
+  companyCommissionRent: Number,
+  staffCommissionSell: Number,
+  companyCommissionSell: Number,
+  note: {type: String, default: ''},
   updatedBy: {type: String, default: ''},
   deleted: {type: Boolean, default: false},
-  deletedBy: {type: String, default: ''}
+  deletedBy: {type: String, default: ''},
+  customer: { type: schema.Types.ObjectId, ref: 'Customer' },
+  deposit: Number
 }, {timestamps: true});
 
 module.exports = mongoose.model('Product', productSchema);

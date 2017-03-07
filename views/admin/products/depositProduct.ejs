@@ -1,5 +1,5 @@
 <% layout('/admin/template') -%>
-<title>Edit Product</title>
+<title>Deposit Product</title>
 <script type="text/javascript">
 
 function updateText(type) {
@@ -9,7 +9,7 @@ function updateText(type) {
 </script>
 <div class="page-heading">
   <h3>
-    <%= __('Edit Product') %>
+    <%= __('Deposit Product') %>
   </h3>
   <ul class="breadcrumb">
     <li>
@@ -18,7 +18,7 @@ function updateText(type) {
     <li>
       <a href="/admin/productList"><%= __('Products List') %></a>
     </li>
-    <li class="active"> <%= __('Edit Product') %> </li>
+    <li class="active"> <%= __('Deposit Product') %> </li>
   </ul>
 </div>
 <div class="wrapper">
@@ -26,7 +26,7 @@ function updateText(type) {
     <div class="col-lg-12">
       <section class="panel">
         <header class="panel-heading">
-          <%= __('Edit Product') %>
+          <%= __('Deposit Product') %>
         </header>
         <div class="panel-body">
           <% if (msg.length > 0) { %>
@@ -51,8 +51,25 @@ function updateText(type) {
               <% } %>
               <form method="post">
                 <div class="form-group">
-                  <label for="name"><%= __('Project') %></label>
-                  <select class="form-control" data-style="btn-info"  id="name" name="name" onchange="updateText('name')">
+                  <label for="name"><%= __('Customers') %></label>
+                  <select class="form-control" data-style="btn-info" id="cus" name="cus" onchange="updateText('name')">
+                    <optgroup label="------------------">
+                      <% var select = 'a' %>
+                      <% for (var i = 0; i < customers.length; i++) { %>
+
+                        <option name="cus1" value="<%= customers[i]._id %>"><%= customers[i].name %> - <%= customers[i].phone %></option>
+
+                      <% } %>
+                    </optgroup>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="depositPrice"><%= __('Deposit Price') %></label>
+                  <input type="number" class="form-control" id="depositPrice" name="depositPrice" min="50000000" placeholder="" required="true">
+                </div>
+                <div class="form-group">
+                  <label for="code"><%= __('Project') %></label>
+                  <select class="form-control" data-style="btn-info" disabled id="name" name="name" onchange="updateText('name')">
                     <optgroup label="------------------">
                       <% var select = 'a' %>
                       <% for (var i = 0; i < projects.length; i++) { %>
@@ -67,42 +84,26 @@ function updateText(type) {
                 </div>
                 <div class="form-group">
                   <label for="code"><%= __('Apt. Code') %></label>
-                  <input type="text" class="form-control" id="code" name="code" value="<%= product.code %>" placeholder="C03.12-09, P05.19-5,..." required="true">
+                  <input type="text" class="form-control" id="code" name="code" disabled value="<%= product.code %>" placeholder="C03.12-09, P05.19-5,..." required="true">
                 </div>
                 <div class="form-group">
                   <label for="rooms"><%= __('Rooms') %></label>
-                  <input type="number" class="form-control" id="rooms" name="rooms" value="<%= product.rooms %>" placeholder="1, 2, 3, 4,..." required="true" step="0.01">
+                  <input type="number" class="form-control" id="rooms" name="rooms" disabled value="<%= product.rooms %>" placeholder="1, 2, 3, 4,..." required="true" step="0.01">
                 </div>
                 <div class="form-group">
                   <label for="area"><%= __('Area') %> (m<sup>2</sup>):</label>
-                  <input type="number" class="form-control" id="area" name="area" value="<%= product.area %>" placeholder="100, 105.5, 89.7,..." step="0.01" required="true">
+                  <input type="number" class="form-control" id="area" name="area" disabled value="<%= product.area %>" placeholder="100, 105.5, 89.7,..." step="0.01" required="true">
                 </div>
                 <div class="form-group">
                   <label for="sellPrice"><%= __('Sell Price') %></label>
-                  <input type="number" class="form-control" id="sellPrice" value="<%= product.sellPrice/1000000000 %>" name="sellPrice" placeholder="3.4, 4.5,..." step="0.01" required="true">
+                  <input type="number" class="form-control" id="sellPrice" disabled value="<%= product.sellPrice %>" name="sellPrice" placeholder="3.4, 4.5,..." step="0.01" required="true">
                 </div>
                 <div class="form-group">
                   <label for="rentPrice"><%= __('Rent Price') %></label>
-                  <input type="number" class="form-control" id="rentPrice" value="<%= product.rentPrice/1000000 %>" name="rentPrice" placeholder="1200, 1500,..." step="0.01" required="true">
+                  <input type="number" class="form-control" id="rentPrice" disabled value="<%= product.rentPrice %>" name="rentPrice" placeholder="1200, 1500,..." step="0.01" required="true">
                 </div>
                 <div class="form-group">
-                  <label for="rentCommissionStaff"><%= __('Rent Commission Staff') %></label>
-                  <input type="number" class="form-control" id="rentCommissionStaff" name="rentCommissionStaff"  value="<%= product.staffCommissionRent %>" max="100" placeholder="1200, 1500,..." step="0.01" required="true">
-                </div>
-                <div class="form-group">
-                  <label for="rentCommissionCompany"><%= __('Rent Commission Company') %></label>
-                  <input type="number" class="form-control" id="rentCommissionCompany" name="rentCommissionCompany" value="<%= product.companyCommissionRent %>" max="100" placeholder="1200, 1500,..." step="0.01" required="true">
-                </div>
-                <div class="form-group">
-                  <label for="sellCommissionStaff"><%= __('Sell Commission Staff') %></label>
-                  <input type="number" class="form-control" id="sellCommissionStaff" name="sellCommissionStaff" max="100" value="<%= product.staffCommissionSell %>" placeholder="1200, 1500,..." step="0.01" required="true">
-                </div>
-                <div class="form-group">
-                  <label for="sellCommissionCompany"><%= __('Sell Commission Company') %></label>
-                  <input type="number" class="form-control" id="sellCommissionCompany" name="sellCommissionCompany" max="100" value="<%= product.companyCommissionRent %>" placeholder="1200, 1500,..." step="0.01" required="true">
-                </div>
-                <div class="form-group">
-                <button type="submit" class="btn btn-primary"><%= __('Submit') %></button>
+                <button type="submit" class="btn btn-primary"><%= __('Deposit') %></button>
               </div>
               </form>
 

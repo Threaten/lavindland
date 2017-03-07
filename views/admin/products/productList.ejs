@@ -25,7 +25,7 @@
 </header>
 <div class="panel-body">
   <div class="clearfix">
-      <div class="btn-group">
+      <div class="col-sm-3">
           <a href="/admin/addProduct" id="editable-sample_new" class="btn btn-primary">
               <%= __('Add new') %> <i class="fa fa-plus"></i>
           </a>
@@ -35,17 +35,17 @@
 <table class="display table table-bordered" id="hidden-table-info2">
 <thead>
 <tr>
-    <th><%= __('Project') %></th>
+    <th style="width:100px" class="hidden-phone"><%= __('Project') %></th>
     <th><%= __('Apt. Code') %></th>
     <th class="hidden-phone"><%= __('Status') %></th>
     <th class="hidden-phone"><%= __('Sell Price') %></th>
     <th class="hidden-phone"><%= __('Rent Price') %></th>
-    <th class="hidden-phone"><%= __('Edit') %></th>
-    <th class="hidden-phone"><%= __('Delete') %></th>
+    <th class="hidden-phone"><%= __('Action') %></th>
     <th class="hidden-phone" style="display:none;">Rooms:</th>
     <th class="hidden-phone" style="display:none;">Area (m<sup>2</sup>): </th>
     <th class="hidden-phone" style="display:none;">Created At:</th>
     <th class="hidden-phone" style="display:none;">Updated At:</th>
+    <th class="hidden-phone" style="display:none;">Customer:</th>
     <th class="hidden-phone" style="display:none;">Notes:</th>
 </tr>
 </thead>
@@ -54,15 +54,50 @@
 <tr class="gradeA">
     <td><%= products[i].project.name %></td>
     <td><%= products[i].code %></td>
-    <td class="hidden-phone"><%= products[i].status %></td>
-    <td class="hidden-phone"><%= products[i].sellPrice %></td>
-    <td class="hidden-phone"><%= products[i].rentPrice %></td>
-    <td class="center hidden-phone"><a href="/admin/editProduct/<%= products[i]._id %>"><%= __('Edit') %></a></td>
-    <td class="center hidden-phone"><a href="/admin/deleteProduct/<%= products[i]._id %>"><%= __('Delete') %></a></td>
+    <% if (products[i].status == "Available") { %>
+    <td class="hidden-phone"><%= __("Available") %></td>
+    <% } else if (products[i].status == "Sold") { %>
+      <td class="hidden-phone"><font color="red"><%= __("Sold") %></font></td>
+      <% } else if (products[i].status == "Rented") { %>
+        <td class="hidden-phone"><font color="purple"><%= __("Rented") %></font></td>
+        <% } else { %>
+          <td class="hidden-phone"><font color="blue"><%= __("Deposited") %></font></td>
+          <% } %>
+    <td class="hidden-phone"><%= products[i].sellPrice/1000000000 %> <%= __('Billion') %></td>
+    <td class="hidden-phone"><%= products[i].rentPrice/1000000 %> <%= __('Million') %></td>
+    <td class="hidden-phone">
+      <ul class="notification-menu">
+      <li>
+          <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+              <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-usermenu pull-right">
+              <li><a href="/admin/editProduct/<%= products[i]._id %>"><%= __('Edit') %></a></li>
+              <li><a href="/admin/deleteProduct/<%= products[i]._id %>"><%= __('Delete') %></a></li>
+              <% if (products[i].status == "Sold" || products[i].status == "Rented") { %>
+              <% } else { %>
+                <li><a href="/admin/sellProduct/<%= products[i]._id %>"><%= __('Sell') %></a></li>
+                <li><a href="/admin/rentProduct/<%= products[i]._id %>"><%= __('Rent') %></a></li>
+                <% if (products[i].status == "Deposited") { %>
+                <li><a href="/admin/cancelDepositProduct/<%= products[i]._id %>"><%= __('Cancel Deposit') %></a></li>
+                <% } else {  %>
+                  <li><a href="/admin/depositProduct/<%= products[i]._id %>"><%= __('Deposit') %></a></li>
+                  <% } %>
+              <% } %>
+
+          </ul>
+      </li>
+    </ul>
+  </td>
     <td class="center hidden-phone" style="display: none;"><%= products[i].rooms %></td>
     <td class="center hidden-phone" style="display: none;"><%= products[i].area %></td>
     <td class="center hidden-phone" style="display: none;"><%= products[i].createdAt %></td>
     <td class="center hidden-phone" style="display: none;"><%= products[i].updatedAt %></td>
+    <% if (products[i].customer != null) { %>
+      <td class="center hidden-phone" style="display: none;"><%= products[i].customer.name %> - <%= __('Deposited: ') %> <%= products[i].deposit %></td>
+    <% } else {%>
+      <td class="center hidden-phone" style="display: none;"></td>
+      <% } %>
     <th class="hidden-phone" style="display:none;"><%= products[i].note %></th>
 </tr>
 <% } %>

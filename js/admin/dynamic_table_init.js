@@ -14,10 +14,11 @@ function fnFormatDetails2 ( oTable, nTr )
 {
     var aData = oTable.fnGetData( nTr );
     var sOut = '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">';
-    sOut += '<tr><td>Rooms:</td><td>'+aData[8]+'</td></tr>';
-    sOut += '<tr><td>Area (m<sup>2</sup>):</td><td>'+aData[9]+'</td></tr>';
-    sOut += '<tr><td>Created At:</td><td>'+aData[10]+'</td></tr>';
-    sOut += '<tr><td>Updated At:</td><td>'+aData[11]+'</td></tr>';
+    sOut += '<tr><td>Rooms:</td><td>'+aData[7]+'</td></tr>';
+    sOut += '<tr><td>Area (m<sup>2</sup>):</td><td>'+aData[8]+'</td></tr>';
+    sOut += '<tr><td>Created At:</td><td>'+aData[9]+'</td></tr>';
+    sOut += '<tr><td>Updated At:</td><td>'+aData[10]+'</td></tr>';
+    sOut += '<tr><td>Customer:</td><td>'+aData[11]+'</td></tr>';
     sOut += '<tr><td>Notes:</td><td>'+aData[12]+'</td></tr>';
     sOut += '</table>';
 
@@ -151,7 +152,7 @@ $(document).ready(function() {
         "aoColumnDefs": [
             { "bSortable": false, "aTargets": [ 0 ] }
         ],
-        "aaSorting": [[1, 'asc']]
+        "aaSorting": [[3, 'desc']]
     });
 
     /* Add event listener for opening and closing details
@@ -389,7 +390,7 @@ $(document).ready(function() {
     /*
      * Insert a 'details' column to the table
      */
-    
+
 
     /*
      * Initialse DataTables, with no sorting on the 'details' column

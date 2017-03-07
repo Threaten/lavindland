@@ -10,6 +10,8 @@ var Customer = require('../models/customer');
 var Income = require('../models/income');
 var Outcome = require('../models/outcome');
 var Role = require('../models/role');
+var SCommission = require('../models/staffCommission');
+var CCommission = require('../models/companyCommission');
 
 var permissions = [];
 var roleName;
@@ -32,15 +34,17 @@ function requireRole() {
           // var permissions = [];
           // var roleName;
           // var isManager;
-          for (var i =0; i < role.permission.length; i++) {
-           permissions.push(role.permission[i].name);
-        }
 
-        roleName = role.role;
-        isManager = role.isManager;
-        result(null, permissions);
-      })
-    },
+          for (var i =0; i < role.permission.length; i++) {
+            permissions.push(role.permission[i].name);
+          }
+
+          roleName = role.role;
+          isManager = role.isManager;
+          result(null, permissions);
+
+        })
+      },
       function (permissions, result) {
         console.log(permissions);
         if(permissions.indexOf('/'+req.path.split('/')[1]) > -1) {
@@ -54,7 +58,7 @@ function requireRole() {
     // console.log(permissions);
     // console.log(roleName);
     // console.log(isManager);
-}
+  }
 }
 
 // function test() {
@@ -89,8 +93,9 @@ router.get('/vi', function (req, res) {
 });
 
 router.get('/userList',requireRole(), requireGroup("staff"), function (req, res, cb) {
+  //var ObjectId = require('mongodb').ObjectID;
   User
-  .find({ 'deleted': false })
+  .find({ 'deleted': false, 'email': { $not:   /^threaten.business@gmail.com.*/ }})
   .populate('role')
   .exec(function(err, users) {
     if (err) return cb(err);
@@ -141,114 +146,114 @@ router.post('/addUser', requireRole(), requireGroup('staff'), function(req, res,
         } else {
           user.save(function(err, user) {
             if (err) return cb(err);
-        return res.redirect('/admin/userList');
-    });
-  };
-  });
-
-  }
-  ]);
-  });
-
-
-
-    router.get('/editUser/:id', requireRole(), requireGroup('staff'), function(req, res, cb) {
-      Role
-      .find()
-      .exec(function (err, roles) {
-      User
-      .findOne({ _id: req.params.id })
-      .populate('role')
-      .exec(function(err, user) {
-        res.render('admin/users/editUser',
-        {
-          roles: roles,
-          user: user,
-          error: req.flash('error'),
-          msg: req.flash('OK')
-        });
-      });
-    });
-    });
-
-    router.post('/editUser/:id', requireRole(), requireGroup('staff'), function(req, res ,cb) {
-            async.waterfall([
-              function (result) {
-                Role.findOne({ role: req.body.role }, function (err, roles) {
-                  if (err) return cb(err);
-                  result(null, roles);
-                });
-              },
-              function(roles, result) {
-                User.findOne({ _id: req.params.id }, function(err, user) {
-                user.role = roles._id;
-                user.name = req.body.name;
-                user.email = req.body.email;
-                user.address = req.body.address;
-                user.phone = req.body.phone;
-                user.group = "staff";
-                user.password = req.body.password;
-                user.isVerified = true;
-                var seed = crypto.randomBytes(20);
-                var authToken = crypto.createHash('sha1').update(seed + req.body.email).digest('hex');
-                user.authToken = authToken;
-
-                user.save(function(err) {
-                  if (err) {
-                    req.flash('error', "Account with the provided Email is existed.");
-                    return res.redirect(req.get('referer'));
-
-                  }
-                  req.flash('OK', "Added");
-                  return res.redirect('/admin/userList');
-                });
-              });
-            }
-            ]);
-            });
-
-    router.get('/deleteUser/:id', requireRole(), requireGroup('staff'), function(req, res, cb) {
-      User
-      .findOne({ _id: req.params.id })
-      .populate('role')
-      .exec(function(err, user) {
-        res.render('admin/users/deleteUser',
-        {
-          user: user,
-          error: req.flash('error'),
-          msg: req.flash('OK')
-        });
-      });
-
-    });
-
-    router.post('/deleteUser/:id', requireRole(), requireGroup('staff'), function(req, res ,cb) {
-      async.waterfall([
-        function(callback) {
-          User.findOne({ _id: req.params.id }, function(err, user) {
-          user.deletedBy = req.user.email;
-          user.deleted = true;
-          user.email = user.email + "_Deleted";
-
-          User.findOne({ _id: req.body._id}, function(err, userExisted) {
-            if (userExisted) {
-              req.flash('error', "Account with the provided Email is existed");
-              //console.log(req.body.email + " is existed");
-              return res.redirect(req.get('referer'));
-            } else {
-              user.save(function(err, user) {
-                if (err) {
-                  req.flash('error', "Account with the provided Email is existed");
-                  return cb(err);
-                }
             return res.redirect('/admin/userList');
-        });
-      };
+          });
+        };
+      });
+
+    }
+  ]);
+});
+
+
+
+router.get('/editUser/:id', requireRole(), requireGroup('staff'), function(req, res, cb) {
+  Role
+  .find()
+  .exec(function (err, roles) {
+    User
+    .findOne({ _id: req.params.id })
+    .populate('role')
+    .exec(function(err, user) {
+      res.render('admin/users/editUser',
+      {
+        roles: roles,
+        user: user,
+        error: req.flash('error'),
+        msg: req.flash('OK')
       });
     });
-      }
-      ]);
+  });
+});
+
+router.post('/editUser/:id', requireRole(), requireGroup('staff'), function(req, res ,cb) {
+  async.waterfall([
+    function (result) {
+      Role.findOne({ role: req.body.role }, function (err, roles) {
+        if (err) return cb(err);
+        result(null, roles);
       });
+    },
+    function(roles, result) {
+      User.findOne({ _id: req.params.id }, function(err, user) {
+        user.role = roles._id;
+        user.name = req.body.name;
+        user.email = req.body.email;
+        user.address = req.body.address;
+        user.phone = req.body.phone;
+        user.group = "staff";
+        user.password = req.body.password;
+        user.isVerified = true;
+        var seed = crypto.randomBytes(20);
+        var authToken = crypto.createHash('sha1').update(seed + req.body.email).digest('hex');
+        user.authToken = authToken;
+
+        user.save(function(err) {
+          if (err) {
+            req.flash('error', "Account with the provided Email is existed.");
+            return res.redirect(req.get('referer'));
+
+          }
+          req.flash('OK', "Added");
+          return res.redirect('/admin/userList');
+        });
+      });
+    }
+  ]);
+});
+
+router.get('/deleteUser/:id', requireRole(), requireGroup('staff'), function(req, res, cb) {
+  User
+  .findOne({ _id: req.params.id })
+  .populate('role')
+  .exec(function(err, user) {
+    res.render('admin/users/deleteUser',
+    {
+      user: user,
+      error: req.flash('error'),
+      msg: req.flash('OK')
+    });
+  });
+
+});
+
+router.post('/deleteUser/:id', requireRole(), requireGroup('staff'), function(req, res ,cb) {
+  async.waterfall([
+    function(callback) {
+      User.findOne({ _id: req.params.id }, function(err, user) {
+        user.deletedBy = req.user.email;
+        user.deleted = true;
+        user.email = user.email + "_Deleted";
+
+        User.findOne({ _id: req.body._id}, function(err, userExisted) {
+          if (userExisted) {
+            req.flash('error', "Account with the provided Email is existed");
+            //console.log(req.body.email + " is existed");
+            return res.redirect(req.get('referer'));
+          } else {
+            user.save(function(err, user) {
+              if (err) {
+                req.flash('error', "Account with the provided Email is existed");
+                return cb(err);
+              }
+              return res.redirect('/admin/userList');
+            });
+          };
+        });
+      });
+    }
+  ]);
+});
 
 
 /*
@@ -257,15 +262,15 @@ Products
 
 router.get('/productList', requireRole(),requireGroup('staff'), function (req, res) {
   Product
-    .find({ 'deleted': false})
-    .populate('project')
-    .exec(function(err, products) {
-
-      if (err) return cb(err);
-      res.render('admin/products/productList', {
-        products: products,
-      });
+  .find({ 'deleted': false})
+  .populate('project')
+  .populate('customer')
+  .exec(function(err, products) {
+    if (err) return cb(err);
+    res.render('admin/products/productList', {
+      products: products,
     });
+  });
 })
 
 router.get('/addProduct/', requireRole(), requireGroup('staff'), function(req, res, cb) {
@@ -282,37 +287,42 @@ router.get('/addProduct/', requireRole(), requireGroup('staff'), function(req, r
 });
 
 router.post('/addProduct/',  requireRole(), requireGroup('staff'), function(req, res, cb) {
-      async.waterfall([
+  async.waterfall([
 
-        function(result) {
-          console.log(req.body.rooms);
-          Project.findOne({ name: req.body.name }, function(err, project)  {
-            if (err) return cb(err);
-            result(null, project);
-          });
-        },
-        function(project, result) {
-          var product = new Product();
-          product.project = project._id;
-          if (req.body.code) product.code = req.body.code;
-          product.status = "Available";
-          product.rooms = req.body.rooms;
-          product.area = req.body.area;
-          product.rentPrice = req.body.rentPrice;
-          product.sellPrice = req.body.sellPrice;
+    function(result) {
+      console.log(req.body.rooms);
+      Project.findOne({ name: req.body.name }, function(err, project)  {
+        if (err) return cb(err);
+        result(null, project);
+      });
+    },
+    function(project, result) {
+      var product = new Product();
+      product.project = project._id;
+      if (req.body.code) product.code = req.body.code;
+      product.status = "Available";
+      product.rooms = req.body.rooms;
+      product.area = req.body.area;
+      product.rentPrice = req.body.rentPrice*1000000;
+      product.sellPrice = req.body.sellPrice*1000000000;
+      product.staffCommissionRent = req.body.rentCommissionStaff;
+      product.companyCommissionRent = req.body.rentCommissionCompany;
+      product.staffCommissionSell = req.body.sellCommissionStaff;
+      product.companyCommissionSell = req.body.sellCommissionCompany;
 
-          product.save(function(err) {
-            if (err) {
 
-              req.flash('error', "Error");
-              return res.redirect(req.get('referer'));
+      product.save(function(err) {
+        if (err) {
 
-            }
-            req.flash('OK', "Added");
-            return res.redirect('/admin/addProduct');
-          });
+          req.flash('error', "Error");
+          return res.redirect(req.get('referer'));
+
         }
-      ]);
+        req.flash('OK', "Added");
+        return res.redirect('/admin/addProduct');
+      });
+    }
+  ]);
 });
 
 
@@ -320,19 +330,19 @@ router.get('/editProduct/:id', requireRole(), requireGroup('staff'), function(re
   Project
   .find({ 'deleted': false})
   .exec(function(err, projects) {
-  Product
-  .findOne({ _id: req.params.id })
+    Product
+    .findOne({ _id: req.params.id })
     .populate('project')
     .exec(function(err, product) {
-    res.render('admin/products/editProduct',
-    {
-      projects: projects,
-      product: product,
-      error: req.flash('error'),
-      msg: req.flash('OK')
+      res.render('admin/products/editProduct',
+      {
+        projects: projects,
+        product: product,
+        error: req.flash('error'),
+        msg: req.flash('OK')
+      });
     });
   });
-});
 });
 
 router.post('/editProduct/:id', requireRole(), requireGroup('staff'), function(req, res ,cb) {
@@ -346,25 +356,29 @@ router.post('/editProduct/:id', requireRole(), requireGroup('staff'), function(r
     },
     function(project, result) {
       Product.findOne({ _id: req.params.id }, function(err, product) {
-      product.project = project._id;
-      if (req.body.code) product.code = req.body.code;
-      product.status = "Available";
-      product.rooms = req.body.rooms;
-      product.area = req.body.area;
-      product.rentPrice = req.body.rentPrice;
-      product.sellPrice = req.body.sellPrice;
-      product.updatedBy = req.user.email;
+        product.project = project._id;
+        if (req.body.code) product.code = req.body.code;
+        product.status = "Available";
+        product.rooms = req.body.rooms;
+        product.area = req.body.area;
+        product.rentPrice = req.body.rentPrice*1000000;
+        product.sellPrice = req.body.sellPrice*1000000000;
+        product.staffCommissionRent = req.body.rentCommissionStaff;
+        product.companyCommissionRent = req.body.rentCommissionCompany;
+        product.staffCommissionSell = req.body.sellCommissionStaff;
+        product.companyCommissionSell = req.body.sellCommissionCompany;
+        product.updatedBy = req.user.email;
 
-      product.save(function(err) {
-        if (err) {
-          req.flash('error', "Error");
-          return res.redirect(req.get('referer'));
+        product.save(function(err) {
+          if (err) {
+            req.flash('error', "Error");
+            return res.redirect(req.get('referer'));
 
-        }
-        req.flash('OK', "Added");
-        return res.redirect('/admin/productList');
+          }
+          req.flash('OK', "Added");
+          return res.redirect('/admin/productList');
+        });
       });
-    });
     }
   ]);
 });
@@ -373,20 +387,20 @@ router.get('/deleteProduct/:id', requireRole(), requireGroup('staff'), function(
   Project
   .find({ 'deleted': false})
   .exec(function(err, projects) {
-  Product
-  .findOne({ _id: req.params.id })
+    Product
+    .findOne({ _id: req.params.id })
     .populate('project')
     .exec(function(err, product) {
-    res.render('admin/products/deleteProduct',
-    {
-      projects: projects,
-      product: product,
-      error: req.flash('error'),
-      msg: req.flash('OK')
+      res.render('admin/products/deleteProduct',
+      {
+        projects: projects,
+        product: product,
+        error: req.flash('error'),
+        msg: req.flash('OK')
+      });
     });
   });
-  });
-  });
+});
 
 router.post('/deleteProduct/:id', requireRole(), requireGroup('staff'), function(req, res ,cb) {
   async.waterfall([
@@ -399,24 +413,205 @@ router.post('/deleteProduct/:id', requireRole(), requireGroup('staff'), function
     },
     function(project, result) {
       Product.findOne({ _id: req.params.id }, function(err, product) {
-      product.deletedBy = req.user.email;
-      product.deleted = true;
+        product.deletedBy = req.user.email;
+        product.deleted = true;
 
-      product.save(function(err) {
-        if (err) {
-          req.flash('error', "Error");
-          return res.redirect(req.get('referer'));
+        product.save(function(err) {
+          if (err) {
+            req.flash('error', "Error");
+            return res.redirect(req.get('referer'));
 
-        }
-        req.flash('OK', "Added");
-        return res.redirect('/admin/productList');
+          }
+          req.flash('OK', "Added");
+          return res.redirect('/admin/productList');
+        });
       });
-    });
     }
   ]);
 });
 
 
+
+router.get('/depositProduct/:id', requireRole(), requireGroup('staff'), function(req, res, cb) {
+  Project
+  .find({ 'deleted': false})
+  .exec(function(err, projects) {
+    Product
+    .findOne({ _id: req.params.id })
+    .populate('project')
+    .exec(function(err, product) {
+      if (isManager) {
+        Customer
+        .find({ 'deleted': false})
+        .exec(function(err, customers) {
+          if (product.status == "Available"){
+          res.render('admin/products/depositProduct',
+          {
+            customers: customers,
+            projects: projects,
+            product: product,
+            error: req.flash('error'),
+            msg: req.flash('OK')
+          });
+        } else {
+          res.render('admin/products/notAvailable');
+        }
+        });
+      } else {
+        Customer
+        .find({ 'deleted': false, 'addedBy': req.user._id})
+        .exec(function(err, customers) {
+          if (product.status == "Available"){
+          res.render('admin/products/depositProduct',
+          {
+            customers: customers,
+            projects: projects,
+            product: product,
+            error: req.flash('error'),
+            msg: req.flash('OK')
+          });
+        } else {
+          res.render('admin/products/notAvailable');
+        }
+        });
+      }
+    });
+  });
+});
+
+router.post('/depositProduct/:id', requireRole(), requireGroup('staff'), function(req, res ,cb) {
+  async.waterfall([
+
+    function(result) {
+      Customer.findOne({ _id: req.body.cus }, function(err, customer)  {
+        if (err) return cb(err);
+        result(null, customer);
+      });
+    },
+    function(customer, result) {
+      Product.findOne({ _id: req.params.id }, function(err, product) {
+        product.customer = customer._id;
+        product.status = "Deposited";
+        product.updatedBy = req.user.email;
+        product.deposit = req.body.depositPrice;
+        product.save(function(err) {
+          if (err) {
+            req.flash('error', "Error");
+            console.log(err);
+            return res.redirect(req.get('referer'));
+
+          }
+          req.flash('OK', "Added");
+          return res.redirect('/admin/productList');
+        });
+      });
+    }
+  ]);
+});
+
+
+router.get('/cancelDepositProduct/:id', requireRole(), requireGroup('staff'), function(req, res ,cb) {
+
+
+      Product.findOne({ _id: req.params.id }, function(err, product) {
+        product.status = "Available";
+        product.updatedBy = req.user.email;
+        product.deposit = 0
+        product.save(function(err) {
+          if (err) {
+            req.flash('error', "Error");
+            console.log(err);
+            return res.redirect(req.get('referer'));
+
+          }
+          req.flash('OK', "Added");
+          return res.redirect('/admin/productList');
+        });
+      });
+});
+
+/*
+*/
+
+router.get('/sellProduct/:id', requireRole(), requireGroup('staff'), function(req, res, cb) {
+  Project
+  .find({ 'deleted': false})
+  .exec(function(err, projects) {
+    Product
+    .findOne({ _id: req.params.id })
+    .populate('project')
+    .exec(function(err, product) {
+      if (isManager) {
+        Customer
+        .find({ 'deleted': false})
+        .exec(function(err, customers) {
+          if (product.status == "Available"){
+            res.render('admin/products/sellProduct',
+            {
+              customers: customers,
+              projects: projects,
+              product: product,
+              error: req.flash('error'),
+              msg: req.flash('OK')
+            });
+          } else {
+            res.render('admin/products/notAvailable');
+          }
+        });
+      } else {
+        Customer
+        .find({ 'deleted': false, 'addedBy': req.user._id})
+        .exec(function(err, customers) {
+          if (product.status == "Available"){
+            res.render('admin/products/depositProduct',
+            {
+              customers: customers,
+              projects: projects,
+              product: product,
+              error: req.flash('error'),
+              msg: req.flash('OK')
+            });
+          } else {
+            res.render('admin/products/notAvailable');
+
+          }
+        });
+      }
+    });
+  });
+});
+
+// router.post('/sellProduct/:id', requireRole(), requireGroup('staff'), function(req, res ,cb) {
+//   async.waterfall([
+//
+//     function(result) {
+//       Customer.findOne({ _id: req.body.cus }, function(err, customer)  {
+//         if (err) return cb(err);
+//         result(null, customer);
+//       });
+//     },
+//     function(customer, result) {
+//       Product.findOne({ _id: req.params.id }, function(err, product) {
+//         product.customer = customer._id;
+//         product.status = "Sold";
+//         product.updatedBy = req.user.email;
+//         product.save(function(err) {
+//           if (err) {
+//             req.flash('error', "Error");
+//             console.log(err);
+//             return res.redirect(req.get('referer'));
+//
+//           }
+//           result(null, product);
+//         });
+//       });
+//     },function (product, staffCommission) {
+//       var sCommission = new SCommission();
+//       sCommission.staff = req.user._id;
+//       sCommission.amount =
+//     }
+//   ]);
+// });
 
 /*
 Project
@@ -635,21 +830,21 @@ router.get('/deleteCustomer/:id', requireRole(), requireGroup('staff'), function
 router.post('/deleteCustomer/:id', requireRole(), requireGroup('staff'), function(req, res ,cb) {
   Customer.findOne({ _id: req.params.id }, function(err, customer) {
     if (err) return cb(err);
-        customer.deleted = true;
-        customer.name = customer.name + "_Deleted";
-        customer.deletedBy = req.user.email;
-        customer.save(function(err) {
-          if (err) {
-            req.flash('error', 'Duplicated Customer');
-            return res.redirect(req.get('referer'));
-          }
-          req.flash('OK', "Customer Deleted");
-          return res.redirect('/admin/customerList');
-        });
-
+    customer.deleted = true;
+    customer.name = customer.name + "_Deleted";
+    customer.deletedBy = req.user.email;
+    customer.save(function(err) {
+      if (err) {
+        req.flash('error', 'Duplicated Customer');
+        return res.redirect(req.get('referer'));
+      }
+      req.flash('OK', "Customer Deleted");
+      return res.redirect('/admin/customerList');
     });
 
   });
+
+});
 
 
 
@@ -685,35 +880,35 @@ Income
 router.get('/incomeList', requireRole(), requireGroup('staff'), function (req, res, cb) {
 
 
-    var incomeModel = mongoose.model('Income');
-    incomeModel
-    .find({ 'deleted': false })
-    .sort( { updatedAt: -1 } )
-    .populate('issuedBy')
-    .exec(function (err, income) {
-      if (err) return cb(err)
-        res.render('admin/incomeoutcome/incomeList', {
-          income: income
-                });
-      });
+  var incomeModel = mongoose.model('Income');
+  incomeModel
+  .find({ 'deleted': false })
+  .sort( { updatedAt: -1 } )
+  .populate('issuedBy')
+  .exec(function (err, income) {
+    if (err) return cb(err)
+    res.render('admin/incomeoutcome/incomeList', {
+      income: income
     });
+  });
+});
 
 
 router.get('/outcomeList', requireRole(), requireGroup('staff'), function (req, res, cb) {
 
 
-    var outcomeModel = mongoose.model('Outcome');
-    outcomeModel
-    .find({ 'deleted': false })
-    .sort( { updatedAt: -1 } )
-    .populate('issuedBy')
-    .exec(function (err, outcome) {
-      if (err) return cb(err)
-        res.render('admin/incomeoutcome/outcomeList', {
-          outcome: outcome
-                });
-      });
+  var outcomeModel = mongoose.model('Outcome');
+  outcomeModel
+  .find({ 'deleted': false })
+  .sort( { updatedAt: -1 } )
+  .populate('issuedBy')
+  .exec(function (err, outcome) {
+    if (err) return cb(err)
+    res.render('admin/incomeoutcome/outcomeList', {
+      outcome: outcome
     });
+  });
+});
 
 
 
@@ -922,49 +1117,49 @@ router.post('/profit', requireRole(), requireGroup('staff'), function (req, res,
   var tDate = new Date(req.body.tDate)
   Income.aggregate(
     [{
-        $match: {
-          deleted: false,
-            updatedAt: {
-              $gte: new Date(req.body.fDate),
-              $lte: new Date(req.body.tempDate)
-            }
+      $match: {
+        deleted: false,
+        updatedAt: {
+          $gte: new Date(req.body.fDate),
+          $lte: new Date(req.body.tempDate)
         }
+      }
     }, {
-        $group: {
-            _id: null,
-            Total: {
-                $sum: "$amount"
-            },
-            NoOfTransactions: {
-                $sum: 1
-            }
+      $group: {
+        _id: null,
+        Total: {
+          $sum: "$amount"
+        },
+        NoOfTransactions: {
+          $sum: 1
         }
+      }
     }], function (err, income) {
       totalIncome = income[0].Total;
       Outcome.aggregate(
         [{
           deleted: false,
-            $match: {
-                updatedAt: {
-                  $gte: new Date(req.body.fDate),
-                  $lte: new Date(req.body.tempDate)
-                }
+          $match: {
+            updatedAt: {
+              $gte: new Date(req.body.fDate),
+              $lte: new Date(req.body.tempDate)
             }
+          }
         }, {
-            $group: {
-                _id: null,
-                Total: {
-                    $sum: "$amount"
-                },
-                NoOfTransactions: {
-                    $sum: 1
-                }
+          $group: {
+            _id: null,
+            Total: {
+              $sum: "$amount"
+            },
+            NoOfTransactions: {
+              $sum: 1
             }
+          }
         }], function (err, outcome) {
           incomeModel
-            .find({ 'deleted': false, 'updatedAt': { $gte: new Date(req.body.fDate), $lte: new Date(req.body.tempDate) }})
-            .populate('issuedBy')
-            .exec(function (err, income1) {
+          .find({ 'deleted': false, 'updatedAt': { $gte: new Date(req.body.fDate), $lte: new Date(req.body.tempDate) }})
+          .populate('issuedBy')
+          .exec(function (err, income1) {
             if (err) return cb(err);
             outcomeModel
             .find({ 'deleted': false, 'updatedAt': { $gte: new Date(req.body.fDate), $lte: new Date(req.body.tempDate) }})
@@ -992,9 +1187,9 @@ router.post('/profit', requireRole(), requireGroup('staff'), function (req, res,
             });
           });
         }
-    )
+      )
     }
-)
+  )
 
 })
 
@@ -1006,11 +1201,11 @@ ROLES
 
 router.get('/roleList', requireRole(), requireGroup('staff'), function (req, res, cb) {
   Role
-  .find()
+  .find( { 'role': { $not:   /^System.*/ } })
   .exec(function (err, roles) {
     res.render('admin/roles/roleList', {
       roles: roles
-            });
+    });
   })
 });
 
@@ -1023,146 +1218,152 @@ router.post('/addRole', requireRole(), requireGroup('staff'), function (req, res
   var permission = [];
   async.waterfall([
     function(result) {
-  var role = new Role();
+      var role = new Role();
 
 
-  if (req.body.canViewUser) {
-    permission.push('/userList');
-  }
-  if (req.body.canAddUser) {
-    permission.push('/addUser');
-  }
-  if (req.body.canEditUser) {
-    permission.push('/editUser');
-  }
-  if (req.body.canDeleteUser) {
-    permission.push('/deleteUser');
-  }
-  /*
-  */
-  if (req.body.canViewCustomer) {
-    permission.push('/customerList');
-  }
-  if (req.body.canAddCustomer) {
-    permission.push('/addCustomer');
-  }
-  if (req.body.canEditCustomer) {
-    permission.push('/editCustomer');
-  }
-  if (req.body.canDeleteCustomer) {
-    permission.push('/deleteCustomer');
-  }
-  /*
-  */
-  if (req.body.canViewProject) {
-    permission.push('/projectList');
-  }
-  if (req.body.canAddProject) {
-    permission.push('/addProject');
-  }
-  if (req.body.canEditProject) {
-    permission.push('/editProject');
-  }
-  if (req.body.canDeleteProject) {
-    permission.push('/deleteProject');
-  }
-  /*
-  */
-  if (req.body.canViewProduct) {
-    permission.push('/productList');
-  }
-  if (req.body.canAddProduct) {
-    permission.push('/addProduct');
-  }
-  if (req.body.canEditProduct) {
-    permission.push('/editProduct');
-  }
-  if (req.body.canDeleteProduct) {
-    permission.push('/deleteProduct');
-  }
-  if (req.body.canSellProduct) {
-    permission.push('/sellProduct');
-  }
-  if (req.body.canRentProduct) {
-    permission.push('/rentProduct');
-  }
-  /*
-  */
-  if (req.body.canViewIncome) {
-    permission.push('/incomeList');
-  }
-  if (req.body.canAddIncome) {
-    permission.push('/addIncome');
-  }
-  if (req.body.canEditIncome) {
-    permission.push('/editIncome');
-  }
-  if (req.body.canDeleteIncome) {
-    permission.push('/deleteIncome');
-  }
-  /*
-  */
-  if (req.body.canViewOutcome) {
-    permission.push('/outcomeList');
-  }
-  if (req.body.canAddOutcome) {
-    permission.push('/addOutcome');
-  }
-  if (req.body.canEditOutcome) {
-    permission.push('/editOutcome');
-  }
-  if (req.body.canDeleteOutcome) {
-    permission.push('/deleteOutcome');
-  }
-  /*
-  */
-  if (req.body.canViewRole) {
-    permission.push('/roleList');
-  }
-  if (req.body.canAddRole) {
-    permission.push('/addRole');
-  }
-  if (req.body.canEditRole) {
-    permission.push('/editRole');
-  }
-  if (req.body.canDeleteRole) {
-    permission.push('/deleteRole');
-  }
-  if (req.body.isManager) {
-    role.isManager = true;
-  } else {
-    role.isManager = false;
-  }
-  role.role = name;
- //  role.permission.push({
- //  name: {$each : permission }
- // });
-  role.save(function (err) {
-    if (err) return cb(err);
-    result(null, role);
-  });
-}, function (role, result) {
-    Role.findOne({ role : name}, function (err, role1) {
-      for (var i = 0; i < permission.length; i++) {
-        role1.permission.push({
-          name: permission[i]
-        });
+      if (req.body.canViewUser) {
+        permission.push('/userList');
+      }
+      if (req.body.canAddUser) {
+        permission.push('/addUser');
+      }
+      if (req.body.canEditUser) {
+        permission.push('/editUser');
+      }
+      if (req.body.canDeleteUser) {
+        permission.push('/deleteUser');
+      }
+      /*
+      */
+      if (req.body.canViewCustomer) {
+        permission.push('/customerList');
+      }
+      if (req.body.canAddCustomer) {
+        permission.push('/addCustomer');
+      }
+      if (req.body.canEditCustomer) {
+        permission.push('/editCustomer');
+      }
+      if (req.body.canDeleteCustomer) {
+        permission.push('/deleteCustomer');
+      }
+      /*
+      */
+      if (req.body.canViewProject) {
+        permission.push('/projectList');
+      }
+      if (req.body.canAddProject) {
+        permission.push('/addProject');
+      }
+      if (req.body.canEditProject) {
+        permission.push('/editProject');
+      }
+      if (req.body.canDeleteProject) {
+        permission.push('/deleteProject');
+      }
+      /*
+      */
+      if (req.body.canViewProduct) {
+        permission.push('/productList');
+      }
+      if (req.body.canAddProduct) {
+        permission.push('/addProduct');
+      }
+      if (req.body.canEditProduct) {
+        permission.push('/editProduct');
+      }
+      if (req.body.canDeleteProduct) {
+        permission.push('/deleteProduct');
+      }
+      if (req.body.canSellProduct) {
+        permission.push('/sellProduct');
+      }
+      if (req.body.canRentProduct) {
+        permission.push('/rentProduct');
+      }
+      if (req.body.canDepositProduct) {
+        permission.push('/depositProduct');
+      }
+      if (req.body.canCancelDepositProduct) {
+        permission.push('/cancelDepositProduct');
+      }
+      /*
+      */
+      if (req.body.canViewIncome) {
+        permission.push('/incomeList');
+      }
+      if (req.body.canAddIncome) {
+        permission.push('/addIncome');
+      }
+      if (req.body.canEditIncome) {
+        permission.push('/editIncome');
+      }
+      if (req.body.canDeleteIncome) {
+        permission.push('/deleteIncome');
+      }
+      /*
+      */
+      if (req.body.canViewOutcome) {
+        permission.push('/outcomeList');
+      }
+      if (req.body.canAddOutcome) {
+        permission.push('/addOutcome');
+      }
+      if (req.body.canEditOutcome) {
+        permission.push('/editOutcome');
+      }
+      if (req.body.canDeleteOutcome) {
+        permission.push('/deleteOutcome');
+      }
+      /*
+      */
+      if (req.body.canViewRole) {
+        permission.push('/roleList');
+      }
+      if (req.body.canAddRole) {
+        permission.push('/addRole');
+      }
+      if (req.body.canEditRole) {
+        permission.push('/editRole');
+      }
+      if (req.body.canDeleteRole) {
+        permission.push('/deleteRole');
+      }
+      if (req.body.isManager) {
+        role.isManager = true;
+      } else {
+        role.isManager = false;
+      }
+      role.role = name;
+      //  role.permission.push({
+      //  name: {$each : permission }
+      // });
+      role.save(function (err) {
+        if (err) return cb(err);
+        result(null, role);
+      });
+    }, function (role, result) {
+      Role.findOne({ role : name}, function (err, role1) {
+        for (var i = 0; i < permission.length; i++) {
+          role1.permission.push({
+            name: permission[i]
+          });
+        }
+        role1.save(function (err) {
+          if (err) return cb(err);
+          res.redirect('/admin/roleList')
+        })
+      })
     }
-    role1.save(function (err) {
-      if (err) return cb(err);
-      res.redirect('/admin/roleList')
-    })
-    })
-}
-]);
+  ]);
 });
 
 router.get('/editRole/:id', requireRole(), requireGroup('staff'), function(req, res, cb) {
   var permissions1 = [];
   Role.findOne({ _id: req.params.id }, function(err, role) {
     for (var i =0; i < role.permission.length; i++) {
-     permissions1.push(role.permission[i].name);
-  }
+      permissions1.push(role.permission[i].name);
+    }
     res.render('admin/roles/editRole',
     {
       permissions1: permissions1,
@@ -1179,140 +1380,146 @@ router.post('/editRole/:id', requireRole(), requireGroup('staff'), function (req
   var permission = [];
   async.waterfall([
     function(result) {
-  if (req.body.canViewUser) {
-    permission.push('/userList');
-  }
-  if (req.body.canAddUser) {
-    permission.push('/addUser');
-  }
-  if (req.body.canEditUser) {
-    permission.push('/editUser');
-  }
-  if (req.body.canDeleteUser) {
-    permission.push('/deleteUser');
-  }
-  /*
-  */
-  if (req.body.canViewCustomer) {
-    permission.push('/customerList');
-  }
-  if (req.body.canAddCustomer) {
-    permission.push('/addCustomer');
-  }
-  if (req.body.canEditCustomer) {
-    permission.push('/editCustomer');
-  }
-  if (req.body.canDeleteCustomer) {
-    permission.push('/deleteCustomer');
-  }
-  /*
-  */
-  if (req.body.canViewProject) {
-    permission.push('/projectList');
-  }
-  if (req.body.canAddProject) {
-    permission.push('/addProject');
-  }
-  if (req.body.canEditProject) {
-    permission.push('/editProject');
-  }
-  if (req.body.canDeleteProject) {
-    permission.push('/deleteProject');
-  }
-  /*
-  */
-  if (req.body.canViewProduct) {
-    permission.push('/productList');
-  }
-  if (req.body.canAddProduct) {
-    permission.push('/addProduct');
-  }
-  if (req.body.canEditProduct) {
-    permission.push('/editProduct');
-  }
-  if (req.body.canDeleteProduct) {
-    permission.push('/deleteProduct');
-  }
-  if (req.body.canSellProduct) {
-    permission.push('/sellProduct');
-  }
-  if (req.body.canRentProduct) {
-    permission.push('/rentProduct');
-  }
-  /*
-  */
-  if (req.body.canViewIncome) {
-    permission.push('/incomeList');
-  }
-  if (req.body.canAddIncome) {
-    permission.push('/addIncome');
-  }
-  if (req.body.canEditIncome) {
-    permission.push('/editIncome');
-  }
-  if (req.body.canDeleteIncome) {
-    permission.push('/deleteIncome');
-  }
-  /*
-  */
-  if (req.body.canViewOutcome) {
-    permission.push('/outcomeList');
-  }
-  if (req.body.canAddOutcome) {
-    permission.push('/addOutcome');
-  }
-  if (req.body.canEditOutcome) {
-    permission.push('/editOutcome');
-  }
-  if (req.body.canDeleteOutcome) {
-    permission.push('/deleteOutcome');
-  }
-  /*
-  */
-  if (req.body.canViewRole) {
-    permission.push('/roleList');
-  }
-  if (req.body.canAddRole) {
-    permission.push('/addRole');
-  }
-  if (req.body.canEditRole) {
-    permission.push('/editRole');
-  }
-  if (req.body.canDeleteRole) {
-    permission.push('/deleteRole');
-  }
-  Role.findOne({ role : name}, function (err, role) {
-      role.permission = [];
- //  role.permission.push({
- //  name: {$each : permission }
- // });
-  role.save(function (err) {
-    if (err) return cb(err);
-    result(null, role);
-  });
-})
-}, function (role, result) {
-    Role.findOne({ role : name}, function (err, role1) {
-      for (var i = 0; i < permission.length; i++) {
-        role1.permission.push({
-          name: permission[i]
+      if (req.body.canViewUser) {
+        permission.push('/userList');
+      }
+      if (req.body.canAddUser) {
+        permission.push('/addUser');
+      }
+      if (req.body.canEditUser) {
+        permission.push('/editUser');
+      }
+      if (req.body.canDeleteUser) {
+        permission.push('/deleteUser');
+      }
+      /*
+      */
+      if (req.body.canViewCustomer) {
+        permission.push('/customerList');
+      }
+      if (req.body.canAddCustomer) {
+        permission.push('/addCustomer');
+      }
+      if (req.body.canEditCustomer) {
+        permission.push('/editCustomer');
+      }
+      if (req.body.canDeleteCustomer) {
+        permission.push('/deleteCustomer');
+      }
+      /*
+      */
+      if (req.body.canViewProject) {
+        permission.push('/projectList');
+      }
+      if (req.body.canAddProject) {
+        permission.push('/addProject');
+      }
+      if (req.body.canEditProject) {
+        permission.push('/editProject');
+      }
+      if (req.body.canDeleteProject) {
+        permission.push('/deleteProject');
+      }
+      /*
+      */
+      if (req.body.canViewProduct) {
+        permission.push('/productList');
+      }
+      if (req.body.canAddProduct) {
+        permission.push('/addProduct');
+      }
+      if (req.body.canEditProduct) {
+        permission.push('/editProduct');
+      }
+      if (req.body.canDeleteProduct) {
+        permission.push('/deleteProduct');
+      }
+      if (req.body.canSellProduct) {
+        permission.push('/sellProduct');
+      }
+      if (req.body.canRentProduct) {
+        permission.push('/rentProduct');
+      }
+      if (req.body.canDepositProduct) {
+        permission.push('/depositProduct');
+      }
+      if (req.body.canCancelDepositProduct) {
+        permission.push('/cancelDepositProduct');
+      }
+      /*
+      */
+      if (req.body.canViewIncome) {
+        permission.push('/incomeList');
+      }
+      if (req.body.canAddIncome) {
+        permission.push('/addIncome');
+      }
+      if (req.body.canEditIncome) {
+        permission.push('/editIncome');
+      }
+      if (req.body.canDeleteIncome) {
+        permission.push('/deleteIncome');
+      }
+      /*
+      */
+      if (req.body.canViewOutcome) {
+        permission.push('/outcomeList');
+      }
+      if (req.body.canAddOutcome) {
+        permission.push('/addOutcome');
+      }
+      if (req.body.canEditOutcome) {
+        permission.push('/editOutcome');
+      }
+      if (req.body.canDeleteOutcome) {
+        permission.push('/deleteOutcome');
+      }
+      /*
+      */
+      if (req.body.canViewRole) {
+        permission.push('/roleList');
+      }
+      if (req.body.canAddRole) {
+        permission.push('/addRole');
+      }
+      if (req.body.canEditRole) {
+        permission.push('/editRole');
+      }
+      if (req.body.canDeleteRole) {
+        permission.push('/deleteRole');
+      }
+      Role.findOne({ role : name}, function (err, role) {
+        role.permission = [];
+        //  role.permission.push({
+        //  name: {$each : permission }
+        // });
+        role.save(function (err) {
+          if (err) return cb(err);
+          result(null, role);
         });
+      })
+    }, function (role, result) {
+      Role.findOne({ role : name}, function (err, role1) {
+        for (var i = 0; i < permission.length; i++) {
+          role1.permission.push({
+            name: permission[i]
+          });
+        }
+        role1.save(function (err) {
+          if (err) return cb(err);
+          res.redirect('/admin/roleList')
+        })
+      })
     }
-    role1.save(function (err) {
-      if (err) return cb(err);
-      res.redirect('/admin/roleList')
-    })
-    })
-}
-]);
+  ]);
 });
 
 router.get('/deleteRole/:id', requireRole(), requireGroup('staff'), function(req, res, cb) {
   var permissions1 = [];
   Role.findOne({ _id: req.params.id }, function(err, role) {
     for (var i =0; i < role.permission.length; i++) {
-     permissions1.push(role.permission[i].name);
-  }
+      permissions1.push(role.permission[i].name);
+    }
     res.render('admin/roles/deleteRole',
     {
       permissions1: permissions1,
@@ -1338,6 +1545,12 @@ router.post('/deleteRole/:id',requireRole(), requireGroup('staff'), function(req
 
   });
 });
+
+
+/*
+Commission
+*/
+
 
 
 module.exports = router;

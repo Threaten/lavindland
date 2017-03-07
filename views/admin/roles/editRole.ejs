@@ -170,6 +170,18 @@
                   <% } else { %>
                     <label><%= __('Rent') %></label> <input type="checkbox" id="canRentProduct" name="canRentProduct">
                     <% } %>
+                    <label>             </label>
+                    <% if(permissions1.indexOf('/depositProduct') > -1) { %>
+                    <label><%= __('Deposit') %></label> <input type="checkbox" checked id="canDepositProduct" name="canDepositProduct">
+                    <% } else { %>
+                      <label><%= __('Deposit') %></label> <input type="checkbox" id="canDepositProduct" name="canDepositProduct">
+                      <% } %>
+                      <label>             </label>
+                      <% if(permissions1.indexOf('/cancelDepositProduct') > -1) { %>
+                      <label><%= __('Cancel Deposit') %></label> <input type="checkbox" checked  id="canCancelDepositProduct" name="canCancelDepositProduct">
+                      <% } else { %>
+                        <label><%= __('Cancel Deposit') %></label> <input type="checkbox" id="canCancelDepositProduct" name="canCancelDepositProduct">
+                        <% } %>
                 </div>
                 <label for="income1"><b><%= __('Income') %></b></label>
                 <div id="income1">
