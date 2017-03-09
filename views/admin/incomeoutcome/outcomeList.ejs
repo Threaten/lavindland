@@ -40,8 +40,7 @@
           <th><%= __('Amount') %></th>
           <th class="hidden-phone"><%= __('Content') %></th>
           <th class="hidden-phone"><%= __('Time') %></th>
-          <th class="hidden-phone"><%= __('Edit') %></th>
-          <th class="hidden-phone"><%= __('Delete') %></th>
+          <th class="hidden-phone"><%= __('Action') %></th>
           <th class="hidden-phone" style="display:none;">Notes:</th>
       </tr>
       </thead>
@@ -52,8 +51,19 @@
           <td><%= outcome[i].amount %></td>
           <td class="hidden-phone"><%= outcome[i].content %></td>
           <td class="hidden-phone" style="width:150px"><%= outcome[i].updatedAt.toUTCString() %></td>
-          <td class="center hidden-phone"><a href="/admin/editProduct/<%= outcome[i]._id %>"><%= __('Edit') %></a></td>
-          <td class="center hidden-phone"><a href="/admin/deleteProduct/<%= outcome[i]._id %>"><%= __('Delete') %></a></td>
+          <td class="hidden-phone">
+            <ul class="notification-menu">
+            <li>
+                <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-usermenu pull-right">
+          <li><a href="/admin/editProduct/<%= outcome[i]._id %>"><%= __('Edit') %></a></li>
+          <li><a href="/admin/deleteProduct/<%= outcome[i]._id %>"><%= __('Delete') %></a></li>
+        </ul>
+    </li>
+  </ul>
+</td>
           <td class="center hidden-phone" style="display: none;"><%= outcome[i].note %></td>
       </tr>
       <% } %>

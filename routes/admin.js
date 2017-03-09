@@ -1138,8 +1138,8 @@ router.post('/profit', requireRole(), requireGroup('staff'), function (req, res,
       totalIncome = income[0].Total;
       Outcome.aggregate(
         [{
-          deleted: false,
           $match: {
+            deleted: false,
             updatedAt: {
               $gte: new Date(req.body.fDate),
               $lte: new Date(req.body.tempDate)
@@ -1305,6 +1305,7 @@ router.post('/addRole', requireRole(), requireGroup('staff'), function (req, res
       */
       if (req.body.canViewOutcome) {
         permission.push('/outcomeList');
+        permission.push('/profit');
       }
       if (req.body.canAddOutcome) {
         permission.push('/addOutcome');
@@ -1464,6 +1465,7 @@ router.post('/editRole/:id', requireRole(), requireGroup('staff'), function (req
       */
       if (req.body.canViewOutcome) {
         permission.push('/outcomeList');
+        permission.push('/profit');
       }
       if (req.body.canAddOutcome) {
         permission.push('/addOutcome');

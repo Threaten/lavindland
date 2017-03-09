@@ -38,8 +38,7 @@
     <th class="hidden-phone">Email</th>
     <th class="hidden-phone"><%= __('Name') %></th>
     <th class="hidden-phone"><%= __('Role') %></th>
-    <th class="hidden-phone"><%= __('Edit') %></th>
-    <th class="hidden-phone"><%= __('Delete') %></th>
+    <th class="hidden-phone"><%= __('Action') %></th>
     <th class="hidden-phone" style="display:none;">Address</th>
     <th class="hidden-phone" style="display:none;">Phone</th>
     <th class="hidden-phone" style="display:none;">Updated At</th>
@@ -52,18 +51,27 @@
     <td><%= users[i].email %></td>
     <td><%= users[i].name %></td>
     <td class="hidden-phone"><%= users[i].role.role %></td>
+    <td class="hidden-phone">
+    <ul class="notification-menu">
+    <li>
+        <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+            <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-usermenu pull-right">
     <% if (users[i].role.role == "System Administrator" || users[i].role.role == "Administrator" ){ %>
-    <td class="hidden-phone">N/A</td>
+    <li>N/A</li>
     <% } else { %>
-      <td class="hidden-phone"><a href="/admin/editUser/<%= users[i]._id %>"><%= __('Edit') %></a></td>
+      <li><a href="/admin/editUser/<%= users[i]._id %>"><%= __('Edit') %></a></li>
       <% } %>
       <% if (users[i].role.role == "System Administrator" || users[i].role.role == "Administrator" ){ %>
-      <td class="hidden-phone">N/A</td>
+      <li>N/A</li>
       <% } else if (users[i]._id == user._id) { %>
-        <td class="hidden-phone">N/A</td>
+        <li>N/A</li>
         <% } else { %>
-        <td class="hidden-phone"><a href="/admin/deleteUser/<%= users[i]._id %>"><%= __('Delete') %></a></td>
+        <li><a href="/admin/deleteUser/<%= users[i]._id %>"><%= __('Delete') %></a></li>
         <% } %>
+      </ul>
+  </li>
     <td class="center hidden-phone" style="display: none;"><%= users[i].address %></td>
     <td class="center hidden-phone" style="display: none;"><%= users[i].phone %></td>
     <td class="center hidden-phone" style="display: none;"><%= users[i].updatedAt %></td>

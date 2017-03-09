@@ -38,8 +38,7 @@
   <th class="hidden-phone"><%= __('Name') %></th>
   <th class="hidden-phone"><%= __('Address') %></th>
     <th class="hidden-phone"><%= __('Owner') %></th>
-    <th class="hidden-phone"><%= __('Edit') %></th>
-    <th class="hidden-phone"><%= __('Delete') %></th>
+    <th class="hidden-phone"><%= __('Action') %></th>
     <th class="hidden-phone" style="display:none;">Note</th>
 </tr>
 </thead>
@@ -49,10 +48,21 @@
     <td><%= projects[i].name %></td>
     <td><%= projects[i].address %></td>
     <td class="hidden-phone"><%= projects[i].owner %></td>
-      <td class="hidden-phone"><a href="/admin/editProject/<%= projects[i]._id %>"><%= __('Edit') %></a></td>
+    <td class="hidden-phone">
+      <ul class="notification-menu">
+      <li>
+          <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+              <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-usermenu pull-right">
+      <li><a href="/admin/editProject/<%= projects[i]._id %>"><%= __('Edit') %></a></li>
 
-        <td class="hidden-phone"><a href="/admin/deleteProject/<%= projects[i]._id %>"><%= __('Delete') %></a></td>
-        
+        <li><a href="/admin/deleteProject/<%= projects[i]._id %>"><%= __('Delete') %></a></li>
+      </ul>
+    </li>
+  </ul>
+</td>
+
     <td class="center hidden-phone" style="display: none;"><%= projects[i].note %></td>
 </tr>
 <% } %>

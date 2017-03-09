@@ -40,8 +40,7 @@
     <th class="hidden-phone"><%= __('Phone') %></th>
     <th class="hidden-phone">Email</th>
     <th class="hidden-phone"><%= __('Potential') %></th>
-    <th class="hidden-phone"><%= __('Edit') %></th>
-    <th class="hidden-phone"><%= __('Delete') %></th>
+    <th class="hidden-phone"><%= __('Action') %></th>
     <th class="hidden-phone" style="display:none;">Date of Birth:</th>
     <th class="hidden-phone" style="display:none;">Notes:</th>
     <th class="hidden-phone" style="display:none;">Created At:</th>
@@ -61,8 +60,19 @@
     <% } else { %>
       <td class="center hidden-phone"><input type="checkbox" disabled="true"></td>
     <% } %>
-    <td class="center hidden-phone"><a href="/admin/editCustomer/<%= customers[i]._id %>"><%= __('Edit') %></a></td>
-    <td class="center hidden-phone"><a href="/admin/deleteCustomer/<%= customers[i]._id %>"><%= __('Delete') %></a></td>
+    <td class="hidden-phone">
+      <ul class="notification-menu">
+      <li>
+          <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+              <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-usermenu pull-right">
+    <li><a href="/admin/editCustomer/<%= customers[i]._id %>"><%= __('Edit') %></a></li>
+    <li><a href="/admin/deleteCustomer/<%= customers[i]._id %>"><%= __('Delete') %></a></li>
+  </ul>
+</li>
+</ul>
+</td>
     <td class="center hidden-phone" style="display: none;"><%= customers[i].dob %></td>
     <td class="center hidden-phone" style="display: none;"><%= customers[i].note %></td>
     <td class="center hidden-phone" style="display: none;"><%= customers[i].createdAt %></td>

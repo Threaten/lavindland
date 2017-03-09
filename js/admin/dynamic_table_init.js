@@ -2,9 +2,9 @@ function fnFormatDetails ( oTable, nTr )
 {
     var aData = oTable.fnGetData( nTr );
     var sOut = '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">';
-    sOut += '<tr><td>Address:</td><td>'+aData[6]+'</td></tr>';
-    sOut += '<tr><td>Phone:</td><td>'+aData[7]+'</td></tr>';
-    sOut += '<tr><td>Updated at:</td><td>'+aData[8]+'</td></tr>';
+    sOut += '<tr><td>Address:</td><td>'+aData[5]+'</td></tr>';
+    sOut += '<tr><td>Phone:</td><td>'+aData[6]+'</td></tr>';
+    sOut += '<tr><td>Updated at:</td><td>'+aData[7]+'</td></tr>';
     sOut += '</table>';
 
     return sOut;
@@ -29,7 +29,7 @@ function fnFormatDetails3 ( oTable, nTr )
 {
     var aData = oTable.fnGetData( nTr );
     var sOut = '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">';
-    sOut += '<tr><td>Notes:</td><td>'+aData[6]+'</td></tr>';
+    sOut += '<tr><td>Notes:</td><td>'+aData[5]+'</td></tr>';
     sOut += '</table>';
 
     return sOut;
@@ -39,11 +39,11 @@ function fnFormatDetails4 ( oTable, nTr )
 {
     var aData = oTable.fnGetData( nTr );
     var sOut = '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">';
-    sOut += '<tr><td>Date of Birth:</td><td>'+aData[8]+'</td></tr>';
-    sOut += '<tr><td>Notes:</td><td>'+aData[9]+'</td></tr>';
-    sOut += '<tr><td>Created At:</td><td>'+aData[10]+'</td></tr>';
-    sOut += '<tr><td>Updated At:</td><td>'+aData[11]+'</td></tr>';
-    sOut += '<tr><td>Added By:</td><td>'+aData[12]+'</td></tr>';
+    sOut += '<tr><td>Date of Birth:</td><td>'+aData[7]+'</td></tr>';
+    sOut += '<tr><td>Notes:</td><td>'+aData[8]+'</td></tr>';
+    sOut += '<tr><td>Created At:</td><td>'+aData[9]+'</td></tr>';
+    sOut += '<tr><td>Updated At:</td><td>'+aData[10]+'</td></tr>';
+    sOut += '<tr><td>Added By:</td><td>'+aData[11]+'</td></tr>';
     sOut += '</table>';
 
     return sOut;
@@ -53,7 +53,7 @@ function fnFormatDetails5 ( oTable, nTr )
 {
     var aData = oTable.fnGetData( nTr );
     var sOut = '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">';
-    sOut += '<tr><td>Notes:</td><td>'+aData[7]+'</td></tr>';
+    sOut += '<tr><td>Notes:</td><td>'+aData[6]+'</td></tr>';
     sOut += '</table>';
 
     return sOut;
