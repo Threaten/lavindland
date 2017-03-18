@@ -739,7 +739,7 @@ router.post('/rentProduct/:id', requireRole(), requireGroup('staff'), function(r
       cCommission.code = product.code;
       cCommission.profit = product.rentProfit;
       cCommission.price = product.rentPrice;
-      cCommission.amount = product.rentProfit*product.companyCommsionRent/100;
+      cCommission.amount = product.rentProfit*product.companyCommissionRent/100;
       cCommission.save(function (err) {
         if (err) return cb(err);
           return res.redirect('/admin/productList')
