@@ -719,7 +719,7 @@ router.post('/rentProduct/:id', requireRole(), requireGroup('staff'), function(r
           result(null, product);
         });
       });
-    },function (product, customer, result) {
+    },function (product, customer) {
       var sCommission = new SCommission();
       sCommission.staff = req.user._id;
       sCommission.customer = customer._id;
@@ -730,8 +730,7 @@ router.post('/rentProduct/:id', requireRole(), requireGroup('staff'), function(r
       sCommission.amount = product.rentProfit*product.staffCommissionRent/100;
       sCommission.save(function (err) {
         if (err) return cb(err);
-        result(null, sCommission);
-
+        customer(null, product);
       })
     }, function (product, customer, companyCommission) {
       var cCommission = new CCommission();
@@ -740,7 +739,7 @@ router.post('/rentProduct/:id', requireRole(), requireGroup('staff'), function(r
       cCommission.code = product.code;
       cCommission.profit = product.rentProfit;
       cCommission.price = product.rentPrice;
-      cCommission.amount = product.rentProfit*product.companyCommissionRent/100;
+      cCommission.amount = product.rentProfit*product.companyCommsionRent/100;
       cCommission.save(function (err) {
         if (err) return cb(err);
           return res.redirect('/admin/productList')
