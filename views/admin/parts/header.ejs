@@ -23,7 +23,6 @@
                 <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
                 <li class="dropdown dropdown-user">
                     <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                        <img alt="" class="img-circle" src="/views/admin/assets/layouts/layout/img/avatar3_small.jpg" />
                         <span class="username username-hide-on-mobile"><%= user.name %> </span>
                         <i class="fa fa-angle-down"></i>
                     </a>
@@ -200,7 +199,25 @@
                         </li>
                     </ul>
                 </li>
-
+                <li class="nav-item">
+                    <a href="javascript:;" class="nav-link nav-toggle">
+                        <i class="fa fa-percent"></i>
+                        <span class="title"><%= __('Commission') %></span>
+                        <span class="arrow"></span>
+                    </a>
+                    <ul class="sub-menu">
+                        <li class="nav-item  ">
+                            <a href="/admin/staffCommission" class="nav-link ">
+                                <span class="title"><%= __('Staff Commission') %></span>
+                            </a>
+                        </li>
+                        <li class="nav-item  ">
+                            <a href="/admin/companyCommission" class="nav-link ">
+                                <span class="title"><%= __('Company Commission') %></span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
             <!-- END SIDEBAR MENU -->
             <!-- END SIDEBAR MENU -->

@@ -604,6 +604,9 @@ router.post('/sellProduct/:id', requireRole(), requireGroup('staff'), function(r
     },
     function(customer, result) {
       Product.findOne({ _id: req.params.id }, function(err, product) {
+        if (product.status != "Available") {
+          res.render('admin/products/notAvailable');
+        } else {
         product.customer = customer._id;
         product.status = "Sold";
         product.updatedBy = req.user.email;
@@ -612,38 +615,34 @@ router.post('/sellProduct/:id', requireRole(), requireGroup('staff'), function(r
             req.flash('error', "Error");
             console.log(err);
             return res.redirect(req.get('referer'));
-
           }
-          result(null, product);
-        });
-      });
-    },function (product, customer) {
-      var sCommission = new SCommission();
-      sCommission.staff = req.user._id;
-      sCommission.customer = customer._id;
-      sCommission.area = product.area;
-      sCommission.code = product.code;
-      sCommission.profit = product.sellProfit;
-      sCommission.price = product.sellPrice;
-      sCommission.amount = product.sellProfit*product.staffCommissionSell/100;
-      sCommission.save(function (err) {
-        if (err) return cb(err);
-        customer(null, product);
-      })
-    }, function (product, customer, companyCommission) {
-      var cCommission = new CCommission();
-      cCommission.customer = customer._id;
-      cCommission.area = product.area;
-      cCommission.code = product.code;
-      cCommission.profit = product.sellProfit;
-      cCommission.price = product.sellPrice;
-      cCommission.amount = product.sellProfit*product.companyCommissionSell/100;
-      cCommission.save(function (err) {
-        if (err) return cb(err);
-          return res.redirect('/admin/productList')
+          var sCommission = new SCommission();
+          sCommission.staff = req.user._id;
+          sCommission.customer = customer._id;
+          sCommission.area = product.area;
+          sCommission.code = product.code;
+          sCommission.profit = product.sellProfit;
+          sCommission.price = product.sellPrice;
+          sCommission.amount = product.sellProfit*product.staffCommissionSell/100;
+          sCommission.save(function (err) {
+            if (err) return cb(err);
+          })
+          var cCommission = new CCommission();
+          cCommission.customer = customer._id;
+          cCommission.area = product.area;
+          cCommission.code = product.code;
+          cCommission.profit = product.sellProfit;
+          cCommission.price = product.sellPrice;
+          cCommission.amount = product.sellProfit*product.companyCommissionSell/100;
+          cCommission.save(function (err) {
+            if (err) return cb(err);
+              return res.redirect('/admin/productList')
 
-      })
-    }
+          })
+        })
+      }
+    })
+  }
   ]);
 });
 
@@ -706,6 +705,9 @@ router.post('/rentProduct/:id', requireRole(), requireGroup('staff'), function(r
     },
     function(customer, result) {
       Product.findOne({ _id: req.params.id }, function(err, product) {
+        if (product.status != "Available") {
+          res.render('admin/products/notAvailable');
+        } else {
         product.customer = customer._id;
         product.status = "Rented";
         product.updatedBy = req.user.email;
@@ -714,38 +716,34 @@ router.post('/rentProduct/:id', requireRole(), requireGroup('staff'), function(r
             req.flash('error', "Error");
             console.log(err);
             return res.redirect(req.get('referer'));
-
           }
-          result(null, product);
-        });
-      });
-    },function (product, customer) {
-      var sCommission = new SCommission();
-      sCommission.staff = req.user._id;
-      sCommission.customer = customer._id;
-      sCommission.area = product.area;
-      sCommission.code = product.code;
-      sCommission.profit = product.rentProfit;
-      sCommission.price = product.rentPrice;
-      sCommission.amount = product.rentProfit*product.staffCommissionRent/100;
-      sCommission.save(function (err) {
-        if (err) return cb(err);
-        customer(null, product);
-      })
-    }, function (product, customer, companyCommission) {
-      var cCommission = new CCommission();
-      cCommission.customer = customer._id;
-      cCommission.area = product.area;
-      cCommission.code = product.code;
-      cCommission.profit = product.rentProfit;
-      cCommission.price = product.rentPrice;
-      cCommission.amount = product.rentProfit*product.companyCommissionRent/100;
-      cCommission.save(function (err) {
-        if (err) return cb(err);
-          return res.redirect('/admin/productList')
+          var sCommission = new SCommission();
+          sCommission.staff = req.user._id;
+          sCommission.customer = customer._id;
+          sCommission.area = product.area;
+          sCommission.code = product.code;
+          sCommission.profit = product.rentProfit;
+          sCommission.price = product.rentPrice;
+          sCommission.amount = product.rentProfit*product.staffCommissionRent/100;
+          sCommission.save(function (err) {
+            if (err) return cb(err);
+          })
+          var cCommission = new CCommission();
+          cCommission.customer = customer._id;
+          cCommission.area = product.area;
+          cCommission.code = product.code;
+          cCommission.profit = product.rentProfit;
+          cCommission.price = product.rentPrice;
+          cCommission.amount = product.rentProfit*product.companyCommissionRent/100;
+          cCommission.save(function (err) {
+            if (err) return cb(err);
+              return res.redirect('/admin/productList')
 
-      })
-    }
+          })
+        })
+      }
+    })
+  }
   ]);
 });
 
@@ -1063,7 +1061,7 @@ router.get('/addIncome', requireRole(), requireGroup('staff'), function(req, res
 router.post('/addIncome', requireRole(), requireGroup('staff'), function(req, res, cb) {
   var income = new Income();
   income.issuedBy = req.user.email;
-  income.amount = req.body.amount;
+  income.amount = req.body.amount*1000000;
   income.content = req.body.content;
   if (req.body.date) {
     income.date = req.body.date;
@@ -1095,7 +1093,7 @@ router.get('/editIncome/:id', requireRole(), requireGroup('staff'), function(req
 router.post('/editIncome/:id', requireRole(), requireGroup('staff'), function(req, res ,cb) {
   Income.findOne({ _id: req.params.id }, function(err, income) {
     if (err) return cb(err);
-    income.amount = req.body.amount;
+    income.amount = req.body.amount*1000000;
     income.content = req.body.content;
     income.updatedBy = req.user.email;
     income.save(function(err) {
@@ -1151,7 +1149,7 @@ router.get('/addOutcome', requireRole(), requireGroup('staff'), function(req, re
 router.post('/addOutcome', requireRole(), requireGroup('staff'), function(req, res, cb) {
   var outcome = new Outcome();
   outcome.issuedBy = req.user.email;
-  outcome.amount = req.body.amount;
+  outcome.amount = req.body.amount*1000000;
   outcome.content = req.body.content;
   if (req.body.date) {
     outcome.date = req.body.date;
@@ -1183,7 +1181,7 @@ router.get('/editOutcome/:id', requireRole(), requireGroup('staff'), function(re
 router.post('/editOutcome/:id', requireRole(), requireGroup('staff'), function(req, res ,cb) {
   Outcome.findOne({ _id: req.params.id }, function(err, outcome) {
     if (err) return cb(err);
-    outcome.amount = req.body.amount;
+    outcome.amount = req.body.amount*1000000;
     outcome.content = req.body.content;
     outcome.updatedBy = req.user.email;
     outcome.save(function(err) {
@@ -1720,7 +1718,28 @@ router.post('/deleteRole/:id',requireRole(), requireGroup('staff'), function(req
 /*
 Commission
 */
+router.get('/staffCommission', requireRole(), requireGroup('staff'), function (req, res, cb) {
+  SCommission
+  .find()
+  .populate('staff')
+  .populate('customer')
+  .exec(function (err, staffCommission) {
+    res.render('admin/commission/staffCommission', {
+      staffCommission: staffCommission
+    })
+  })
+})
 
+router.get('/companyCommission', requireRole(), requireGroup('staff'), function (req, res, cb) {
+  CCommission
+  .find()
+  .populate('customer')
+  .exec(function (err, companyCommission) {
+    res.render('admin/commission/companyCommission', {
+      companyCommission: companyCommission
+    })
+  })
+})
 
 
 module.exports = router;
