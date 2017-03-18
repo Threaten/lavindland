@@ -1,52 +1,61 @@
 <% layout('/admin/template') -%>
 <title>Products List</title>
-<div class="page-heading">
-    <h3>
-      <%= __('Products List') %>
-    </h3>
-    <ul class="breadcrumb">
-        <li>
-            <a href="/admin">Dashboard</a>
-        </li>
-        <li class="active"><%= __('Products List') %> </li>
-    </ul>
-</div>
-<div class="wrapper">
-
-<div class="row">
-<div class="col-sm-12">
-<section class="panel">
-<header class="panel-heading">
-    <%= __('List') %>
-    <span class="tools pull-right">
-        <a href="javascript:;" class="fa fa-chevron-down"></a>
-        <a href="javascript:;" class="fa fa-times"></a>
-     </span>
-</header>
-<div class="panel-body">
-  <div class="clearfix">
-      <div class="col-sm-3">
-          <a href="/admin/addProduct" id="editable-sample_new" class="btn btn-primary">
-              <%= __('Add new') %> <i class="fa fa-plus"></i>
-          </a>
-      </div>
-    </div>
-<div class="adv-table">
-<table class="display table table-bordered" id="hidden-table-info2">
-<thead>
+<!-- BEGIN CONTENT -->
+<div class="page-content-wrapper">
+    <!-- BEGIN CONTENT BODY -->
+    <div class="page-content">
+        <!-- BEGIN PAGE HEADER-->
+        <!-- BEGIN PAGE BAR -->
+        <div class="page-bar">
+            <ul class="page-breadcrumb">
+                <li>
+                    <a href="/admin"><%= __('Dashboard') %></a>
+                    <i class="fa fa-circle"></i>
+                </li>
+                <li>
+                    <a href="#"><%= __('Products List') %></a>
+                    <i class="fa fa-circle"></i>
+                </li>
+            </ul>
+        </div>
+        <!-- END PAGE BAR -->
+        <!-- BEGIN PAGE TITLE-->
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption font-dark">
+                    <i class="icon-settings font-dark"></i>
+                    <span class="caption-subject bold uppercase"><%= __('List') %></span>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="table-toolbar">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="btn-group">
+                                <a href="/admin/addProduct" id="sample_editable_1_new" class="btn grey">
+                                    <%= __('Add new') %>
+                                    <i class="fa fa-plus"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_1">
+              <thead>
 <tr>
-    <th style="width:100px" class="hidden-phone"><%= __('Project') %></th>
-    <th><%= __('Apt. Code') %></th>
-    <th class="hidden-phone"><%= __('Status') %></th>
-    <th class="hidden-phone"><%= __('Sell Price') %></th>
-    <th class="hidden-phone"><%= __('Rent Price') %></th>
-    <th class="hidden-phone"><%= __('Action') %></th>
-    <th class="hidden-phone" style="display:none;">Rooms:</th>
-    <th class="hidden-phone" style="display:none;">Area (m<sup>2</sup>): </th>
-    <th class="hidden-phone" style="display:none;">Created At:</th>
-    <th class="hidden-phone" style="display:none;">Updated At:</th>
-    <th class="hidden-phone" style="display:none;">Customer:</th>
-    <th class="hidden-phone" style="display:none;">Notes:</th>
+    <th class="all"><%= __('Project') %></th>
+    <th class="all"><%= __('Apt. Code') %></th>
+    <th class="all"><%= __('Status') %></th>
+    <th class="all"><%= __('Sell Price') %></th>
+    <th class="all"><%= __('Rent Price') %></th>
+    <th class="all"><%= __('Action') %></th>
+    <th class="none"><%= __('Rooms') %></th>
+    <th class="none"><%= __('Area') %> (m<sup>2</sup>): </th>
+    <th class="none"><%= __('Created At') %></th>
+    <th class="none"><%= __('Updated At') %></th>
+    <th class="none"><%= __('Customer') %></th>
+    <th class="none"><%= __('Note') %></th>
 </tr>
 </thead>
 <tbody>
@@ -55,58 +64,55 @@
     <td><%= products[i].project.name %></td>
     <td><%= products[i].code %></td>
     <% if (products[i].status == "Available") { %>
-    <td class="hidden-phone"><%= __("Available") %></td>
+    <td><%= __("Available") %></td>
     <% } else if (products[i].status == "Sold") { %>
-      <td class="hidden-phone"><font color="red"><%= __("Sold") %></font></td>
+      <td><font color="red"><%= __("Sold") %></font></td>
       <% } else if (products[i].status == "Rented") { %>
-        <td class="hidden-phone"><font color="purple"><%= __("Rented") %></font></td>
+        <td><font color="purple"><%= __("Rented") %></font></td>
         <% } else { %>
-          <td class="hidden-phone"><font color="blue"><%= __("Deposited") %></font></td>
+          <td><font color="blue"><%= __("Deposited") %></font></td>
           <% } %>
-    <td class="hidden-phone"><%= products[i].sellPrice/1000000000 %> <%= __('Billion') %></td>
-    <td class="hidden-phone"><%= products[i].rentPrice/1000000 %> <%= __('Million') %></td>
-    <td class="hidden-phone">
-      <ul class="notification-menu">
-      <li>
-          <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-              <span class="caret"></span>
-          </a>
-          <ul class="dropdown-menu dropdown-menu-usermenu pull-right">
+    <td><%= products[i].sellPrice/1000000000 %> <%= __('Billion') %></td>
+    <td><%= products[i].rentPrice/1000000 %> <%= __('Million') %></td>
+    <td>
+        <div class="btn-group pull-right">
+            <button class="btn green btn-xs btn-outline dropdown-toggle" data-toggle="dropdown">Tools
+                <i class="fa fa-angle-down"></i>
+            </button>
+            <ul class="dropdown-menu pull-right">
               <li><a href="/admin/editProduct/<%= products[i]._id %>"><%= __('Edit') %></a></li>
-              <li><a href="/admin/deleteProduct/<%= products[i]._id %>"><%= __('Delete') %></a></li>
-              <% if (products[i].status == "Sold" || products[i].status == "Rented") { %>
-              <% } else { %>
-                <li><a href="/admin/sellProduct/<%= products[i]._id %>"><%= __('Sell') %></a></li>
-                <li><a href="/admin/rentProduct/<%= products[i]._id %>"><%= __('Rent') %></a></li>
-                <% if (products[i].status == "Deposited") { %>
-                <li><a href="/admin/cancelDepositProduct/<%= products[i]._id %>"><%= __('Cancel Deposit') %></a></li>
-                <% } else {  %>
-                  <li><a href="/admin/depositProduct/<%= products[i]._id %>"><%= __('Deposit') %></a></li>
-                  <% } %>
-              <% } %>
+            <li><a href="/admin/deleteProduct/<%= products[i]._id %>"><%= __('Delete') %></a></li>
+            <% if (products[i].status == "Sold" || products[i].status == "Rented") { %>
+            <% } else { %>
+              <li><a href="/admin/sellProduct/<%= products[i]._id %>"><%= __('Sell') %></a></li>
+              <li><a href="/admin/rentProduct/<%= products[i]._id %>"><%= __('Rent') %></a></li>
+              <% if (products[i].status == "Deposited") { %>
+              <li><a href="/admin/cancelDepositProduct/<%= products[i]._id %>"><%= __('Cancel Deposit') %></a></li>
+              <% } else {  %>
+                <li><a href="/admin/depositProduct/<%= products[i]._id %>"><%= __('Deposit') %></a></li>
+                <% } %>
+            <% } %>
 
-          </ul>
-      </li>
-    </ul>
-  </td>
-    <td class="center hidden-phone" style="display: none;"><%= products[i].rooms %></td>
-    <td class="center hidden-phone" style="display: none;"><%= products[i].area %></td>
-    <td class="center hidden-phone" style="display: none;"><%= products[i].createdAt %></td>
-    <td class="center hidden-phone" style="display: none;"><%= products[i].updatedAt %></td>
+                    </ul>
+                </div>
+            </td>
+    <td><%= products[i].rooms %></td>
+    <td><%= products[i].area %></td>
+    <td><%= products[i].createdAt %></td>
+    <td><%= products[i].updatedAt %></td>
     <% if (products[i].customer != null) { %>
-      <td class="center hidden-phone" style="display: none;"><%= products[i].customer.name %> - <%= __('Deposited: ') %> <%= products[i].deposit %></td>
+      <td><%= products[i].customer.name %> - <%= __('Deposited: ') %> <%= products[i].deposit %></td>
     <% } else {%>
-      <td class="center hidden-phone" style="display: none;"></td>
+      <td></td>
       <% } %>
-    <th class="hidden-phone" style="display:none;"><%= products[i].note %></th>
+    <th><%= products[i].note %></th>
 </tr>
 <% } %>
 </tbody>
 </table>
-
-</div>
-</div>
-</section>
-</div>
-</div>
-</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END CONTENT BODY -->
+                </div>
+                <!-- END CONTENT -->

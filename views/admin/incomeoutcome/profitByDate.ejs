@@ -1,5 +1,5 @@
 <% layout('/admin/template') -%>
-<title>Finance List</title>
+<title>Finance Report</title>
 <script  type="text/javascript">
 function getdate() {
     var tt = document.getElementById('tDate').value;
@@ -35,39 +35,49 @@ document.getElementById("fDate").setAttribute("max", today);
 document.getElementById("tDate").setAttribute("max", today);
 }
 </script>
-<div class="page-heading">
-    <h3>
-      <%= __('Finance List') %>
-    </h3>
-    <ul class="breadcrumb">
-        <li>
-            <a href="/admin">Dashboard</a>
-        </li>
-        <li class="active"><%= __('Finance List') %> </li>
-    </ul>
-</div>
-<div class="wrapper">
-
-<div class="row">
-<div class="col-sm-12">
-<section class="panel">
-<header class="panel-heading">
-    <%= __('Finance') %>
-    <span class="tools pull-right">
-        <a href="javascript:;" class="fa fa-chevron-down"></a>
-        <a href="javascript:;" class="fa fa-times"></a>
-     </span>
-</header>
-<div class="panel-body">
-    <form method="post">
-    <label><%= __('From Date') %>: </label>&nbsp;<input type="date" required="true" id="fDate" name="fDate" max='2000-13-13' min='1899-01-01' onclick="maxDate()"></input>&nbsp;&nbsp<label><%= __('To Date') %>: </label>&nbsp;<input type="date" require="true" onchange="getdate()" id="tDate" name="tDate" onclick="maxDate()">&nbsp;&nbsp;&nbsp;<input type="text" id="tempDate" hidden name="tempDate"/><button type="submit" class="btn btn-primary"><%= __('Submit1') %></button>
-</form>
+    <!-- BEGIN CONTENT -->
+    <div class="page-content-wrapper">
+        <!-- BEGIN CONTENT BODY -->
+        <div class="page-content">
+            <!-- BEGIN PAGE HEADER-->
+            <!-- BEGIN PAGE BAR -->
+            <div class="page-bar">
+                <ul class="page-breadcrumb">
+                    <li>
+                        <a href="/admin"><%= __('Dashboard') %></a>
+                        <i class="fa fa-circle"></i>
+                    </li>
+                    <li>
+                        <a href="#"><%= __('Finance Report') %></a>
+                        <i class="fa fa-circle"></i>
+                    </li>
+                </ul>
+            </div>
+            <!-- END PAGE BAR -->
+            <!-- BEGIN PAGE TITLE-->
+            <div class="portlet light bordered">
+                <div class="portlet-title">
+                    <div class="caption font-dark">
+                        <i class="icon-settings font-dark"></i>
+                        <span class="caption-subject bold uppercase"><%= __('List') %></span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                </div>
+                <form method="post">
+            <label><%= __('From Date') %>: </label>&nbsp;
+            <input type="date" required="true" id="fDate" name="fDate" max='2000-13-13' min='1899-01-01' onclick="maxDate()"></input>&nbsp;&nbsp;
+            <label><%= __('To Date') %>: </label>&nbsp;
+            <input type="date" require="true" onchange="getdate()" id="tDate" name="tDate" onclick="maxDate()">&nbsp;&nbsp;&nbsp;
+            <input type="text" id="tempDate" hidden name="tempDate"/>
+            <button type="submit" class="btn btn-primary"><%= __('Find') %></button>
+        </form>
 <div style="margin-top:20px">
+    <% if (fDate != null && tDate != null) {%>
     <header class="panel-heading">
-        <% if (fDate != null && tDate != null) {%>
         <%= __('Statistic from') %> <%= fDate.toDateString() %> <%= __('to') %> <%= tDate.toDateString() %>
-    <%  } %>
     </header>
+    <%  } %>
     <table class="table">
     <thead>
     <tr>
@@ -134,83 +144,91 @@ document.getElementById("tDate").setAttribute("max", today);
           <div class="tab-content">
             <div role="tabpanel" class="tab-pane active" id="description">
               <div class="adv-table">
-              <table class="display table table-bordered" id="hidden-table-info5">
-              <thead>
-              <tr>
-                  <th><%= __('Issued By') %></th>
-                  <th><%= __('Amount') %></th>
-                  <th class="hidden-phone"><%= __('Content') %></th>
-                  <th class="hidden-phone"><%= __('Time') %></th>
-                  <th class="hidden-phone"><%= __('Action') %></th>
-                  <th class="hidden-phone" style="display:none;">Notes:</th>
-              </tr>
-              </thead>
-              <tbody>
-                <% for (var i = 0; i < income1.length; i++) { %>
-              <tr class="gradeA">
-                  <td><%= income1[i].issuedBy.email %></td>
-                  <td><%= income1[i].amount %></td>
-                  <td class="hidden-phone"><%= income1[i].content %></td>
-                  <td class="hidden-phone" style="width:150px"><%= income1[i].updatedAt.toUTCString() %></td>
-                  <td class="hidden-phone">
-          <ul class="notification-menu">
-          <li>
-              <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                  <span class="caret"></span>
-              </a>
-              <ul class="dropdown-menu dropdown-menu-usermenu pull-right">
-        <li><a href="/admin/editIncome/<%= income1[i]._id %>"><%= __('Edit') %></a></li>
-        <li><a href="/admin/deleteIncome/<%= income1[i]._id %>"><%= __('Delete') %></a></li>
-      </ul>
-  </li>
-</ul>
-</td>
-                  <td class="center hidden-phone" style="display: none;"><%= income1[i].note %></td>
-              </tr>
-              <% } %>
-              </tbody>
-              </table>
+                  <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_1">
+      <thead>
+          <tr>
+              <th class="all"><%= __('Issued By') %></th>
+              <th class="min-phone-l"><%= __('Amount (VND)') %></th>
+              <th class="min-tablet"><%= __('Content') %></th>
+              <th class="all"><%= __('Issued Time') %></th>
+              <th class="none"><%= __('Notes') %></th>
+              <th class="all"><%= __('Actions') %></th>
+          </tr>
+      </thead>
+      <tbody>
+       <% for (var i = 0; i < income1.length; i++) { %>
+          <tr>
+              <td><%= income1[i].issuedBy %></td>
+              <td><%= income1[i].amount %></td>
+              <td><%= income1[i].content %></td>
+              <td><%= income1[i].date %></td>
+              <td><%= income1[i].note %></td>
+              <td>
+                  <div class="btn-group pull-right">
+                      <button class="btn green btn-xs btn-outline dropdown-toggle" data-toggle="dropdown">Tools
+                                  <i class="fa fa-angle-down"></i>
+                              </button>
+                      <ul class="dropdown-menu pull-right">
+                          <li>
+                              <a href="/admin/editIncome/<%= income1[i]._id %>">
+                                  <i class="icon-pencil"></i> <%= __('Edit') %> </a>
+                          </li>
+                          <li>
+                              <a href="/admin/deleteIncome/<%= income1[i]._id %>">
+                                  <i class="fa fa-trash-o"></i> <%= __('Delete') %> </a>
+                          </li>
+                      </ul>
+                  </div>
+              </td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
 
               </div>
             </div>
             <div role="tabpanel" class="tab-pane" id="reviews">
               <div class="adv-table">
-              <table class="display table table-bordered" id="hidden-table-info6">
-              <thead>
-              <tr>
-                  <th><%= __('Issued By') %></th>
-                  <th><%= __('Amount') %></th>
-                  <th class="hidden-phone"><%= __('Content') %></th>
-                  <th class="hidden-phone"><%= __('Time') %></th>
-                  <th class="hidden-phone"><%= __('Action') %></th>
-                  <th class="hidden-phone" style="display:none;">Notes:</th>
-              </tr>
-              </thead>
-              <tbody>
-                <% for (var i = 0; i < outcome1.length; i++) { %>
-              <tr class="gradeA">
-                  <td><%= outcome1[i].issuedBy.email %></td>
-                  <td><%= outcome1[i].amount %></td>
-                  <td class="hidden-phone"><%= outcome1[i].content %></td>
-                  <td class="hidden-phone" style="width:150px"><%= outcome1[i].updatedAt.toUTCString() %></td>
-                  <td class="hidden-phone">
-                    <ul class="notification-menu">
-                    <li>
-                        <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-usermenu pull-right">
-                  <li><a href="/admin/editProduct/<%= outcome1[i]._id %>"><%= __('Edit') %></a></li>
-                  <li><a href="/admin/deleteProduct/<%= outcome1[i]._id %>"><%= __('Delete') %></a></li>
-                </ul>
-            </li>
-          </ul>
-        </td>
-                  <td class="center hidden-phone" style="display: none;"><%= outcome1[i].note %></td>
-              </tr>
-              <% } %>
-              </tbody>
-              </table>
+                  <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_1">
+      <thead>
+          <tr>
+              <th class="all"><%= __('Issued By') %></th>
+              <th class="min-phone-l"><%= __('Amount (VND)') %></th>
+              <th class="min-tablet"><%= __('Content') %></th>
+              <th class="all"><%= __('Issued Time') %></th>
+              <th class="none"><%= __('Notes') %></th>
+              <th class="all"><%= __('Actions') %></th>
+          </tr>
+      </thead>
+      <tbody>
+       <% for (var i = 0; i < outcome1.length; i++) { %>
+          <tr>
+              <td><%= outcome1[i].issuedBy %></td>
+              <td><%= outcome1[i].amount %></td>
+              <td><%= outcome1[i].content %></td>
+              <td><%= outcome1[i].date %></td>
+              <td><%= outcome1[i].note %></td>
+              <td>
+                  <div class="btn-group pull-right">
+                      <button class="btn green btn-xs btn-outline dropdown-toggle" data-toggle="dropdown">Tools
+                                  <i class="fa fa-angle-down"></i>
+                              </button>
+                      <ul class="dropdown-menu pull-right">
+                          <li>
+                              <a href="/admin/editOutcome/<%= outcome1[i]._id %>">
+                                  <i class="icon-pencil"></i> <%= __('Edit') %> </a>
+                          </li>
+                          <li>
+                              <a href="/admin/deleteOutcome/<%= outcome1[i]._id %>">
+                                  <i class="fa fa-trash-o"></i> <%= __('Delete') %> </a>
+                          </li>
+                      </ul>
+                  </div>
+              </td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
 
               </div>
             </div>
@@ -233,43 +251,41 @@ document.getElementById("tDate").setAttribute("max", today);
               <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="description">
                   <div class="adv-table">
-                  <table class="display table table-bordered" id="hidden-table-info5">
-                  <thead>
-                  <tr>
-                      <th><%= __('Issued By') %></th>
-                      <th><%= __('Amount') %></th>
-                      <th class="hidden-phone"><%= __('Content') %></th>
-                      <th class="hidden-phone"><%= __('Time') %></th>
-                      <th class="hidden-phone"><%= __('Edit') %></th>
-                      <th class="hidden-phone"><%= __('Delete') %></th>
-                      <th class="hidden-phone" style="display:none;">Notes:</th>
-                  </tr>
-                  </thead>
-                  <tbody>
+                      <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_1">
+          <thead>
+              <tr>
+                  <th class="all"><%= __('Issued By') %></th>
+                  <th class="min-phone-l"><%= __('Amount (VND)') %></th>
+                  <th class="min-tablet"><%= __('Content') %></th>
+                  <th class="all"><%= __('Issued Time') %></th>
+                  <th class="none"><%= __('Notes') %></th>
+                  <th class="all"><%= __('Actions') %></th>
+              </tr>
+          </thead>
+          <tbody>
 
-                  </tbody>
-                  </table>
+          </tbody>
+      </table>
 
                   </div>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="reviews">
                   <div class="adv-table">
-                  <table class="display table table-bordered" id="hidden-table-info6">
-                  <thead>
-                  <tr>
-                      <th><%= __('Issued By') %></th>
-                      <th><%= __('Amount') %></th>
-                      <th class="hidden-phone"><%= __('Content') %></th>
-                      <th class="hidden-phone"><%= __('Time') %></th>
-                      <th class="hidden-phone"><%= __('Edit') %></th>
-                      <th class="hidden-phone"><%= __('Delete') %></th>
-                      <th class="hidden-phone" style="display:none;">Notes:</th>
-                  </tr>
-                  </thead>
-                  <tbody>
+                      <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_1">
+          <thead>
+              <tr>
+                  <th class="all"><%= __('Issued By') %></th>
+                  <th class="min-phone-l"><%= __('Amount (VND)') %></th>
+                  <th class="min-tablet"><%= __('Content') %></th>
+                  <th class="all"><%= __('Issued Time') %></th>
+                  <th class="none"><%= __('Notes') %></th>
+                  <th class="all"><%= __('Actions') %></th>
+              </tr>
+          </thead>
+          <tbody>
 
-                  </tbody>
-                  </table>
+          </tbody>
+      </table>
 
                   </div>
                 </div>
@@ -277,8 +293,11 @@ document.getElementById("tDate").setAttribute("max", today);
                     </section>
     </div>
     <% } %>
-</section>
+</div>
 
-</div>
-</div>
-</div>
+            </div>
+        </div>
+    </div>
+    <!-- END CONTENT BODY -->
+    </div>
+    <!-- END CONTENT -->

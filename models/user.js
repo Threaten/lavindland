@@ -18,7 +18,8 @@ var userSchema = mongoose.Schema({
   group: {type: String, default: 'user', required: true},
   updatedBy: {type: String, default: ''},
   deleted: {type: Boolean, default: false},
-  deletedBy: {type: String, default: ''}
+  deletedBy: {type: String, default: ''},
+  dob: {type: Date, default:'01/01/1990'}
 }, {timestamps: true});
 
 /* Password Encryption using BCrypt */

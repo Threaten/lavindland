@@ -19,7 +19,10 @@ var productSchema = new schema({
   deleted: {type: Boolean, default: false},
   deletedBy: {type: String, default: ''},
   customer: { type: schema.Types.ObjectId, ref: 'Customer' },
-  deposit: Number
+  deposit: Number,
+  sellProfit: Number,
+  rentProfit: Number,
+  rentExpire: Date
 }, {timestamps: true});
 
 module.exports = mongoose.model('Product', productSchema);

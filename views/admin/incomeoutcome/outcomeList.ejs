@@ -1,100 +1,89 @@
 <% layout('/admin/template') -%>
 <title>Outcome List</title>
-<div class="page-heading">
-    <h3>
-      <%= __('Outcome List') %>
-    </h3>
-    <ul class="breadcrumb">
-        <li>
-            <a href="/admin">Dashboard</a>
-        </li>
-        <li class="active"><%= __('Outcome List') %> </li>
-    </ul>
-</div>
-<div class="wrapper">
-
-<div class="row">
-<div class="col-sm-12">
-<section class="panel">
-<header class="panel-heading">
-    <%= __('List') %>
-    <span class="tools pull-right">
-        <a href="javascript:;" class="fa fa-chevron-down"></a>
-        <a href="javascript:;" class="fa fa-times"></a>
-     </span>
-</header>
-<div class="panel-body">
-  <div class="clearfix">
-      <div class="btn-group">
-          <a href="/admin/addOutcome" id="editable-sample_new" class="btn btn-primary">
-              <%= __('Add new') %> <i class="fa fa-plus"></i>
-          </a>
-          <i>&nbsp<i>
-      </div>
-      <% if (outcome != null) { %>
-      <div class="adv-table">
-      <table class="display table table-bordered" id="hidden-table-info5">
-      <thead>
-      <tr>
-          <th><%= __('Issued By') %></th>
-          <th><%= __('Amount') %></th>
-          <th class="hidden-phone"><%= __('Content') %></th>
-          <th class="hidden-phone"><%= __('Time') %></th>
-          <th class="hidden-phone"><%= __('Action') %></th>
-          <th class="hidden-phone" style="display:none;">Notes:</th>
-      </tr>
-      </thead>
-      <tbody>
-        <% for (var i = 0; i < outcome.length; i++) { %>
-      <tr class="gradeA">
-          <td><%= outcome[i].issuedBy.email %></td>
-          <td><%= outcome[i].amount %></td>
-          <td class="hidden-phone"><%= outcome[i].content %></td>
-          <td class="hidden-phone" style="width:150px"><%= outcome[i].updatedAt.toUTCString() %></td>
-          <td class="hidden-phone">
-            <ul class="notification-menu">
-            <li>
-                <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                    <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu dropdown-menu-usermenu pull-right">
-          <li><a href="/admin/editProduct/<%= outcome[i]._id %>"><%= __('Edit') %></a></li>
-          <li><a href="/admin/deleteProduct/<%= outcome[i]._id %>"><%= __('Delete') %></a></li>
-        </ul>
-    </li>
-  </ul>
-</td>
-          <td class="center hidden-phone" style="display: none;"><%= outcome[i].note %></td>
-      </tr>
-      <% } %>
-      </tbody>
-      </table>
-
-      </div>
-      <% } else { %>
-        <div class="adv-table">
-        <table class="display table table-bordered" id="hidden-table-info6">
-        <thead>
-        <tr>
-            <th><%= __('Issued By') %></th>
-            <th><%= __('Amount') %></th>
-            <th class="hidden-phone"><%= __('Content') %></th>
-            <th class="hidden-phone"><%= __('Time') %></th>
-            <th class="hidden-phone"><%= __('Edit') %></th>
-            <th class="hidden-phone"><%= __('Delete') %></th>
-            <th class="hidden-phone" style="display:none;">Notes:</th>
-        </tr>
-        </thead>
-        <tbody>
-
-        </tbody>
-        </table>
-
+    <!-- BEGIN CONTENT -->
+    <div class="page-content-wrapper">
+        <!-- BEGIN CONTENT BODY -->
+        <div class="page-content">
+            <!-- BEGIN PAGE HEADER-->
+            <!-- BEGIN PAGE BAR -->
+            <div class="page-bar">
+                <ul class="page-breadcrumb">
+                    <li>
+                        <a href="/admin"><%= __('Dashboard') %></a>
+                        <i class="fa fa-circle"></i>
+                    </li>
+                    <li>
+                        <a href="#"><%= __('Outcome List') %></a>
+                        <i class="fa fa-circle"></i>
+                    </li>
+                </ul>
+            </div>
+            <!-- END PAGE BAR -->
+            <!-- BEGIN PAGE TITLE-->
+            <div class="portlet light bordered">
+                <div class="portlet-title">
+                    <div class="caption font-dark">
+                        <i class="icon-settings font-dark"></i>
+                        <span class="caption-subject bold uppercase"><%= __('List') %></span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="table-toolbar">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="btn-group">
+                                    <a href="/admin/addOutcome" id="sample_editable_1_new" class="btn grey">
+                                        <%= __('Add new') %>
+                                        <i class="fa fa-plus"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_1">
+                    <thead>
+                        <tr>
+                            <th class="all"><%= __('Issued By') %></th>
+                            <th class="min-phone-l"><%= __('Amount (VND)') %></th>
+                            <th class="min-tablet"><%= __('Content') %></th>
+                            <th class="all"><%= __('Issued Time') %></th>
+                            <th class="none"><%= __('Notes') %></th>
+                            <th class="all"><%= __('Actions') %></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                     <% for (var i = 0; i < outcome.length; i++) { %>
+                        <tr>
+                            <td><%= outcome[i].issuedBy %></td>
+                            <td><%= outcome[i].amount %></td>
+                            <td><%= outcome[i].content %></td>
+                            <td><%= outcome[i].date %></td>
+                            <td><%= outcome[i].note %></td>
+                            <td>
+                                <div class="btn-group pull-right">
+                                    <button class="btn green btn-xs btn-outline dropdown-toggle" data-toggle="dropdown">Tools
+                                                <i class="fa fa-angle-down"></i>
+                                            </button>
+                                    <ul class="dropdown-menu pull-right">
+                                        <li>
+                                            <a href="/admin/editOutcome/<%= outcome[i]._id %>">
+                                                <i class="icon-pencil"></i> <%= __('Edit') %> </a>
+                                        </li>
+                                        <li>
+                                            <a href="/admin/deleteOutcome/<%= outcome[i]._id %>">
+                                                <i class="fa fa-trash-o"></i> <%= __('Delete') %> </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                      <% } %>
+                    </tbody>
+                </table>
+            </div>
         </div>
-      <% } %>
     </div>
-</div>
-</section>
-</div>
-</div>
-</div>
+    <!-- END CONTENT BODY -->
+    </div>
+    <!-- END CONTENT -->

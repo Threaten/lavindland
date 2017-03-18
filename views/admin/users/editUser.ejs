@@ -1,96 +1,148 @@
 <% layout('/admin/template') -%>
-<title>Edit Staff</title>
-<script type="text/javascript">
+<title>Edit User</title>
 
+<script type="text/javascript">
 function updateText(type) {
- var id = type+'Text';
- document.getElementById(id).value = document.getElementById(type).value;
+    var id = type+'Text';
+    document.getElementById(id).value = document.getElementById(type).value;
 }
 </script>
-<div class="page-heading">
-  <h3>
-    <%= __('Edit Staff') %>
-  </h3>
-  <ul class="breadcrumb">
-    <li>
-      <a href="/admin">Dashboard</a>
-    </li>
-    <li>
-      <a href="/admin/userList"><%= __('Users List') %></a>
-    </li>
-    <li class="active"> <%= __('Edit Staff') %> </li>
-  </ul>
-</div>
-<div class="wrapper">
-  <div class="row">
-    <div class="col-lg-12">
-      <section class="panel">
-        <header class="panel-heading">
-          <%= __('Edit Staff') %>
-        </header>
-        <div class="panel-body">
-          <% if (msg.length > 0) { %>
-            <div class="alert alert-success alert-dismissible">
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
 
-              <%= msg %>
-
-            </div>
-            <% } %>
-            <% if (error.length > 0) { %>
-              <div class="alert alert-danger alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-
-                <%= error %>
-
-              </div>
-              <% } %>
-              <form method="post">
-                <div class="form-group">
-                  <label for="name"><%= __('Name') %></label>
-                  <input type="text" class="form-control" id="name" name="name" value="<%= user.name %>" placeholder="Nguyen Van A,..." required="true">
-                </div>
-                <div class="form-group">
-                  <label for="email">Email</label>
-                  <input type="email" class="form-control" id="email" name="email" value="<%= user.email %>" placeholder="youremail@example.com" required="true">
-                </div>
-                <div class="form-group">
-                  <label for="address"><%= __('Address') %></label>
-                  <input type="text" class="form-control" id="address" name="address" value="<%= user.address %>" placeholder="100 ABC Street..." required="true">
-                <div class="form-group">
-                  <label for="Phone"><%= __('Phone') %></label>
-                  <input type="phone" class="form-control" id="phone" name="phone" value="<%= user.phone %>" placeholder="091xxxxxxx" required="true">
-                </div>
-                <div class="form-group">
-                  <label for="password"><%= __('Password') %> <%= __('Default Password') %></label>
-                  <input type="password" class="form-control" id="password" name="password" required="true">
-                </div>
-                <div class="form-group">
-                  <label for="name"><%= __('Role') %></label>
-                  <select class="form-control" data-style="btn-info" id="role" value="<%= user.role %>" name="role" onchange="updateText('role')">
-                    <optgroup label="------------------">
-                      <% for (var i = 0; i < roles.length; i++) { %>
-                        <% if (user.role.role == roles[i].role) { %>
-                      <option name="pro" selected value="<%= roles[i].role %>"><%= roles[i].role %></option>
-                      <% } else { %>
-                        <option name="pro" value="<%= roles[i].role %>"><%= roles[i].role %></option>
-                        <% } %>
-                      <% } %>
-
-                    </optgroup>
-                  </select>
-                </div>
-                <div class="form-group">
-                <button type="submit" class="btn btn-primary"><%= __('Submit') %></button>
-              </div>
-              </form>
-
-            </div>
-          </section>
+<!-- BEGIN CONTENT -->
+<div class="page-content-wrapper">
+    <!-- BEGIN CONTENT BODY -->
+    <div class="page-content">
+        <!-- BEGIN PAGE HEADER-->
+        <!-- BEGIN PAGE BAR -->
+        <div class="page-bar">
+            <ul class="page-breadcrumb">
+                <li>
+                    <a href="/admin">Home</a>
+                    <i class="fa fa-circle"></i>
+                </li>
+                <li>
+                    <a href="/admin/userList"><%= __('Users List') %></a>
+                    <i class="fa fa-circle"></i>
+                </li>
+                <li>
+                    <a href="#"><%= __('Edit User') %></a>
+                    <i class="fa fa-circle"></i>
+                </li>
+            </ul>
         </div>
-      </div>
-    </div>
+        <!-- END PAGE BAR -->
+        <!-- BEGIN PAGE TITLE-->
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="icon-equalizer font-blue-hoki"></i>
+                    <span class="caption-subject font-blue-hoki bold uppercase"><%= __('Edit User') %></span>
+                    <span class="caption-helper"><%= __('Staff Only') %></span>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                <form method="post" class="horizontal-form">
+                    <div class="form-body">
+                        <% if (msg.length > 0) { %>
+                            <div class="alert alert-success alert-dismissible">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+
+                                <%= msg %>
+
+                            </div>
+                            <% } %>
+                            <% if (error.length > 0) { %>
+                                <div class="alert alert-danger alert-dismissible">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+
+                                    <%= error %>
+
+                                </div>
+                                <% } %>
+                                <h3 class="form-section"><%= __('Personal Information') %></h3>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label"><%= __('Name') %></label>
+                                            <input type="text" id="name" name="name" required class="form-control" value="<%= user.name %>" placeholder="Nguyen Van A">
+                                        </div>
+                                    </div>
+                                    <!--/span-->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label"><%= __('Email') %></label>
+                                            <input type="text" id="email" name="email" required class="form-control" value="<%= user.email %>" placeholder="email@example.com">
+                                        </div>
+                                    </div>
+                                    <!--/span-->
+                                </div>
+                                <!--/row-->
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label"><%= __('Role') %></label>
+                                            <select class="form-control" data-style="btn-info" id="role" required name="role" onchange="updateText('role')">
+                                                <optgroup label="------------------">
+                                                    <% for (var i = 0; i < roles.length; i++) { %>
+                                                        <% if (user.role.role == roles[i].role) { %>
+                                                            <option name="pro" selected value="<%= roles[i].role %>"><%= roles[i].role %></option>
+                                                            <% } else { %>
+                                                                <option name="pro" value="<%= roles[i].role %>"><%= roles[i].role %></option>
+                                                                <% } %>
+                                                                <% } %>
+
+                                                            </optgroup>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label"><%= __('Date of Birth') %></label>
+                                                        <input type="date" id="dob" name="dob" required class="form-control" value="<%= user.dob.toISOString().slice(0,10) %>" placeholder="mm/dd/yyyy"> </div>
+                                                    </div>
+                                                    <!--/span-->
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label><%= __('Phone') %></label>
+                                                            <input type="number" id="phone" name="phone" required value="<%= user.phone %>" class="form-control"> </div>
+                                                        </div>
+                                                        <!--/span-->
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label><%= __('Password') %></label>
+                                                                <input type="password" disabled id="password" required value="<%= user.password %>" name="password" class="form-control"> </div>
+                                                                <span class="help-block"><%= __('Default Password') %></span>
+                                                            </div>
+                                                            <!--/row-->
+                                                        </div>
+                                                        <!--/row-->
+                                                        <div class="row">
+                                                            <div class="col-md-12 ">
+                                                                <div class="form-group">
+                                                                    <label><%= __('Address') %></label>
+                                                                    <input type="text" id="address" required name="address" value="<%= user.address %>" class="form-control"> </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-actions right">
+                                                                <a href="javascript:history.back()" class="btn default">Cancel</a>
+                                                                <button type="submit" class="btn blue">
+                                                                    <i class="fa fa-check"></i> <%= __('Save') %></button>
+                                                                </div>
+                                                            </form>
+                                                            <!-- END FORM-->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- END CONTENT BODY -->
+                                        </div>
+                                        <!-- END CONTENT -->

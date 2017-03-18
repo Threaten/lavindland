@@ -1,77 +1,139 @@
 <% layout('/admin/template') -%>
 <title>Edit Customer</title>
-<div class="page-heading">
-    <h3>
-        <%= __('Edit Customer') %>
-    </h3>
-    <ul class="breadcrumb">
+
+<script type="text/javascript">
+function updateText(type) {
+  var id = type+'Text';
+  document.getElementById(id).value = document.getElementById(type).value;
+}
+</script>
+
+<!-- BEGIN CONTENT -->
+<div class="page-content-wrapper">
+  <!-- BEGIN CONTENT BODY -->
+  <div class="page-content">
+    <!-- BEGIN PAGE HEADER-->
+    <!-- BEGIN PAGE BAR -->
+    <div class="page-bar">
+      <ul class="page-breadcrumb">
         <li>
-            <a href="/admin">Dashboard</a>
+          <a href="/admin">Home</a>
+          <i class="fa fa-circle"></i>
         </li>
         <li>
-            <a href="/admin/customerList"><%= __('Customers List') %></a>
+          <a href="/admin/customerList"><%= __('Customers List') %></a>
+          <i class="fa fa-circle"></i>
         </li>
-        <li class="active"><%= __('Edit Customer') %> </li>
-    </ul>
-</div>
-<div class="wrapper">
-<div class="row">
-  <div class="col-lg-12">
-    <section class="panel">
-      <header class="panel-heading">
-<%= __('Edit Customer') %>
-      </header>
-      <div class="panel-body">
-        <% if (msg.length > 0) { %>
-          <div class="alert alert-success alert-dismissible">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-
-            <%= msg %>
-
-            </div>
-            <% } %>
-            <% if (error.length > 0) { %>
-              <div class="alert alert-danger alert-dismissible">
+        <li>
+          <a href="#"><%= __('Edit Customer') %></a>
+          <i class="fa fa-circle"></i>
+        </li>
+      </ul>
+    </div>
+    <!-- END PAGE BAR -->
+    <!-- BEGIN PAGE TITLE-->
+    <div class="portlet light bordered">
+      <div class="portlet-title">
+        <div class="caption">
+          <i class="icon-equalizer font-blue-hoki"></i>
+          <span class="caption-subject font-blue-hoki bold uppercase"><%= __('Edit Customer') %></span>
+        </div>
+      </div>
+      <div class="portlet-body form">
+        <!-- BEGIN FORM-->
+        <form method="post" class="horizontal-form">
+          <div class="form-body">
+            <% if (msg.length > 0) { %>
+              <div class="alert alert-success alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
 
-                <%= error %>
+                <%= msg %>
+
+              </div>
+              <% } %>
+              <% if (error.length > 0) { %>
+                <div class="alert alert-danger alert-dismissible">
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+
+                  <%= error %>
 
                 </div>
                 <% } %>
-            <form role="form" method="post">
-              <div class="form-group">
-                <label for="name"><%= __('Name') %></label>
-                <input type="text" class="form-control" id="name" name="name" required value="<%= customer.name %>" placeholder="Nguyen Van A,...">
-                <label for="address"><%= __('Address') %></label>
-                <input type="text" class="form-control" id="address" name="address" required value="<%= customer.address %>" placeholder="208 Nguyen Huu Canh Street, Ward 22, Binh Thanh District, Ho Chi Minh City">
-                <label for="phone"><%= __('Phone') %></label>
-                <input type="text" class="form-control" id="phone" name="phone" required value="<%= customer.phone %>" placeholder="0901234567,...">
-                <label for="email"><%= __('Email') %></label>
-                <input type="email" class="form-control" id="email" name="email" required value="<%= customer.email %>" placeholder="youremail@example.com">
-                <label for="dob"><%= __('Date of Birth') %></label>
-                <input type="date" class="form-control" id="dob" name="dob" required value="<%= customer.dob.toISOString().slice(0,10) %>" placeholder="1/1/1990">
-                <label for="potential"><%= __('Potential') %></label>
-                <div id="potential">
-                  <% if (customer.potential) { %>
-                  <label><%= __('Yes') %></label> <input type="checkbox" checked id="havePotential" name="havePotential">
-                  <label>             </label>
-                  <label><%= __('No') %></label> <input type="checkbox" id="noPotential" name="noPotential">
-                  <% } else { %>
-                    <label><%= __('Yes') %></label> <input type="checkbox"  id="havePotential" name="havePotential">
-                    <label>             </label>
-                    <label><%= __('No') %></label> <input type="checkbox" checked id="noPotential" name="noPotential">
-                  <% } %>
+                <h3 class="form-section"><%= __('Personal Information') %></h3>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="name"><%= __('Name') %></label>
+                      <input type="text" class="form-control" id="name" name="name" required value="<%= customer.name %>" placeholder="Nguyen Van A,...">
+                    </div>
+                  </div>
+                  <!--/span-->
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="email"><%= __('Email') %></label>
+                      <input type="email" class="form-control" id="email" name="email" required value="<%= customer.email %>">
+                    </div>
+                  </div>
+                  <!--/span-->
+                </div>
+                <!--/row-->
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="phone"><%= __('Phone') %></label>
+                      <input type="text" class="form-control" id="phone" name="phone" required value="<%= customer.phone %>" placeholder="0901234567,...">
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="dob"><%= __('Date of Birth') %></label>
+                      <input type="date" class="form-control" id="dob" name="dob" required value="<%= customer.dob.toISOString().slice(0,10) %>" placeholder="1/1/1990">
+                    </div>
+                  </div>
+                  <!--/span-->
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="potential"><%= __('Potential') %></label>
+                      <div id="potential">
+                        <% if (customer.potential) { %>
+                          <label><%= __('Yes') %></label> <input type="checkbox" checked id="havePotential" name="havePotential">
+                          <label>             </label>
+                          <label><%= __('No') %></label> <input type="checkbox" id="noPotential" name="noPotential">
+                          <% } else { %>
+                            <label><%= __('Yes') %></label> <input type="checkbox"  id="havePotential" name="havePotential">
+                            <label>             </label>
+                            <label><%= __('No') %></label> <input type="checkbox" checked id="noPotential" name="noPotential">
+                            <% } %>
+                          </div>
+
+                        </div>
+                      </div>
+                      <!--/span-->
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12 ">
+                        <div class="form-group">
+                          <label for="address"><%= __('Address') %></label>
+                          <input type="text" class="form-control" id="address" name="address" required value="<%= customer.address %>" placeholder="208 Nguyen Huu Canh Street, Ward 22, Binh Thanh District, Ho Chi Minh City">
+
+                        </div>
+                      </div>
+
+                      <div class="form-actions right">
+                        <a href="javascript:history.back()" class="btn default">Cancel</a>
+                        <button type="submit" class="btn blue">
+                          <i class="fa fa-check"></i> <%= __('Save') %></button>
+                        </div>
+                      </form>
+                      <!-- END FORM-->
+                    </div>
+                  </div>
                 </div>
               </div>
-              <button type="submit" class="btn btn-primary"><%= __('Submit') %></button>
-            </form>
-
-          </div>
-        </section>
-      </div>
-    </div>
-  </div>
+              <!-- END CONTENT BODY -->
+            </div>
+            <!-- END CONTENT -->

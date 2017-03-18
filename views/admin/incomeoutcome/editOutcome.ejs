@@ -1,59 +1,118 @@
 <% layout('/admin/template') -%>
 <title>Edit Outcome</title>
-<div class="page-heading">
-    <h3>
-        <%= __('Edit Outcome') %>
-    </h3>
-    <ul class="breadcrumb">
-        <li>
-            <a href="/admin">Dashboard</a>
-        </li>
-        <li>
-            <a href="/admin/outcomeList"><%= __('Outcome') %></a>
-        </li>
-        <li class="active"><%= __('Edit Outcome') %> </li>
-    </ul>
-</div>
-<div class="wrapper">
-<div class="row">
-  <div class="col-lg-12">
-    <section class="panel">
-      <header class="panel-heading">
-<%= __('Edit Outcome') %>
-      </header>
-      <div class="panel-body">
-        <% if (msg.length > 0) { %>
-          <div class="alert alert-success alert-dismissible">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
+<script>
+function maxDate() {
+var today = new Date();
+var dd = today.getDate();
+var mm = today.getMonth()+1; //January is 0!
+var yyyy = today.getFullYear();
+ if(dd<10){
+        dd='0'+dd
+    }
+    if(mm<10){
+        mm='0'+mm
+    }
 
-            <%= msg %>
-
+today = yyyy+'-'+mm+'-'+dd;
+document.getElementById("date").setAttribute("max", today);
+}
+function updateText(type) {
+    var id = type+'Text';
+    document.getElementById(id).value = document.getElementById(type).value;
+}
+</script>
+<!-- BEGIN CONTENT -->
+<div class="page-content-wrapper">
+    <!-- BEGIN CONTENT BODY -->
+    <div class="page-content">
+        <!-- BEGIN PAGE HEADER-->
+        <!-- BEGIN PAGE BAR -->
+        <div class="page-bar">
+            <ul class="page-breadcrumb">
+                <li>
+                    <a href="/admin">Home</a>
+                    <i class="fa fa-circle"></i>
+                </li>
+                <li>
+                    <a href="/admin/outcomeList"><%= __('Outcome List') %></a>
+                    <i class="fa fa-circle"></i>
+                </li>
+                <li>
+                    <a href="#"><%= __('Edit Outcome') %></a>
+                    <i class="fa fa-circle"></i>
+                </li>
+            </ul>
+        </div>
+        <!-- END PAGE BAR -->
+        <!-- BEGIN PAGE TITLE-->
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="icon-equalizer font-blue-hoki"></i>
+                    <span class="caption-subject font-blue-hoki bold uppercase"><%= __('Edit Outcome') %></span>
+                </div>
             </div>
-            <% } %>
-            <% if (error.length > 0) { %>
-              <div class="alert alert-danger alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
+            <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                <form method="post" class="horizontal-form">
+                    <div class="form-body">
+                        <% if (msg.length > 0) { %>
+                <div class="alert alert-success alert-dismissible">
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
 
-                <%= error %>
+                  <%= msg %>
 
                 </div>
                 <% } %>
-            <form role="form" method="post">
-              <div class="form-group">
-                <label for="amount"><%= __('Amount') %></label>
-                <input type="numbet" class="form-control" id="amount" required value="<%= income.amount %>" name="amount" placeholder="...VND">
-                <label for="content"><%= __('Content') %></label>
-                <input type="text" class="form-control" id="content" required value="<%= income.content %>" name="content" placeholder="Vingroup, Him Lam,...">
-              </div>
-              <button type="submit" class="btn btn-primary"><%= __('Submit') %></button>
-            </form>
+                <% if (error.length > 0) { %>
+                  <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
 
-          </div>
-        </section>
-      </div>
-    </div>
-  </div>
+                    <%= error %>
+
+                  </div>
+                  <% } %>
+                        <h3 class="form-section"><%= __('Outcome Details') %></h3>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="control-label"><%= __('Content') %></label>
+                                    <input type="text" id="content" value="<%= outcome.content %>" name="content" required class="form-control" placeholder="Nguyen Van A">
+                                </div>
+                            </div>
+                            <!--/span-->
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="control-label"><%= __('Amount (VND)') %></label>
+                                    <input type="number" id="amount" value="<%= outcome.amount %>" name="amount" required class="form-control" placeholder="">
+                                </div>
+                            </div>
+                            <!--/span-->
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="control-label"><%= __('Date') %></label>
+                                    <input type="Date" id="date" value="<%= outcome.date.toISOString().slice(0,10) %>" name="date" class="form-control" onclick="maxDate()" placeholder="">
+                                    <span class="help-block"><%= __('No Date') %></span>
+                                </div>
+                            </div>
+                        </div>
+                        <!--/row-->
+
+                                        <div class="form-actions right">
+                                            <a href="javascript:history.back()" class="btn default">Cancel</a>
+                                            <button type="submit" class="btn blue">
+                                                <i class="fa fa-check"></i> <%= __('Save') %></button>
+                                            </div>
+                                        </form>
+                                        <!-- END FORM-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END CONTENT BODY -->
+                    </div>
+                    <!-- END CONTENT -->

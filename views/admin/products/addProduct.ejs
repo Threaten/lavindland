@@ -1,108 +1,170 @@
 <% layout('/admin/template') -%>
 <title>Add Product</title>
-<script type="text/javascript">
 
+<script type="text/javascript">
 function updateText(type) {
- var id = type+'Text';
- document.getElementById(id).value = document.getElementById(type).value;
+    var id = type+'Text';
+    document.getElementById(id).value = document.getElementById(type).value;
 }
 </script>
-<div class="page-heading">
-  <h3>
-    <%= __('Add new Product') %>
-  </h3>
-  <ul class="breadcrumb">
-    <li>
-      <a href="/admin">Dashboard</a>
-    </li>
-    <li>
-      <a href="/admin/productList"><%= __('Products List') %></a>
-    </li>
-    <li class="active"> <%= __('Add new Product') %> </li>
-  </ul>
-</div>
-<div class="wrapper">
-  <div class="row">
-    <div class="col-lg-12">
-      <section class="panel">
-        <header class="panel-heading">
-          <%= __('Add new Product') %>
-        </header>
-        <div class="panel-body">
-          <% if (msg.length > 0) { %>
-            <div class="alert alert-success alert-dismissible">
-              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
 
-              <%= msg %>
-
-            </div>
-            <% } %>
-            <% if (error.length > 0) { %>
-              <div class="alert alert-danger alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-
-                <%= error %>
-
-              </div>
-              <% } %>
-              <form method="post">
-                <div class="form-group">
-                  <label for="name"><%= __('Project') %></label>
-                  <select class="form-control" data-style="btn-info" id="name" name="name" onchange="updateText('name')">
-                    <optgroup label="------------------">
-                      <% for (var i = 0; i < project.length; i++) { %>
-                      <option name="pro" value="<%= project[i].name %>"><%= project[i].name %></option>
-                      <% } %>
-                    </optgroup>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label for="code"><%= __('Apt. Code') %></label>
-                  <input type="text" class="form-control" id="code" name="code" placeholder="C03.12-09, P05.19-5,..." required="true">
-                </div>
-                <div class="form-group">
-                  <label for="rooms"><%= __('Rooms') %></label>
-                  <input type="number" class="form-control" id="rooms" name="rooms" placeholder="1, 2, 3, 4,..." required="true" step="0.01">
-                </div>
-                <div class="form-group">
-                  <label for="area"><%= __('Area') %> (m<sup>2</sup>):</label>
-                  <input type="number" class="form-control" id="area" name="area" placeholder="100, 105.5, 89.7,..." step="0.01" required="true">
-                </div>
-                <div class="form-group">
-                  <label for="sellPrice"><%= __('Sell Price') %></label>
-                  <input type="number" class="form-control" id="sellPrice" name="sellPrice" placeholder="3.4, 4.5,..." step="0.01" required="true">
-                </div>
-                <div class="form-group">
-                  <label for="rentPrice"><%= __('Rent Price') %></label>
-                  <input type="number" class="form-control" id="rentPrice" name="rentPrice" placeholder="1200, 1500,..." step="0.01" required="true">
-                </div>
-                <div class="form-group">
-                  <label for="rentCommissionStaff"><%= __('Rent Commission Staff') %></label>
-                  <input type="number" class="form-control" id="rentCommissionStaff" name="rentCommissionStaff" max="100" placeholder="1200, 1500,..." step="0.01" required="true">
-                </div>
-                <div class="form-group">
-                  <label for="rentCommissionCompany"><%= __('Rent Commission Company') %></label>
-                  <input type="number" class="form-control" id="rentCommissionCompany" name="rentCommissionCompany" max="100" placeholder="1200, 1500,..." step="0.01" required="true">
-                </div>
-                <div class="form-group">
-                  <label for="sellCommissionStaff"><%= __('Sell Commission Staff') %></label>
-                  <input type="number" class="form-control" id="sellCommissionStaff" name="sellCommissionStaff" max="100" placeholder="1200, 1500,..." step="0.01" required="true">
-                </div>
-                <div class="form-group">
-                  <label for="sellCommissionCompany"><%= __('Sell Commission Company') %></label>
-                  <input type="number" class="form-control" id="sellCommissionCompany" name="sellCommissionCompany" max="100" placeholder="1200, 1500,..." step="0.01" required="true">
-                </div>
-                <div class="form-group">
-                <button type="submit" class="btn btn-primary"><%= __('Submit') %></button>
-              </div>
-              </form>
-
-            </div>
-          </section>
+<!-- BEGIN CONTENT -->
+<div class="page-content-wrapper">
+    <!-- BEGIN CONTENT BODY -->
+    <div class="page-content">
+        <!-- BEGIN PAGE HEADER-->
+        <!-- BEGIN PAGE BAR -->
+        <div class="page-bar">
+            <ul class="page-breadcrumb">
+                <li>
+                    <a href="/admin">Home</a>
+                    <i class="fa fa-circle"></i>
+                </li>
+                <li>
+                    <a href="/admin/productList"><%= __('Products List') %></a>
+                    <i class="fa fa-circle"></i>
+                </li>
+                <li>
+                    <a href="#"><%= __('Add Product') %></a>
+                    <i class="fa fa-circle"></i>
+                </li>
+            </ul>
         </div>
-      </div>
-    </div>
+        <!-- END PAGE BAR -->
+        <!-- BEGIN PAGE TITLE-->
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="icon-equalizer font-blue-hoki"></i>
+                    <span class="caption-subject font-blue-hoki bold uppercase"><%= __('Add Product') %></span>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                <form method="post" class="horizontal-form">
+                    <div class="form-body">
+                        <% if (msg.length > 0) { %>
+                            <div class="alert alert-success alert-dismissible">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+
+                                <%= msg %>
+
+                            </div>
+                            <% } %>
+                            <% if (error.length > 0) { %>
+                                <div class="alert alert-danger alert-dismissible">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+
+                                    <%= error %>
+
+                                </div>
+                                <% } %>
+                                <h3 class="form-section"><%= __('Product Information') %></h3>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="name"><%= __('Project') %></label>
+                                            <select class="form-control" data-style="btn-info" id="name" name="name" onchange="updateText('name')">
+                                                <optgroup label="------------------">
+                                                    <% for (var i = 0; i < project.length; i++) { %>
+                                                        <option name="pro" value="<%= project[i].name %>"><%= project[i].name %></option>
+                                                        <% } %>
+                                                    </optgroup>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <!--/span-->
+                                        <!--/span-->
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="code"><%= __('Apt. Code') %></label>
+                                                <input type="text" class="form-control" id="code" name="code" placeholder="C03.12-09, P05.19-5,..." required="true">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="rooms"><%= __('Rooms') %></label>
+                                                <input type="number" class="form-control" id="rooms" name="rooms" placeholder="1, 2, 3, 4,..." required="true" step="1">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="area"><%= __('Area') %> (m<sup>2</sup>):</label>
+                                                <input type="number" class="form-control" id="area" name="area" placeholder="100, 105.5, 89.7,..." step="0.01" required="true"></div>
+                                            </div>
+
+                                        </div>
+                                        <!--/row-->
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="sellPrice"><%= __('Sell Price') %></label>
+                                                    <input type="number" class="form-control" id="sellPrice" name="sellPrice" placeholder="3.4, 4.5,..." step="0.01" required="true">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="rentPrice"><%= __('Rent Price') %></label>
+                                                    <input type="number" class="form-control" id="rentPrice" name="rentPrice" placeholder="1200, 1500,..." step="0.01" required="true">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="sellProfit"><%= __('Sell Profit') %></label>
+                                                    <input type="number" class="form-control" id="sellProfit" name="sellProfit" placeholder="1200, 1500,..." step="0.01" required="true">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="rentProfit"><%= __('Rent Profit') %></label>
+                                                    <input type="number" class="form-control" id="rentProfit" name="rentProfit" placeholder="1200, 1500,..." step="0.01" required="true">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="rentCommissionStaff"><%= __('Rent Commission Staff') %></label>
+                                                    <input type="number" class="form-control" id="rentCommissionStaff" name="rentCommissionStaff" max="100" placeholder="1200, 1500,..." step="0.01" required="true">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="rentCommissionCompany"><%= __('Rent Commission Company') %></label>
+                                                    <input type="number" class="form-control" id="rentCommissionCompany" name="rentCommissionCompany" max="100" placeholder="1200, 1500,..." step="0.01" required="true">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="sellCommissionStaff"><%= __('Sell Commission Staff') %></label>
+                                                    <input type="number" class="form-control" id="sellCommissionStaff" name="sellCommissionStaff" max="100" placeholder="1200, 1500,..." step="0.01" required="true">
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label for="sellCommissionCompany"><%= __('Sell Commission Company') %></label>
+                                                    <input type="number" class="form-control" id="sellCommissionCompany" name="sellCommissionCompany" max="100" placeholder="1200, 1500,..." step="0.01" required="true">
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-actions right">
+                                            <a href="javascript:history.back()" class="btn default">Cancel</a>
+                                            <button type="submit" class="btn blue">
+                                                <i class="fa fa-check"></i> <%= __('Save') %></button>
+                                            </div>
+                                        </form>
+                                        <!-- END FORM-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END CONTENT BODY -->
+                    </div>
+                    <!-- END CONTENT -->

@@ -1,61 +1,114 @@
 <% layout('/admin/template') -%>
 <title>Edit Project</title>
-<div class="page-heading">
-    <h3>
-        <%= __('Edit Project') %>
-    </h3>
-    <ul class="breadcrumb">
+
+<script type="text/javascript">
+function updateText(type) {
+  var id = type+'Text';
+  document.getElementById(id).value = document.getElementById(type).value;
+}
+</script>
+
+<!-- BEGIN CONTENT -->
+<div class="page-content-wrapper">
+  <!-- BEGIN CONTENT BODY -->
+  <div class="page-content">
+    <!-- BEGIN PAGE HEADER-->
+    <!-- BEGIN PAGE BAR -->
+    <div class="page-bar">
+      <ul class="page-breadcrumb">
         <li>
-            <a href="/admin">Dashboard</a>
+          <a href="/admin">Home</a>
+          <i class="fa fa-circle"></i>
         </li>
         <li>
-            <a href="/admin/projectList"><%= __('Projects List') %></a>
+          <a href="/admin/projectList"><%= __('Projects List') %></a>
+          <i class="fa fa-circle"></i>
         </li>
-        <li class="active"><%= __('Edit Project') %> </li>
-    </ul>
-</div>
-<div class="wrapper">
-<div class="row">
-  <div class="col-lg-12">
-    <section class="panel">
-      <header class="panel-heading">
-<%= __('Edit Project') %>
-      </header>
-      <div class="panel-body">
-        <% if (msg.length > 0) { %>
-          <div class="alert alert-success alert-dismissible">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-
-            <%= msg %>
-
-            </div>
-            <% } %>
-            <% if (error.length > 0) { %>
-              <div class="alert alert-danger alert-dismissible">
+        <li>
+          <a href="#"><%= __('Edit Project') %></a>
+          <i class="fa fa-circle"></i>
+        </li>
+      </ul>
+    </div>
+    <!-- END PAGE BAR -->
+    <!-- BEGIN PAGE TITLE-->
+    <div class="portlet light bordered">
+      <div class="portlet-title">
+        <div class="caption">
+          <i class="icon-equalizer font-blue-hoki"></i>
+          <span class="caption-subject font-blue-hoki bold uppercase"><%= __('Edit Project') %></span>
+        </div>
+      </div>
+      <div class="portlet-body form">
+        <!-- BEGIN FORM-->
+        <form method="post" class="horizontal-form">
+          <div class="form-body">
+            <% if (msg.length > 0) { %>
+              <div class="alert alert-success alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
 
-                <%= error %>
+                <%= msg %>
+
+              </div>
+              <% } %>
+              <% if (error.length > 0) { %>
+                <div class="alert alert-danger alert-dismissible">
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+
+                  <%= error %>
 
                 </div>
                 <% } %>
-            <form role="form" method="post">
-              <div class="form-group">
-                <label for="name"><%= __('Project Name') %></label>
-                <input type="text" class="form-control" id="name" name="name" required value="<%= project.name %>" placeholder="Vinhomes Central Park,...">
-                <label for="name"><%= __('Address') %></label>
-                <input type="text" class="form-control" id="address" name="address" required value="<%= project.address %>" placeholder="208 Nguyen Huu Canh Street, Ward 22, Binh Thanh District, Ho Chi Minh City">
-                <label for="name"><%= __('Owner') %></label>
-                <input type="text" class="form-control" id="owner" name="owner" required value="<%= project.owner %>" placeholder="Vingroup, Him Lam,...">
-              </div>
-              <button type="submit" class="btn btn-primary"><%= __('Submit') %></button>
-            </form>
+                <h3 class="form-section"><%= __('Project Information') %></h3>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="name"><%= __('Name') %></label>
+                      <input type="text" class="form-control" id="name" name="name" required value="<%= project.name %>" placeholder="Vinhomes Central Park, Vinhomes Golden River">
+                    </div>
+                  </div>
+                  <!--/span-->
+                  <!--/span-->
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="name"><%= __('Owner') %></label>
+                      <input type="text" class="form-control" id="owner" name="owner" required value="<%= project.owner %>" placeholder="Vingroup, Nova...">
+                    </div>
+                  </div>
+                </div>
+                <!--/row-->
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="text"><%= __('Address') %></label>
+                      <input type="text" class="form-control" id="address" name="address" required value="<%= project.address %>" placeholder="208 Nguyen Huu Canh Street, Ward 22, Binh Thanh District, Ho Chi Minh City">
+                    </div>
+                  </div>
+                </div>
+                    <div class="row">
+                      <div class="col-md-12 ">
+                        <div class="form-group">
+                          <label for="address"><%= __('Note') %></label>
+                          <input type="text" class="form-control" id="note" name="note" value="<%= project.note %>" placeholder="Note">
 
-          </div>
-        </section>
-      </div>
-    </div>
-  </div>
+                        </div>
+                      </div>
+
+                      <div class="form-actions right">
+                        <a href="javascript:history.back()" class="btn default">Cancel</a>
+                        <button type="submit" class="btn blue">
+                          <i class="fa fa-check"></i> <%= __('Save') %></button>
+                        </div>
+                      </form>
+                      <!-- END FORM-->
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- END CONTENT BODY -->
+            </div>
+            <!-- END CONTENT -->
