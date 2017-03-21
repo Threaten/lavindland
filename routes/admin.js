@@ -2,6 +2,7 @@ var router = require('express').Router();
 var async = require('async');
 var crypto = require('crypto');
 var mongoose = require('mongoose');
+var bcrypt = require('bcrypt-nodejs');
 
 var User = require('../models/user');
 var Project = require('../models/project');
@@ -92,6 +93,75 @@ router.get('/vi', function (req, res) {
   return res.redirect('/admin/');
 });
 
+router.get('/profile', requireGroup("staff"), function (req, res, cb) {
+  //var ObjectId = require('mongodb').ObjectID;
+  User
+  .findOne({ _id: req.user._id })
+  .exec(function(err, user) {
+    if (err) return cb(err);
+    res.render('admin/profile', {
+
+      user: user,
+       error: req.flash('error'), msg: req.flash('OK'), error1: req.flash('error1'), msg1: req.flash('OK1')
+    });
+  });
+});
+
+router.post('/editProfile', requireGroup('staff'), function(req, res ,cb) {
+      User.findOne({ _id: req.user._id }, function(err, user) {
+        user.name = req.body.name;
+        user.email = req.body.email;
+        user.address = req.body.address;
+        user.dob = req.body.dob;
+        user.phone = req.body.phone;
+        user.group = "staff";
+        user.isVerified = true;
+        var seed = crypto.randomBytes(20);
+        var authToken = crypto.createHash('sha1').update(seed + req.body.email).digest('hex');
+        user.authToken = authToken;
+
+        user.save(function(err) {
+          if (err) {
+            req.flash('error', "Account with the provided Email is existed.");
+            return res.redirect(req.get('referer'));
+
+          }
+          req.flash('OK', "Edited");
+          return res.redirect('/admin/profile');
+        });
+      });
+});
+
+router.post('/changePassword', requireGroup('staff'), function(req, res ,cb) {
+      User.findOne({ _id: req.user._id }, function(err, user) {
+        var password = req.body.currentPassword;
+        if(user.checkPassword(password)) {
+          if (req.body.newPassword == req.body.newPasswordConf) {
+            user.password = req.body.newPassword
+            user.save(function(err) {
+              if (err) {
+                console.log(err);
+                req.flash('error1', "An Error has occured");
+                return res.redirect(req.get('referer'));
+
+              }
+              req.flash('OK1', "Password Changed");
+              return res.redirect('/admin/profile');
+            });
+          } else {
+            console.log(err);
+            req.flash('error1', "Your new Password and Password Confirmation do not match!");
+            return res.redirect(req.get('referer'));
+          }
+        } else {
+          console.log(err);
+          req.flash('error1', "Your current Password is incorrect");
+          return res.redirect(req.get('referer'));
+        }
+
+      });
+});
+
 router.get('/userList',requireRole(), requireGroup("staff"), function (req, res, cb) {
   //var ObjectId = require('mongodb').ObjectID;
   User
@@ -106,6 +176,7 @@ router.get('/userList',requireRole(), requireGroup("staff"), function (req, res,
     });
   });
 });
+
 
 router.get('/addUser',requireRole(), requireGroup('staff'), function(req, res, cb) {
   Role
