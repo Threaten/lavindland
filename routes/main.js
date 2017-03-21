@@ -13,7 +13,7 @@ router.get('/', function (req, res, cb) {
 
 router.get('/en', function (req, res) {
   res.cookie('i18n', 'en');
-return res.redirect('/');
+  return res.redirect('/');
 });
 
 router.get('/vi', function (req, res) {
