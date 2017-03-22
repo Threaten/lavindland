@@ -72,8 +72,8 @@
         <% } else { %>
           <td><font color="blue"><%= __("Deposited") %></font></td>
           <% } %>
-    <td><%= products[i].sellPrice/1000000000 %> <%= __('Billion') %></td>
-    <td><%= products[i].rentPrice/1000000 %> <%= __('Million') %></td>
+    <td><%= products[i].sellPrice.toLocaleString() %></td>
+    <td><%= products[i].rentPrice.toLocaleString() %></td>
     <td>
         <div class="btn-group pull-right">
             <button class="btn green btn-xs btn-outline dropdown-toggle" data-toggle="dropdown">Tools
@@ -100,8 +100,8 @@
     <td><%= products[i].area %></td>
     <td><%= products[i].createdAt %></td>
     <td><%= products[i].updatedAt %></td>
-    <% if (products[i].customer != null) { %>
-      <td><%= products[i].customer.name %> - <%= __('Deposited: ') %> <%= products[i].deposit %></td>
+    <% if (products[i].customer != null && products[i].deposit) { %>
+      <td><%= products[i].customer.name %> - <%= __('Deposited: ') %> <%= products[i].deposit.toLocaleString() %> VND</td>
     <% } else {%>
       <td></td>
       <% } %>

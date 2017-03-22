@@ -29,15 +29,15 @@
                     <ul class="dropdown-menu dropdown-menu-default">
                         <li>
                             <a href="/admin/profile">
-                                <i class="icon-user"></i> My Profile </a>
+                                <i class="icon-user"></i><%= __('Profile') %> </a>
                         </li>
                         <li>
                             <a href="/">
-                                <i class="icon-home"></i> Homepage </a>
+                                <i class="icon-home"></i> <%= __('Home') %></a>
                         </li>
                         <li>
                             <a href="/logout">
-                                <i class="icon-key"></i> Log Out </a>
+                                <i class="icon-key"></i> <%= __('Logout') %> </a>
                         </li>
                     </ul>
                 </li>
@@ -46,12 +46,12 @@
                 <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
                 <li class="dropdown dropdown-user">
                     <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                        <span class="username username-hide-on-mobile"> Language </span>
+                        <span class="username username-hide-on-mobile"> <%= __('Language') %> </span>
                         <i class="fa fa-angle-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-default">
-                        <li><a href="/admin/en"><img src="/views/admin/assets/global/img//flags/us.png" alt="English"> English</a></li>
-                        <li><a href="/admin/vi"><img src="/views/admin/assets/global/img//flags/vn.png" alt="Vietnamese"> Vietnamese</a></li>
+                        <li><a href="/admin/en"><img src="/views/admin/assets/global/img/flags/us.png" alt="English"> English</a></li>
+                        <li><a href="/admin/vi"><img src="/views/admin/assets/global/img/flags/vn.png" alt="Vietnamese"> Tiếng Việt</a></li>
                     </ul>
                 </li>
                 <!-- END QUICK SIDEBAR TOGGLER -->

@@ -99,7 +99,7 @@ function updateText(type) {
                                                 <div class="col-md-3">
                                                     <div class="form-group">
                                                         <label for="area"><%= __('Area') %> (m<sup>2</sup>):</label>
-                                                        <input type="number" class="form-control" id="area" name="area" value="<%= product.area %>" placeholder="100, 105.5, 89.7,..." step="0.01" required="true">
+                                                        <input type="number" class="form-control" id="area" name="area" value="<%= product.area %>" placeholder="100, 105.5, 89.7,..." step="0.0001" required="true">
                                                     </div>
                                                 </div>
                                             </div>
@@ -108,13 +108,13 @@ function updateText(type) {
                                                     <div class="col-md-3">
                                                         <div class="form-group">
                                                             <label for="sellPrice"><%= __('Sell Price') %></label>
-                                                            <input type="number" class="form-control" id="sellPrice" value="<%= product.sellPrice/1000000000 %>" name="sellPrice" placeholder="3.4, 4.5,..." step="0.01" required="true">
+                                                            <input type="number" class="form-control" id="sellPrice" value="<%= product.sellPrice/1000000 %>" name="sellPrice" placeholder="3.4, 4.5,..." step="0.0001" required="true">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-3">
                                                         <div class="form-group">
                                                             <label for="rentPrice"><%= __('Rent Price') %></label>
-                                                            <input type="number" class="form-control" id="rentPrice" value="<%= product.rentPrice/1000000 %>" name="rentPrice" placeholder="1200, 1500,..." step="0.01" required="true">
+                                                            <input type="number" class="form-control" id="rentPrice" value="<%= product.rentPrice/1000000 %>" name="rentPrice" placeholder="1200, 1500,..." step="0.001" required="true">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-3">

@@ -38,7 +38,7 @@
 	"Project": "Project",
 	"Apt. Code": "Apt. Code",
 	"Status": "Status",
-	"Sell Price": "Sell Price (b. VND)",
+	"Sell Price": "Sell Price (m. VND)",
 	"Rent Price": "Rent Price (m. VND)",
 	"Rooms": "Rooms",
 	"Area": "Area",
@@ -156,5 +156,7 @@
 	"Commssion": "Commission",
 	"Not Available": "Not Available",
 	"Add Product": "Add Product",
-	"Company Commission List": "Company Commission List"
+	"Company Commission List": "Company Commission List",
+	"Sell Price List": "Sell Price (VND)",
+	"Rent Price List": "Rent Price (VND)"
 }

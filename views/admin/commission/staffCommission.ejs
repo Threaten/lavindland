@@ -46,9 +46,9 @@
                             <td><%= staffCommission[i].customer.name %></td>
                             <td><%= staffCommission[i].code %></td>
                             <td><%= staffCommission[i].area %></td>
-                            <td><%= staffCommission[i].price/1000000 %> <%= __('Million') %></td>
-                            <td><%= staffCommission[i].profit/1000000 %> <%= __('Million') %></td>
-                            <td><%= staffCommission[i].amount/1000000 %> <%= __('Million') %></td>
+                            <td><%= staffCommission[i].price.toLocaleString() %></td>
+                            <td><%= staffCommission[i].profit.toLocaleString() %></td>
+                            <td><%= staffCommission[i].amount.toLocaleString() %></td>
                         </tr>
                       <% } %>
                     </tbody>

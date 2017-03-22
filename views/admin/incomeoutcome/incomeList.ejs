@@ -56,7 +56,7 @@
                      <% for (var i = 0; i < income.length; i++) { %>
                         <tr>
                             <td><%= income[i].issuedBy %></td>
-                            <td><%= income[i].amount %></td>
+                            <td><%= income[i].amount.toLocaleString() %></td>
                             <td><%= income[i].content %></td>
                             <td><%= income[i].date %></td>
                             <td><%= income[i].note %></td>

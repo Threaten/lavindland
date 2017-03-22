@@ -1,59 +1,59 @@
 <% layout('/admin/template') -%>
 <title>Company Commission List</title>
-    <!-- BEGIN CONTENT -->
-    <div class="page-content-wrapper">
-        <!-- BEGIN CONTENT BODY -->
-        <div class="page-content">
-            <!-- BEGIN PAGE HEADER-->
-            <!-- BEGIN PAGE BAR -->
-            <div class="page-bar">
-                <ul class="page-breadcrumb">
-                    <li>
-                        <a href="/admin"><%= __('Dashboard') %></a>
-                        <i class="fa fa-circle"></i>
-                    </li>
-                    <li>
-                        <a href="#"><%= __('Company Commission List') %></a>
-                        <i class="fa fa-circle"></i>
-                    </li>
-                </ul>
-            </div>
-            <!-- END PAGE BAR -->
-            <!-- BEGIN PAGE TITLE-->
-            <div class="portlet light bordered">
-                <div class="portlet-title">
-                    <div class="caption font-dark">
-                        <i class="icon-settings font-dark"></i>
-                        <span class="caption-subject bold uppercase"><%= __('List') %></span>
-                    </div>
-                </div>
-                <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_1">
-                    <thead>
-                        <tr>
-                            <th class="min-phone-l"><%= __('Customer') %></th>
-                            <th class="min-tablet"><%= __('Apt. Code') %></th>
-                            <th class="all"><%= __('Area') %> (m<sup>2)</sup></th>
-                            <th class="all"><%= __('Price') %></th>
-                            <th class="all"><%= __('Profit') %></th>
-                            <th class="all"><%= __('Commssion') %></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                     <% for (var i = 0; i < companyCommission.length; i++) { %>
-                        <tr>
-                            <td><%= companyCommission[i].customer.name %></td>
-                            <td><%= companyCommission[i].code %></td>
-                            <td><%= companyCommission[i].area %></td>
-                            <td><%= companyCommission[i].price/1000000 %> <%= __('Million') %></td>
-                            <td><%= companyCommission[i].profit/1000000 %> <%= __('Million') %></td>
-                            <td><%= companyCommission[i].amount/1000000 %> <%= __('Million') %></td>
-                        </tr>
-                      <% } %>
-                    </tbody>
-                </table>
-            </div>
+<!-- BEGIN CONTENT -->
+<div class="page-content-wrapper">
+  <!-- BEGIN CONTENT BODY -->
+  <div class="page-content">
+    <!-- BEGIN PAGE HEADER-->
+    <!-- BEGIN PAGE BAR -->
+    <div class="page-bar">
+      <ul class="page-breadcrumb">
+        <li>
+          <a href="/admin"><%= __('Dashboard') %></a>
+          <i class="fa fa-circle"></i>
+        </li>
+        <li>
+          <a href="#"><%= __('Company Commission List') %></a>
+          <i class="fa fa-circle"></i>
+        </li>
+      </ul>
+    </div>
+    <!-- END PAGE BAR -->
+    <!-- BEGIN PAGE TITLE-->
+    <div class="portlet light bordered">
+      <div class="portlet-title">
+        <div class="caption font-dark">
+          <i class="icon-settings font-dark"></i>
+          <span class="caption-subject bold uppercase"><%= __('List') %></span>
         </div>
+      </div>
+      <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_1">
+        <thead>
+          <tr>
+            <th class="min-phone-l"><%= __('Customer') %></th>
+            <th class="min-tablet"><%= __('Apt. Code') %></th>
+            <th class="all"><%= __('Area') %> (m<sup>2)</sup></th>
+            <th class="all"><%= __('Price') %></th>
+            <th class="all"><%= __('Profit') %></th>
+            <th class="all"><%= __('Commssion') %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for (var i = 0; i < companyCommission.length; i++) { %>
+            <tr>
+              <td><%= companyCommission[i].customer.name %></td>
+              <td><%= companyCommission[i].code %></td>
+              <td><%= companyCommission[i].area %></td>
+              <td><%= companyCommission[i].price.toLocaleString() %></td>
+              <td><%= companyCommission[i].profit.toLocaleString() %></td>
+              <td><%= companyCommission[i].amount.toLocaleString() %></td>
+            </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
     </div>
-    <!-- END CONTENT BODY -->
-    </div>
-    <!-- END CONTENT -->
+  </div>
+  <!-- END CONTENT BODY -->
+</div>
+<!-- END CONTENT -->

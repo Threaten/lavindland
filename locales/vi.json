@@ -38,7 +38,7 @@
 	"Project": "Dự án",
 	"Apt. Code": "Mã căn",
 	"Status": "Trạng thái",
-	"Sell Price": "Giá bán (tỉ VND)",
+	"Sell Price": "Giá bán (triệu VND)",
 	"Rent Price": "Giá thuê (triệu VND)",
 	"Rooms": "Phòng",
 	"Area": "Diện tích",
@@ -157,8 +157,13 @@
 	"Not Available": "Không tồn tại",
 	"Add Product": "Thêm sản phẩm",
 	"Company Commission List": "Hoa hồng công ty",
-	"Edit Profile": "Edit Profile",
-	"Current Password": "Current Password",
-	"New Password": "New Password",
-	"New Password Confirmation": "New Password Confirmation"
+	"Edit Profile": "Thay đổi thông tin",
+	"Current Password": "Mật khẩu hiện tại",
+	"New Password": "Mật khẩu mới",
+	"New Password Confirmation": "Nhập lại mật khẩu",
+	"Add User": "Thêm nhân viên",
+	"Sell Price List": "Giá bán (VND)",
+	"Rent Price List": "Giá thuê (VND)",
+	"Added By": "Added By",
+	"Add Customer": "Add Customer"
 }

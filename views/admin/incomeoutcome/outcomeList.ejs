@@ -56,7 +56,7 @@
                      <% for (var i = 0; i < outcome.length; i++) { %>
                         <tr>
                             <td><%= outcome[i].issuedBy %></td>
-                            <td><%= outcome[i].amount %></td>
+                            <td><%= outcome[i].amount.toLocaleString() %></td>
                             <td><%= outcome[i].content %></td>
                             <td><%= outcome[i].date %></td>
                             <td><%= outcome[i].note %></td>

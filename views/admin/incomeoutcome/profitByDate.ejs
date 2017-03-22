@@ -105,12 +105,12 @@ document.getElementById("tDate").setAttribute("max", today);
     <% if (totalIncome == null) {%>
         <td>0</td>
     <% } else { %>
-    <td><%= totalIncome %></td>
+    <td><%= totalIncome.toLocaleString() %></td>
         <% } %>
         <% if (totalOutcome == null) {%>
             <td>0</td>
         <% } else { %>
-        <td><%= totalOutcome %></td>
+        <td><%= totalOutcome.toLocaleString() %></td>
             <% } %>
     </tr>
     <tr>
@@ -119,9 +119,9 @@ document.getElementById("tDate").setAttribute("max", today);
         <td colspan="2">0</td>
     <% } else { %>
         <% if (balance > 0) { %>
-            <td colspan="2"><font color="#009900" size="4px" weight="bold"><%= balance %><font></td>
+            <td colspan="2"><font color="#009900" size="4px" weight="bold"><%= balance.toLocaleString() %><font></td>
         <% } else { %>
-            <td colspan="2"><font color="red" size="4px" weight="bold"><%= balance %><font></td>
+            <td colspan="2"><font color="red" size="4px" weight="bold"><%= balance.toLocaleString() %><font></td>
             <% } %>
         <% } %>
     </tr>
@@ -159,7 +159,7 @@ document.getElementById("tDate").setAttribute("max", today);
        <% for (var i = 0; i < income1.length; i++) { %>
           <tr>
               <td><%= income1[i].issuedBy %></td>
-              <td><%= income1[i].amount %></td>
+              <td><%= income1[i].amount.toLocaleString() %></td>
               <td><%= income1[i].content %></td>
               <td><%= income1[i].date %></td>
               <td><%= income1[i].note %></td>
@@ -204,7 +204,7 @@ document.getElementById("tDate").setAttribute("max", today);
        <% for (var i = 0; i < outcome1.length; i++) { %>
           <tr>
               <td><%= outcome1[i].issuedBy %></td>
-              <td><%= outcome1[i].amount %></td>
+              <td><%= outcome1[i].amount.toLocaleString() %></td>
               <td><%= outcome1[i].content %></td>
               <td><%= outcome1[i].date %></td>
               <td><%= outcome1[i].note %></td>

@@ -382,7 +382,7 @@ router.post('/addProduct/',  requireRole(), requireGroup('staff'), function(req,
       product.rooms = req.body.rooms;
       product.area = req.body.area;
       product.rentPrice = req.body.rentPrice*1000000;
-      product.sellPrice = req.body.sellPrice*1000000000;
+      product.sellPrice = req.body.sellPrice*1000000;
       product.staffCommissionRent = req.body.rentCommissionStaff;
       product.companyCommissionRent = req.body.rentCommissionCompany;
       product.staffCommissionSell = req.body.sellCommissionStaff;
@@ -441,7 +441,7 @@ router.post('/editProduct/:id', requireRole(), requireGroup('staff'), function(r
         product.rooms = req.body.rooms;
         product.area = req.body.area;
         product.rentPrice = req.body.rentPrice*1000000;
-        product.sellPrice = req.body.sellPrice*1000000000;
+        product.sellPrice = req.body.sellPrice*1000000;
         product.staffCommissionRent = req.body.rentCommissionStaff;
         product.companyCommissionRent = req.body.rentCommissionCompany;
         product.staffCommissionSell = req.body.sellCommissionStaff;
