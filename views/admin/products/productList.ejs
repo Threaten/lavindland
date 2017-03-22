@@ -98,8 +98,8 @@
             </td>
     <td><%= products[i].rooms %></td>
     <td><%= products[i].area %></td>
-    <td><%= products[i].createdAt %></td>
-    <td><%= products[i].updatedAt %></td>
+    <td><%= products[i].createdAt.toLocaleString() %></td>
+    <td><%= products[i].updatedAt.toLocaleString() %></td>
     <% if (products[i].customer != null && products[i].deposit) { %>
       <td><%= products[i].customer.name %> - <%= __('Deposited: ') %> <%= products[i].deposit.toLocaleString() %> VND</td>
     <% } else {%>
