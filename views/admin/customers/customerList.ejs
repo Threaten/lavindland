@@ -86,7 +86,7 @@
                                                     </ul>
                                                 </div>
                                             </td>
-                                            <td><%= customers[i].dobtoISOString().slice(0,10) %></td>
+                                            <td><%= customers[i].dob.toISOString().slice(0,10) %></td>
                                             <td><%= customers[i].note %></td>
                                             <td><%= customers[i].createdAt.toLocaleString() %></td>
                                             <td><%= customers[i].updatedAt.toLocaleString() %></td>
