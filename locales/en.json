@@ -158,5 +158,10 @@
 	"Add Product": "Add Product",
 	"Company Commission List": "Company Commission List",
 	"Sell Price List": "Sell Price (VND)",
-	"Rent Price List": "Rent Price (VND)"
+	"Rent Price List": "Rent Price (VND)",
+	"Edit Profile": "Edit Profile",
+	"Current Password": "Current Password",
+	"New Password": "New Password",
+	"New Password Confirmation": "New Password Confirmation",
+	"Password Regex": "Password Regex"
 }

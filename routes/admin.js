@@ -136,6 +136,8 @@ router.post('/changePassword', requireGroup('staff'), function(req, res ,cb) {
       User.findOne({ _id: req.user._id }, function(err, user) {
         var password = req.body.currentPassword;
         if(user.checkPassword(password)) {
+          var regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,20}/g
+          if (req.body.newPassword.match(regex)) {
           if (req.body.newPassword == req.body.newPasswordConf) {
             user.password = req.body.newPassword
             user.save(function(err) {
@@ -153,6 +155,10 @@ router.post('/changePassword', requireGroup('staff'), function(req, res ,cb) {
             req.flash('error1', "Your new Password and Password Confirmation do not match!");
             return res.redirect(req.get('referer'));
           }
+        } else {
+          req.flash('error1', "Minimum 8 and Maximum 20 characters at least 1 Uppercase Alphabet, 1 Lowercase Alphabet, 1 Number and 1 Special Character ");
+          return res.redirect(req.get('referer'));
+        }
         } else {
           console.log(err);
           req.flash('error1', "Your current Password is incorrect");
