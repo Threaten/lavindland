@@ -534,7 +534,7 @@ router.post('/productList',requireGroup('staff'), function (req, res, cb) {
   var minArea = 0;
   var maxArea = 0;
     if (req.body.name) {
-      if (req.body.rooms!="Rooms") {
+      if (req.body.rooms) {
         if (req.body.minSellPrice) {
           minSellPrice = req.body.minSellPrice;
         } else {
