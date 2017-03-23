@@ -7,7 +7,7 @@ var productSchema = new schema({
   code: String,
   status: String,
   rooms: Number,
-  area: String,
+  area: Number,
   rentPrice: Number,
   sellPrice: Number,
   staffCommissionRent: Number,

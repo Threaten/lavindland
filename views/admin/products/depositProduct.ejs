@@ -68,8 +68,9 @@ function updateText(type) {
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="name"><%= __('Customers') %></label>
-                                            <select class="form-control" data-style="btn-info" id="cus" name="cus" onchange="updateText('name')">
-                                                <optgroup label="------------------">
+                                            <select class="bs-select form-control" data-live-search="true"  required id="cus" name="cus" onchange="updateText('name')">
+                                                <option selected disabled>Choose Customer</option>
+
                                                     <% var select = 'a' %>
                                                     <% for (var i = 0; i < customers.length; i++) { %>
 

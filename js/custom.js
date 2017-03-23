@@ -118,6 +118,7 @@ $(document).ready(function() {
       $('#total').html(quantity);
     });
 
+
     function stripeResponseHandler(status, response) {
       // Grab the form:
       var $form = $('#payment-form');

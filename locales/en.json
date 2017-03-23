@@ -163,5 +163,8 @@
 	"Current Password": "Current Password",
 	"New Password": "New Password",
 	"New Password Confirmation": "New Password Confirmation",
-	"Password Regex": "Password Regex"
+	"Password Regex": "The password must be at least 8 characters in length and contain both uppercase and lowercase letters, at least 1 number and special character (!@#$%^&*)",
+	"Change Password": "Change Password",
+	"Filter by:": "Filter by:",
+	"Filter": "Filter"
 }

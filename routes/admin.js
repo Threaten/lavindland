@@ -345,6 +345,9 @@ Products
 */
 
 router.get('/productList', requireRole(),requireGroup('staff'), function (req, res) {
+  Project
+  .find({ 'deleted': false})
+  .exec(function(err, projects) {
   Product
   .find({ 'deleted': false})
   .populate('project')
@@ -352,7 +355,11 @@ router.get('/productList', requireRole(),requireGroup('staff'), function (req, r
   .exec(function(err, products) {
     if (err) return cb(err);
     res.render('admin/products/productList', {
+      projects: projects,
       products: products,
+      error: req.flash('error'),
+      msg: req.flash('OK')
+    })
     });
   });
 })
@@ -519,6 +526,234 @@ router.post('/deleteProduct/:id', requireRole(), requireGroup('staff'), function
   ]);
 });
 
+router.post('/productList',requireGroup('staff'), function (req, res, cb) {
+  var minSellPrice = 0;
+  var maxSellPrice = 0;
+  var minRentPrice = 0;
+  var maxRentPrice = 0;
+  var minArea = 0;
+  var maxArea = 0;
+    if (req.body.name) {
+      if (req.body.rooms!="Rooms") {
+        if (req.body.minSellPrice) {
+          minSellPrice = req.body.minSellPrice;
+        } else {
+          minSellPrice = 0;
+        }
+        if (req.body.maxSellPrice) {
+          maxSellPrice = req.body.maxSellPrice;
+        } else {
+          maxSellPrice = 999999999999999;
+        }
+        if (req.body.minRentPrice) {
+          minRentPrice = req.body.minRentPrice;
+        } else {
+          minRentPrice = 0;
+        }
+        if (req.body.maxRentPrice) {
+          maxRentPrice = req.body.maxRentPrice;
+        } else {
+          maxRentPrice = 999999999999999;
+        }
+        if (req.body.minArea) {
+          minArea = req.body.minArea;
+        } else {
+          minArea = 0;
+        }
+        if (req.body.maxArea) {
+          maxArea = req.body.maxArea;
+        } else {
+          maxArea = 999999999999999;
+        }
+        Project
+        .find({ 'deleted': false})
+        .exec(function(err, projects) {
+          async.waterfall([
+
+            function(result) {
+              Project.findOne({ name: req.body.name }, function(err, project)  {
+                if (err) return cb(err);
+                result(null, project);
+              });
+            },
+            function(project, result) {
+        Product
+        .find({ 'deleted': false,project: project._id, rooms: {$eq: req.body.rooms},  sellPrice: {$gte: minSellPrice, $lte: maxSellPrice}, rentPrice: {$gte: minRentPrice, $lte: maxRentPrice}, area: {$gte: minArea, $lte: maxArea} })
+        .populate('project')
+        .populate('customer')
+        .exec(function(err, products) {
+          if (err) return cb(err);
+          res.render('admin/products/productList', {
+            projects: projects,
+            products: products,
+            error: req.flash('error'),
+            msg: req.flash('OK')
+          })
+          });
+        }
+      ]);
+        });
+      } else {
+        if (req.body.minSellPrice) {
+          minSellPrice = req.body.minSellPrice;
+        } else {
+          minSellPrice = 0;
+        }
+        if (req.body.maxSellPrice) {
+          maxSellPrice = req.body.maxSellPrice;
+        } else {
+          maxSellPrice = 999999999999999;
+        }
+        if (req.body.minRentPrice) {
+          minRentPrice = req.body.minRentPrice;
+        } else {
+          minRentPrice = 0;
+        }
+        if (req.body.maxRentPrice) {
+          maxRentPrice = req.body.maxRentPrice;
+        } else {
+          maxRentPrice = 999999999999999;
+        }
+        if (req.body.minArea) {
+          minArea = req.body.minArea;
+        } else {
+          minArea = 0;
+        }
+        if (req.body.maxArea) {
+          maxArea = req.body.maxArea;
+        } else {
+          maxArea = 999999999999999;
+        }
+        Project
+        .find({ 'deleted': false})
+        .exec(function(err, projects) {
+          async.waterfall([
+
+            function(result) {
+              Project.findOne({ name: req.body.name }, function(err, project)  {
+                if (err) return cb(err);
+                result(null, project);
+              });
+            },
+            function(project, result) {
+        Product
+        .find({ 'deleted': false,project: project._id, sellPrice: {$gte: minSellPrice, $lte: maxSellPrice}, rentPrice: {$gte: minRentPrice, $lte: maxRentPrice}, area: {$gte: minArea, $lte: maxArea} })
+        .populate('project')
+        .populate('customer')
+        .exec(function(err, products) {
+          if (err) return cb(err);
+          res.render('admin/products/productList', {
+            projects: projects,
+            products: products,
+            error: req.flash('error'),
+            msg: req.flash('OK')
+          })
+          });
+        }
+      ]);
+        });
+      }
+    } else {
+      if (req.body.rooms) {
+        console.log(req.body.rooms);
+        if (req.body.minSellPrice) {
+          minSellPrice = req.body.minSellPrice;
+        } else {
+          minSellPrice = 0;
+        }
+        if (req.body.maxSellPrice) {
+          maxSellPrice = req.body.maxSellPrice;
+        } else {
+          maxSellPrice = 999999999999999;
+        }
+        if (req.body.minRentPrice) {
+          minRentPrice = req.body.minRentPrice;
+        } else {
+          minRentPrice = 0;
+        }
+        if (req.body.maxRentPrice) {
+          maxRentPrice = req.body.maxRentPrice;
+        } else {
+          maxRentPrice = 999999999999999;
+        }
+        if (req.body.minArea) {
+          minArea = req.body.minArea;
+        } else {
+          minArea = 0;
+        }
+        if (req.body.maxArea) {
+          maxArea = req.body.maxArea;
+        } else {
+          maxArea = 999999999999999;
+        }
+      Project
+      .find({ 'deleted': false})
+      .exec(function(err, projects) {
+      Product
+      .find({ 'deleted': false, rooms: {$eq: req.body.rooms},  sellPrice: {$gte: minSellPrice, $lte: maxSellPrice}, rentPrice: {$gte: minRentPrice, $lte: maxRentPrice} , area: {$gte: minArea, $lte: maxArea} })
+      .populate('project')
+      .populate('customer')
+      .exec(function(err, products) {
+        if (err) return cb(err);
+        res.render('admin/products/productList', {
+          projects: projects,
+          products: products,
+          error: req.flash('error'),
+          msg: req.flash('OK')
+        })
+        });
+      });
+    } else {
+      if (req.body.minSellPrice) {
+        minSellPrice = req.body.minSellPrice;
+      } else {
+        minSellPrice = 0;
+      }
+      if (req.body.maxSellPrice) {
+        maxSellPrice = req.body.maxSellPrice;
+      } else {
+        maxSellPrice = 999999999999999;
+      }
+      if (req.body.minRentPrice) {
+        minRentPrice = req.body.minRentPrice;
+      } else {
+        minRentPrice = 0;
+      }
+      if (req.body.maxRentPrice) {
+        maxRentPrice = req.body.maxRentPrice;
+      } else {
+        maxRentPrice = 999999999999999;
+      }
+      if (req.body.minArea) {
+        minArea = req.body.minArea;
+      } else {
+        minArea = 0;
+      }
+      if (req.body.maxArea) {
+        maxArea = req.body.maxArea;
+      } else {
+        maxArea = 999999999999999;
+      }
+      Project
+      .find({ 'deleted': false})
+      .exec(function(err, projects) {
+      Product
+      .find({ 'deleted': false,  sellPrice: {$gte: minSellPrice, $lte: maxSellPrice}, rentPrice: {$gte: minRentPrice, $lte: maxRentPrice}, area: {$gte: minArea, $lte: maxArea} })
+      .populate('project')
+      .populate('customer')
+      .exec(function(err, products) {
+        if (err) return cb(err);
+        res.render('admin/products/productList', {
+          projects: projects,
+          products: products,
+          error: req.flash('error'),
+          msg: req.flash('OK')
+        })
+        });
+      });
+    }
+    }
+  })
 
 
 router.get('/depositProduct/:id', requireRole(), requireGroup('staff'), function(req, res, cb) {
