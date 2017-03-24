@@ -191,9 +191,11 @@ function updateText(type) {
                                     <td><font color="red"><%= __("Sold") %></font></td>
                                     <% } else if (products[i].status == "Rented") { %>
                                       <td><font color="purple"><%= __("Rented") %></font></td>
-                                      <% } else { %>
+                                      <% } else if (products[i].status == "Deposited"){ %>
                                         <td><font color="blue"><%= __("Deposited") %></font></td>
-                                        <% } %>
+                                        <% } else { %>
+                                          <td><font style="color:rgb(50,197,210)"><%= __("Consigned") %></font></td>
+                                          <% } %>
                                         <td><%= products[i].sellPrice.toLocaleString() %></td>
                                         <td><%= products[i].rentPrice.toLocaleString() %></td>
                                         <td>
@@ -235,67 +237,83 @@ function updateText(type) {
                                             </div>
                                             <div class="tab-pane" id="tab_1">
                                               <% for (var i = 0; i < products.length; i++) { %>
-                                                <% if (products[i].status == "Available") { %>
-                                                  <a data-toggle="modal" href="#basic">
-                                                    <div class="col-md-1" style="background-color: white; border: thin solid black;text-align:center;">
-                                                      <font size="3px" color="black"><%= products[i].code %></font>
-                                                    </div>
-                                                  </a>
-
-                                                  <% } else if (products[i].status == "Sold") { %>
-                                                    <a data-toggle="modal" href="#basic">
-                                                      <div class="col-md-1" style="background-color: red; border: thin solid black;text-align:center;">
-                                                        <font size="3px" color="white"><%= products[i].code %></font>
+                                                  <% if (products[i].status == "Available") { %>
+                                                    <a data-toggle="modal" data-target="#<%= i %>">
+                                                      <div class="col-md-1" style="background-color: white; border: thin solid black;text-align:center;">
+                                                        <font size="3px" color="black"><%= products[i].code %></font>
                                                       </div>
                                                     </a>
 
-                                                    <% } else if (products[i].status == "Rented") { %>
-                                                      <a data-toggle="modal" href="#basic">
-                                                        <div class="col-md-1" style="background-color: purple; border: thin solid black;text-align:center;">
+                                                    <% } else if (products[i].status == "Sold") { %>
+                                                      <a data-toggle="modal" data-target="#<%= i %>">
+                                                        <div class="col-md-1" style="background-color: red; border: thin solid black;text-align:center;">
                                                           <font size="3px" color="white"><%= products[i].code %></font>
                                                         </div>
                                                       </a>
 
-                                                      <% } else if (products[i].status == "Deposited") { %>
-                                                        <a data-toggle="modal" href="#basic">
-                                                          <div class="col-md-1" style="background-color: blue; border: thin solid black;text-align:center;">
+                                                      <% } else if (products[i].status == "Rented") { %>
+                                                        <a data-toggle="modal" data-target="#<%= i %>">
+                                                          <div class="col-md-1" style="background-color: purple; border: thin solid black;text-align:center;">
                                                             <font size="3px" color="white"><%= products[i].code %></font>
                                                           </div>
                                                         </a>
 
-                                                        <% } else if (products[i].status == "Consigned") { %>
-                                                          <a data-toggle="modal" href="#basic">
-                                                            <div class="col-md-1" style="background-color: green; border: thin solid black;text-align:center;">
+                                                        <% } else if (products[i].status == "Deposited") { %>
+                                                          <a data-toggle="modal" data-target="#<%= i %>">
+                                                            <div class="col-md-1" style="background-color: blue; border: thin solid black;text-align:center;">
                                                               <font size="3px" color="white"><%= products[i].code %></font>
                                                             </div>
                                                           </a>
-                                                          <% } %>
-                                                          <div class="modal fade" id="basic" tabindex="-1" role="basic" aria-hidden="true">
-                                                              <div class="modal-dialog">
-                                                                  <div class="modal-content">
-                                                                      <div class="modal-header">
-                                                                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                                                                          <h4 class="modal-title"><%= __('Information') %></h4>
-                                                                      </div>
-                                                                      <div class="modal-body">
-                                                                        <%= __('Project') %>: <%= products[i].project.name %><br/>
-                                                                        <%= __('Apt. Code') %>: <%= products[i].code %><br/>
-                                                                        <%= __('Sell Price List') %>: <%= products[i].sellPrice %><br/>
-                                                                        <%= __('Rent Price List') %>: <%= products[i].rentPrice %><br/>
-                                                                        <%= __('Area') %>: <%= products[i].area %> m<sup>2</sup><br/>
-                                                                        <%= __('Rooms') %>: <%= products[i].rooms %><br/>
 
-                                                                      </div>
-                                                                      <div class="modal-footer">
-                                                                          <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
-                                                                          <button type="button" class="btn green">Save changes</button>
-                                                                      </div>
-                                                                  </div>
-                                                                  <!-- /.modal-content -->
+                                                          <% } else if (products[i].status == "Consigned") { %>
+                                                            <a data-toggle="modal" data-target="#<%= i %>">
+                                                              <div class="col-md-1" style="background-color: rgb(50,197,210); border: thin solid black;text-align:center;">
+                                                                <font size="3px" color="white"><%= products[i].code %></font>
                                                               </div>
-                                                              <!-- /.modal-dialog -->
-                                                          </div>
-                                                          <% } %>
+                                                            </a>
+                                                            <% } %>
+                                                            <div class="modal fade" id="<%= i %>" role="dialog" aria-hidden="true">
+                                                                <div class="modal-dialog">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                                                                            <h4 class="modal-title"><%= __('Information') %></h4>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                          <%= __('Project') %>: <%= products[i].project.name %><br/>
+                                                                          <%= __('Apt. Code') %>: <%= products[i].code %><br/>
+                                                                          <%= __('Sell Price List') %>: <%= products[i].sellPrice %><br/>
+                                                                          <%= __('Rent Price List') %>: <%= products[i].rentPrice %><br/>
+                                                                          <%= __('Area') %>: <%= products[i].area %> m<sup>2</sup><br/>
+                                                                          <%= __('Rooms') %>: <%= products[i].rooms %><br/>
+
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                          <a class="btn btn-primary" href="/admin/editProduct/<%= products[i]._id %>"><%= __('Edit') %></a>
+                                                                          <a class="btn dark" href="/admin/deleteProduct/<%= products[i]._id %>"><%= __('Delete') %></a>
+                                                                          <% if (products[i].status == "Sold" || products[i].status == "Rented") { %>
+                                                                            <% } else { %>
+                                                                              <a class="btn red" href="/admin/sellProduct/<%= products[i]._id %>"><%= __('Sell') %></a>
+                                                                              <a class="btn purple" href="/admin/rentProduct/<%= products[i]._id %>"><%= __('Rent') %></a>
+                                                                              <% if (products[i].status == "Deposited") { %>
+                                                                                <a class="btn blue" href="/admin/cancelDepositProduct/<%= products[i]._id %>"><%= __('Cancel Deposit') %></a>
+                                                                                <% } else {  %>
+                                                                                  <a class="btn blue" href="/admin/depositProduct/<%= products[i]._id %>"><%= __('Deposit') %></a>
+                                                                                  <% } %>
+                                                                                  <% } %>
+                                                                                  <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- /.modal-content -->
+                                                                </div>
+                                                                <!-- /.modal-dialog -->
+                                                            </div>
+                                                            <% } %>
+
+
+
+
+
                                                         </div>
                                                       </div>
                                                     </div>
