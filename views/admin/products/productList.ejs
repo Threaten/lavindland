@@ -2,222 +2,309 @@
 <title>Products List</title>
 <script type="text/javascript">
 function updateText(type) {
-    var id = type+'Text';
-    document.getElementById(id).value = document.getElementById(type).value;
+  var id = type+'Text';
+  document.getElementById(id).value = document.getElementById(type).value;
 }
+}
+
 </script>
+
 <!-- BEGIN CONTENT -->
 <div class="page-content-wrapper">
-    <!-- BEGIN CONTENT BODY -->
-    <div class="page-content">
-        <!-- BEGIN PAGE HEADER-->
-        <!-- BEGIN PAGE BAR -->
-        <div class="page-bar">
-            <ul class="page-breadcrumb">
-                <li>
-                    <a href="/admin"><%= __('Dashboard') %></a>
-                    <i class="fa fa-circle"></i>
-                </li>
-                <li>
-                    <a href="#"><%= __('Products List') %></a>
-                    <i class="fa fa-circle"></i>
-                </li>
-            </ul>
+  <!-- BEGIN CONTENT BODY -->
+  <div class="page-content">
+    <!-- BEGIN PAGE HEADER-->
+    <!-- BEGIN PAGE BAR -->
+    <div class="page-bar">
+      <ul class="page-breadcrumb">
+        <li>
+          <a href="/admin"><%= __('Dashboard') %></a>
+          <i class="fa fa-circle"></i>
+        </li>
+        <li>
+          <a href="#"><%= __('Products List') %></a>
+          <i class="fa fa-circle"></i>
+        </li>
+      </ul>
+    </div>
+    <!-- END PAGE BAR -->
+    <!-- BEGIN PAGE TITLE-->
+    <div class="portlet light bordered">
+      <div class="portlet-title">
+        <div class="caption font-dark">
+          <i class="icon-settings font-dark"></i>
+          <span class="caption-subject bold uppercase"><%= __('List') %></span>
         </div>
-        <!-- END PAGE BAR -->
-        <!-- BEGIN PAGE TITLE-->
-        <div class="portlet light bordered">
-            <div class="portlet-title">
-                <div class="caption font-dark">
-                    <i class="icon-settings font-dark"></i>
-                    <span class="caption-subject bold uppercase"><%= __('List') %></span>
-                </div>
+      </div>
+      <div class="portlet-body">
+        <div class="table-toolbar">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="btn-group">
+                <a href="/admin/addProduct" id="sample_editable_1_new" class="btn grey">
+                  <%= __('Add new') %>
+                  <i class="fa fa-plus"></i>
+                </a>
+              </div>
             </div>
-            <div class="portlet-body">
-                <div class="table-toolbar">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="btn-group">
-                                <a href="/admin/addProduct" id="sample_editable_1_new" class="btn grey">
-                                    <%= __('Add new') %>
-                                    <i class="fa fa-plus"></i>
-                                </a>
-                            </div>
-                        </div>
+          </div>
+        </div>
+      </div>
+      <div class="portlet-body">
+        <div class="table-toolbar">
+          <form method="post" class="horizontal-form">
+            <div class="form-body">
+              <% if (msg.length > 0) { %>
+                <div class="alert alert-success alert-dismissible">
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+
+                  <%= msg %>
+
+                </div>
+                <% } %>
+                <% if (error.length > 0) { %>
+                  <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+
+                    <%= error %>
+
+                  </div>
+                  <% } %>
+                  <div class="row">
+
+                    <div class="col-md-1">
+                      <div class="form-group">
+                        <b><%= __('Filter by:') %></b>
+                      </div>
                     </div>
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <select class="form-control" data-style="btn-info" id="name" name="name" onchange="updateText('name')">
+                          <option disabled selected value="Project">Project</option>
+
+                          <% for (var i = 0; i < projects.length; i++) { %>
+                            <option name="pro" value="<%= projects[i].name %>"><%= projects[i].name %></option>
+                            <% } %>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-2">
+                        <div class="form-group">
+                          <select class="form-control" id="rooms" name="rooms">
+                            <option selected disabled>Rooms</option>
+                            <option value=1>1</option>
+                            <option value=2>2</option>
+                            <option value=3>3</option>
+                            <option value=4>4</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-2">
+                        <div class="form-group">
+                          <input type="number" name="minSellPrice" id="minSellPrice" class="form-control" placeholder="Min Sell Price"/>
+                        </div>
+                      </div>
+                      <div class="col-md-2">
+                        <div class="form-group">
+                          <input type="number" name="maxSellPrice" id="maxSellPrice" class="form-control" placeholder="Max Sell Price"/>
+                        </div>
+                      </div>
+                      <div class="col-md-1">
+                        <button type="submit" class="btn blue">
+                          <i class="fa fa-check"></i> <%= __('Filter') %></button>
+                        </div>
+
+                      </div>
+                      <div class="row">
+                        <div class="col-md-2">
+                        </div>
+                        <div class="col-md-2">
+                          <div class="form-group">
+                            <input type="number" name="minArea" id="minArea" class="form-control" placeholder="Min Area"/>
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                          <div class="form-group">
+                            <input type="number" name="maxArea" id="maxArea" class="form-control" placeholder="Max Area"/>
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                          <div class="form-group">
+                            <input type="number" name="minRentPrice" id="minRentPrice" class="form-control" placeholder="Min Rent Price"/>
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                          <div class="form-group">
+                            <input type="number" name="maxRentPrice" id="maxRentPrice" class="form-control" placeholder="Max Rent Price"/>
+                          </div>
+                        </div>
+
+
+                      </div>
+                    </form>
+                  </div>
                 </div>
-            </div>
-            <div class="portlet-body">
-                <div class="table-toolbar">
-                    <form method="post" class="horizontal-form">
-                        <div class="form-body">
-                            <% if (msg.length > 0) { %>
-                                <div class="alert alert-success alert-dismissible">
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
+              </div>
 
-                                    <%= msg %>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="tabbable-line boxless tabbable-reversed">
+                    <ul class="nav nav-tabs">
+                      <li class="active">
+                        <a href="#tab_0" data-toggle="tab"><i class="icon-list"></i>List</a>
+                      </li>
+                      <li>
+                        <a href="#tab_1" data-toggle="tab"><i class="icon-grid"></i>Grid</a>
+                      </li>
+                    </ul>
+                    <div class="tab-content">
+                      <div class="tab-pane active" id="tab_0">
+                        <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_1">
+                          <thead>
+                            <tr>
+                              <th class="all"><%= __('Project') %></th>
+                              <th class="all"><%= __('Apt. Code') %></th>
+                              <th class="all"><%= __('Status') %></th>
+                              <th class="all"><%= __('Sell Price List') %></th>
+                              <th class="all"><%= __('Rent Price List') %></th>
+                              <th class="all"><%= __('Action') %></th>
+                              <th class="none"><%= __('Rooms') %></th>
+                              <th class="none"><%= __('Area') %> (m<sup>2</sup>): </th>
+                              <th class="none"><%= __('Created At') %></th>
+                              <th class="none"><%= __('Updated At') %></th>
+                              <th class="none"><%= __('Customer') %></th>
+                              <th class="none"><%= __('Note') %></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <% for (var i = 0; i < products.length; i++) { %>
+                              <tr class="gradeA">
+                                <td><%= products[i].project.name %></td>
+                                <td><%= products[i].code %></td>
+                                <% if (products[i].status == "Available") { %>
+                                  <td><%= __("Available") %></td>
+                                  <% } else if (products[i].status == "Sold") { %>
+                                    <td><font color="red"><%= __("Sold") %></font></td>
+                                    <% } else if (products[i].status == "Rented") { %>
+                                      <td><font color="purple"><%= __("Rented") %></font></td>
+                                      <% } else { %>
+                                        <td><font color="blue"><%= __("Deposited") %></font></td>
+                                        <% } %>
+                                        <td><%= products[i].sellPrice.toLocaleString() %></td>
+                                        <td><%= products[i].rentPrice.toLocaleString() %></td>
+                                        <td>
+                                          <div class="btn-group pull-right">
+                                            <button class="btn green btn-xs btn-outline dropdown-toggle" data-toggle="dropdown">Tools
+                                              <i class="fa fa-angle-down"></i>
+                                            </button>
+                                            <ul class="dropdown-menu pull-right">
+                                              <li><a href="/admin/editProduct/<%= products[i]._id %>"><%= __('Edit') %></a></li>
+                                              <li><a href="/admin/deleteProduct/<%= products[i]._id %>"><%= __('Delete') %></a></li>
+                                              <% if (products[i].status == "Sold" || products[i].status == "Rented") { %>
+                                                <% } else { %>
+                                                  <li><a href="/admin/sellProduct/<%= products[i]._id %>"><%= __('Sell') %></a></li>
+                                                  <li><a href="/admin/rentProduct/<%= products[i]._id %>"><%= __('Rent') %></a></li>
+                                                  <% if (products[i].status == "Deposited") { %>
+                                                    <li><a href="/admin/cancelDepositProduct/<%= products[i]._id %>"><%= __('Cancel Deposit') %></a></li>
+                                                    <% } else {  %>
+                                                      <li><a href="/admin/depositProduct/<%= products[i]._id %>"><%= __('Deposit') %></a></li>
+                                                      <% } %>
+                                                      <% } %>
 
-                                </div>
-                                <% } %>
-                                <% if (error.length > 0) { %>
-                                    <div class="alert alert-danger alert-dismissible">
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-
-                                        <%= error %>
-
-                                    </div>
-                                    <% } %>
-                                    <div class="row">
-
-                                        <div class="col-md-1">
-                                            <div class="form-group">
-                                                <b><%= __('Filter by:') %></b>
+                                                    </ul>
+                                                  </div>
+                                                </td>
+                                                <td><%= products[i].rooms %></td>
+                                                <td><%= products[i].area %></td>
+                                                <td><%= products[i].createdAt.toLocaleString() %></td>
+                                                <td><%= products[i].updatedAt.toLocaleString() %></td>
+                                                <% if (products[i].customer != null && products[i].deposit) { %>
+                                                  <td><%= products[i].customer.name %> - <%= __('Deposited: ') %> <%= products[i].deposit.toLocaleString() %> VND</td>
+                                                  <% } else {%>
+                                                    <td></td>
+                                                    <% } %>
+                                                    <th><%= products[i].note %></th>
+                                                  </tr>
+                                                  <% } %>
+                                                </tbody>
+                                              </table>
                                             </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <select class="form-control" data-style="btn-info" id="name" name="name" onchange="updateText('name')">
-                                                    <option disabled selected value="Project">Project</option>
-
-                                                    <% for (var i = 0; i < projects.length; i++) { %>
-                                                        <option name="pro" value="<%= projects[i].name %>"><%= projects[i].name %></option>
-                                                        <% } %>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <div class="form-group">
-                                                    <select class="form-control" id="rooms" name="rooms">
-                                                        <option selected disabled>Rooms</option>
-                                                        <option value=1>1</option>
-                                                        <option value=2>2</option>
-                                                        <option value=3>3</option>
-                                                        <option value=4>4</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <div class="form-group">
-                                                    <input type="number" name="minSellPrice" id="minSellPrice" class="form-control" placeholder="Min Sell Price"/>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <div class="form-group">
-                                                    <input type="number" name="maxSellPrice" id="maxSellPrice" class="form-control" placeholder="Max Sell Price"/>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-1">
-                                                <button type="submit" class="btn blue">
-                                                    <i class="fa fa-check"></i> <%= __('Filter') %></button>
-                                                </div>
-
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-2">
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <div class="form-group">
-                                                        <input type="number" name="minArea" id="minArea" class="form-control" placeholder="Min Area"/>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <div class="form-group">
-                                                        <input type="number" name="maxArea" id="maxArea" class="form-control" placeholder="Max Area"/>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <div class="form-group">
-                                                        <input type="number" name="minRentPrice" id="minRentPrice" class="form-control" placeholder="Min Rent Price"/>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <div class="form-group">
-                                                        <input type="number" name="maxRentPrice" id="maxRentPrice" class="form-control" placeholder="Max Rent Price"/>
-                                                    </div>
-                                                </div>
-
-
-                                            </div>
-                                        </form>
-
-                                    </div>
-                                </div>
-                                <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_1">
-                                    <thead>
-                                        <tr>
-                                            <th class="all"><%= __('Project') %></th>
-                                            <th class="all"><%= __('Apt. Code') %></th>
-                                            <th class="all"><%= __('Status') %></th>
-                                            <th class="all"><%= __('Sell Price List') %></th>
-                                            <th class="all"><%= __('Rent Price List') %></th>
-                                            <th class="all"><%= __('Action') %></th>
-                                            <th class="none"><%= __('Rooms') %></th>
-                                            <th class="none"><%= __('Area') %> (m<sup>2</sup>): </th>
-                                            <th class="none"><%= __('Created At') %></th>
-                                            <th class="none"><%= __('Updated At') %></th>
-                                            <th class="none"><%= __('Customer') %></th>
-                                            <th class="none"><%= __('Note') %></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <% for (var i = 0; i < products.length; i++) { %>
-                                            <tr class="gradeA">
-                                                <td><%= products[i].project.name %></td>
-                                                <td><%= products[i].code %></td>
+                                            <div class="tab-pane" id="tab_1">
+                                              <% for (var i = 0; i < products.length; i++) { %>
                                                 <% if (products[i].status == "Available") { %>
-                                                    <td><%= __("Available") %></td>
-                                                    <% } else if (products[i].status == "Sold") { %>
-                                                        <td><font color="red"><%= __("Sold") %></font></td>
-                                                        <% } else if (products[i].status == "Rented") { %>
-                                                            <td><font color="purple"><%= __("Rented") %></font></td>
-                                                            <% } else { %>
-                                                                <td><font color="blue"><%= __("Deposited") %></font></td>
-                                                                <% } %>
-                                                                <td><%= products[i].sellPrice.toLocaleString() %></td>
-                                                                <td><%= products[i].rentPrice.toLocaleString() %></td>
-                                                                <td>
-                                                                    <div class="btn-group pull-right">
-                                                                        <button class="btn green btn-xs btn-outline dropdown-toggle" data-toggle="dropdown">Tools
-                                                                            <i class="fa fa-angle-down"></i>
-                                                                        </button>
-                                                                        <ul class="dropdown-menu pull-right">
-                                                                            <li><a href="/admin/editProduct/<%= products[i]._id %>"><%= __('Edit') %></a></li>
-                                                                            <li><a href="/admin/deleteProduct/<%= products[i]._id %>"><%= __('Delete') %></a></li>
-                                                                            <% if (products[i].status == "Sold" || products[i].status == "Rented") { %>
-                                                                                <% } else { %>
-                                                                                    <li><a href="/admin/sellProduct/<%= products[i]._id %>"><%= __('Sell') %></a></li>
-                                                                                    <li><a href="/admin/rentProduct/<%= products[i]._id %>"><%= __('Rent') %></a></li>
-                                                                                    <% if (products[i].status == "Deposited") { %>
-                                                                                        <li><a href="/admin/cancelDepositProduct/<%= products[i]._id %>"><%= __('Cancel Deposit') %></a></li>
-                                                                                        <% } else {  %>
-                                                                                            <li><a href="/admin/depositProduct/<%= products[i]._id %>"><%= __('Deposit') %></a></li>
-                                                                                            <% } %>
-                                                                                            <% } %>
+                                                  <a data-toggle="modal" href="#basic">
+                                                    <div class="col-md-1" style="background-color: white; border: thin solid black;text-align:center;">
+                                                      <font size="3px" color="black"><%= products[i].code %></font>
+                                                    </div>
+                                                  </a>
 
-                                                                                        </ul>
-                                                                                    </div>
-                                                                                </td>
-                                                                                <td><%= products[i].rooms %></td>
-                                                                                <td><%= products[i].area %></td>
-                                                                                <td><%= products[i].createdAt.toLocaleString() %></td>
-                                                                                <td><%= products[i].updatedAt.toLocaleString() %></td>
-                                                                                <% if (products[i].customer != null && products[i].deposit) { %>
-                                                                                    <td><%= products[i].customer.name %> - <%= __('Deposited: ') %> <%= products[i].deposit.toLocaleString() %> VND</td>
-                                                                                    <% } else {%>
-                                                                                        <td></td>
-                                                                                        <% } %>
-                                                                                        <th><%= products[i].note %></th>
-                                                                                    </tr>
-                                                                                    <% } %>
-                                                                                </tbody>
-                                                                            </table>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <!-- END CONTENT BODY -->
+                                                  <% } else if (products[i].status == "Sold") { %>
+                                                    <a data-toggle="modal" href="#basic">
+                                                      <div class="col-md-1" style="background-color: red; border: thin solid black;text-align:center;">
+                                                        <font size="3px" color="white"><%= products[i].code %></font>
+                                                      </div>
+                                                    </a>
+
+                                                    <% } else if (products[i].status == "Rented") { %>
+                                                      <a data-toggle="modal" href="#basic">
+                                                        <div class="col-md-1" style="background-color: purple; border: thin solid black;text-align:center;">
+                                                          <font size="3px" color="white"><%= products[i].code %></font>
+                                                        </div>
+                                                      </a>
+
+                                                      <% } else if (products[i].status == "Deposited") { %>
+                                                        <a data-toggle="modal" href="#basic">
+                                                          <div class="col-md-1" style="background-color: blue; border: thin solid black;text-align:center;">
+                                                            <font size="3px" color="white"><%= products[i].code %></font>
+                                                          </div>
+                                                        </a>
+
+                                                        <% } else if (products[i].status == "Consigned") { %>
+                                                          <a data-toggle="modal" href="#basic">
+                                                            <div class="col-md-1" style="background-color: green; border: thin solid black;text-align:center;">
+                                                              <font size="3px" color="white"><%= products[i].code %></font>
                                                             </div>
-                                                            <!-- END CONTENT -->
+                                                          </a>
+                                                          <% } %>
+                                                          <div class="modal fade" id="basic" tabindex="-1" role="basic" aria-hidden="true">
+                                                              <div class="modal-dialog">
+                                                                  <div class="modal-content">
+                                                                      <div class="modal-header">
+                                                                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                                                                          <h4 class="modal-title"><%= __('Information') %></h4>
+                                                                      </div>
+                                                                      <div class="modal-body">
+                                                                        <%= __('Project') %>: <%= products[i].project.name %><br/>
+                                                                        <%= __('Apt. Code') %>: <%= products[i].code %><br/>
+                                                                        <%= __('Sell Price List') %>: <%= products[i].sellPrice %><br/>
+                                                                        <%= __('Rent Price List') %>: <%= products[i].rentPrice %><br/>
+                                                                        <%= __('Area') %>: <%= products[i].area %> m<sup>2</sup><br/>
+                                                                        <%= __('Rooms') %>: <%= products[i].rooms %><br/>
+
+                                                                      </div>
+                                                                      <div class="modal-footer">
+                                                                          <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
+                                                                          <button type="button" class="btn green">Save changes</button>
+                                                                      </div>
+                                                                  </div>
+                                                                  <!-- /.modal-content -->
+                                                              </div>
+                                                              <!-- /.modal-dialog -->
+                                                          </div>
+                                                          <% } %>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <!-- END CONTENT BODY -->
+
+                                          <!-- END CONTENT -->
