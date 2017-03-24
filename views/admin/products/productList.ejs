@@ -282,8 +282,8 @@ function updateText(type) {
                                                                         <div class="modal-body">
                                                                           <%= __('Project') %>: <%= products[i].project.name %><br/>
                                                                           <%= __('Apt. Code') %>: <%= products[i].code %><br/>
-                                                                          <%= __('Sell Price List') %>: <%= products[i].sellPrice %><br/>
-                                                                          <%= __('Rent Price List') %>: <%= products[i].rentPrice %><br/>
+                                                                          <%= __('Sell Price List') %>: <%= products[i].sellPrice.toLocaleString() %><br/>
+                                                                          <%= __('Rent Price List') %>: <%= products[i].rentPrice.toLocaleString() %><br/>
                                                                           <%= __('Area') %>: <%= products[i].area %> m<sup>2</sup><br/>
                                                                           <%= __('Rooms') %>: <%= products[i].rooms %><br/>
 

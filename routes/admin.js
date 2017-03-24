@@ -350,6 +350,7 @@ router.get('/productList', requireRole(),requireGroup('staff'), function (req, r
   .exec(function(err, projects) {
   Product
   .find({ 'deleted': false})
+  .sort({ 'code': 1})
   .populate('project')
   .populate('customer')
   .exec(function(err, products) {
