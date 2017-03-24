@@ -580,7 +580,7 @@ router.post('/productList',requireGroup('staff'), function (req, res, cb) {
             function(project, result) {
         Product
         .find({ 'deleted': false,project: project._id, rooms: {$eq: req.body.rooms},  sellPrice: {$gte: minSellPrice, $lte: maxSellPrice}, rentPrice: {$gte: minRentPrice, $lte: maxRentPrice}, area: {$gte: minArea, $lte: maxArea} })
-        .sort({'code': 1}
+        .sort({ 'code': 1})
         .populate('project')
         .populate('customer')
         .exec(function(err, products) {
@@ -640,7 +640,7 @@ router.post('/productList',requireGroup('staff'), function (req, res, cb) {
             function(project, result) {
         Product
         .find({ 'deleted': false,project: project._id, sellPrice: {$gte: minSellPrice, $lte: maxSellPrice}, rentPrice: {$gte: minRentPrice, $lte: maxRentPrice}, area: {$gte: minArea, $lte: maxArea} })
-        .sort({'code': 1}
+        .sort({ 'code': 1})
         .populate('project')
         .populate('customer')
         .exec(function(err, products) {
@@ -694,7 +694,7 @@ router.post('/productList',requireGroup('staff'), function (req, res, cb) {
       .exec(function(err, projects) {
       Product
       .find({ 'deleted': false, rooms: {$eq: req.body.rooms},  sellPrice: {$gte: minSellPrice, $lte: maxSellPrice}, rentPrice: {$gte: minRentPrice, $lte: maxRentPrice} , area: {$gte: minArea, $lte: maxArea} })
-      .sort({'code': 1}
+      .sort({ 'code': 1})
       .populate('project')
       .populate('customer')
       .exec(function(err, products) {
@@ -743,7 +743,7 @@ router.post('/productList',requireGroup('staff'), function (req, res, cb) {
       .exec(function(err, projects) {
       Product
       .find({ 'deleted': false,  sellPrice: {$gte: minSellPrice, $lte: maxSellPrice}, rentPrice: {$gte: minRentPrice, $lte: maxRentPrice}, area: {$gte: minArea, $lte: maxArea} })
-      .sort({'code': 1}
+      .sort({ 'code': 1})
       .populate('project')
       .populate('customer')
       .exec(function(err, products) {
