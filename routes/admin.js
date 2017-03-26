@@ -391,6 +391,7 @@ router.post('/addProduct/',  requireRole(), requireGroup('staff'), function(req,
     function(project, result) {
       var product = new Product();
       product.project = project._id;
+      
       if (req.body.code) product.code = req.body.code;
       product.status = "Available";
       product.rooms = req.body.rooms;
