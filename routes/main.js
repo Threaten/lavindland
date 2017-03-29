@@ -5,7 +5,11 @@ var i18n = require('i18n');
 
 
 router.get('/', function (req, res, cb) {
+  if (req.cookies.i18n) {
   res.setLocale(req.cookies.i18n);
+} else {
+  res.setLocale('en');
+}
   res.render('main/index', {
     i18n: res
   })
