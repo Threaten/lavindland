@@ -169,5 +169,14 @@
 	"Filter": "Filter",
 	"Added By": "Added By",
 	"Information": "Information",
-	"Consigned": "Consigned"
+	"Consigned": "Consigned",
+	"Add Project": "Add Project",
+	"Rooms": "Rooms",
+	"Min Sell Price": "Min Sell Price",
+	"Max Sell Price": "Max Sell Price",
+	"Min Area": "Min Area",
+	"Max Area": "Max Area",
+	"Min Rent Price": "Min Rent Price",
+	"Max Rent Price": "Max Rent Price"
+
 }

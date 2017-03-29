@@ -172,5 +172,13 @@
 	"Filter": "Lọc",
 	"Consigned": "Ký gửi",
 	"Information": "Thông tin",
-	"Project Information": "Thông tin dự án"
+	"Project Information": "Thông tin dự án",
+	"Add Project": "Thêm dự án",
+	"Min Sell Price": "Giá bán thấp nhất",
+	"Max Sell Price": "Giá bán cao nhất",
+	"Min Area": "Diện tích thấp nhất",
+	"Max Area": "Diện tích lớn nhất",
+	"Min Rent Price": "Giá thuê thấp nhất",
+	"Max Rent Price": "Giá thuê cao nhất",
+	"Phòng": "Phòng"
 }

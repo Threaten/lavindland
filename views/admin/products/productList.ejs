@@ -86,7 +86,7 @@ function updateText(type) {
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <select class="form-control" data-style="btn-info" id="name" name="name" onchange="updateText('name')">
-                                                    <option disabled selected value="Project">Project</option>
+                                                    <option disabled selected value="Project"><%= __("Project") %></option>
 
                                                     <% for (var i = 0; i < projects.length; i++) { %>
                                                         <option name="pro" value="<%= projects[i].name %>"><%= projects[i].name %></option>
@@ -97,7 +97,7 @@ function updateText(type) {
                                             <div class="col-md-2">
                                                 <div class="form-group">
                                                     <select class="form-control" id="rooms" name="rooms">
-                                                        <option selected disabled>Rooms</option>
+                                                        <option selected disabled><%= __("Phòng") %></option>
                                                         <option value=1>1</option>
                                                         <option value=2>2</option>
                                                         <option value=3>3</option>
@@ -107,12 +107,12 @@ function updateText(type) {
                                             </div>
                                             <div class="col-md-2">
                                                 <div class="form-group">
-                                                    <input type="number" name="minSellPrice" id="minSellPrice" class="form-control" placeholder="Min Sell Price" />
+                                                    <input type="number" name="minSellPrice" id="minSellPrice" class="form-control" placeholder="<%= __('Min Sell Price') %>" />
                                                 </div>
                                             </div>
                                             <div class="col-md-2">
                                                 <div class="form-group">
-                                                    <input type="number" name="maxSellPrice" id="maxSellPrice" class="form-control" placeholder="Max Sell Price" />
+                                                    <input type="number" name="maxSellPrice" id="maxSellPrice" class="form-control" placeholder="<%= __('Max Sell Price') %>" />
                                                 </div>
                                             </div>
                                             <div class="col-md-1">
@@ -126,22 +126,22 @@ function updateText(type) {
                                                 </div>
                                                 <div class="col-md-2">
                                                     <div class="form-group">
-                                                        <input type="number" name="minArea" id="minArea" class="form-control" placeholder="Min Area" />
+                                                        <input type="number" name="minArea" id="minArea" class="form-control" placeholder="<%= __('Min Area') %>" />
                                                     </div>
                                                 </div>
                                                 <div class="col-md-2">
                                                     <div class="form-group">
-                                                        <input type="number" name="maxArea" id="maxArea" class="form-control" placeholder="Max Area" />
+                                                        <input type="number" name="maxArea" id="maxArea" class="form-control" placeholder="<%= __('Max Area') %>" />
                                                     </div>
                                                 </div>
                                                 <div class="col-md-2">
                                                     <div class="form-group">
-                                                        <input type="number" name="minRentPrice" id="minRentPrice" class="form-control" placeholder="Min Rent Price" />
+                                                        <input type="number" name="minRentPrice" id="minRentPrice" class="form-control" placeholder="<%= __('Min Rent Price') %>" />
                                                     </div>
                                                 </div>
                                                 <div class="col-md-2">
                                                     <div class="form-group">
-                                                        <input type="number" name="maxRentPrice" id="maxRentPrice" class="form-control" placeholder="Max Rent Price" />
+                                                        <input type="number" name="maxRentPrice" id="maxRentPrice" class="form-control" placeholder="<%= __('Max Rent Price') %>" />
                                                     </div>
                                                 </div>
 
