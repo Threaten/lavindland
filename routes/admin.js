@@ -74,8 +74,11 @@ function requireRole() {
 // }
 
 router.get('/', requireGroup("staff"), function (req, res, cb) {
-
+  if (req.cookies.i18n) {
   res.setLocale(req.cookies.i18n);
+  } else {
+  res.setLocale('en');
+  }
   res.render('admin/dashboard/index', {
     i18n: res
   })
