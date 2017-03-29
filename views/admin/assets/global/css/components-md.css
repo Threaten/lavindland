@@ -41,7 +41,7 @@ body {
 @-ms-viewport {
   width: auto !important; }
 
-.md-shadow-z-1, .alert, .badge, .btn:not(.md-skip), .btn-group > .btn:not(.md-skip), .btn.btn-link:not(.md-skip):hover, .icon-btn, .label:not(.md-skip), .note, .panel, .social-icons li > a, .social-icons.social-icons-color > li > a, .well {
+.md-shadow-z-1, .alert, .badge, .btn:not(.md-skip):not(.bs-select-all):not(.bs-deselect-all), .btn-group > .btn:not(.md-skip):not(.bs-select-all):not(.bs-deselect-all), .btn.btn-link:not(.md-skip):not(.bs-select-all):not(.bs-deselect-all):hover, .icon-btn, .label:not(.md-skip), .note, .panel, .social-icons li > a, .social-icons.social-icons-color > li > a, .well {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.18); }
 
 .md-shadow-z-1-i {
@@ -56,7 +56,7 @@ body {
 .md-shadow-z-2-i, .dropdown-menu, .btn-group > .dropdown-menu {
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.22) !important; }
 
-.md-shadow-z-2-hover, .btn:not(.md-skip):hover, .icon-btn:hover, .portlet.box.white > .portlet-title > .actions .btn-default:hover, .portlet.box.default > .portlet-title > .actions .btn-default:hover, .portlet.box.dark > .portlet-title > .actions .btn-default:hover, .portlet.box.blue > .portlet-title > .actions .btn-default:hover, .portlet.box.blue-madison > .portlet-title > .actions .btn-default:hover, .portlet.box.blue-chambray > .portlet-title > .actions .btn-default:hover, .portlet.box.blue-ebonyclay > .portlet-title > .actions .btn-default:hover, .portlet.box.blue-hoki > .portlet-title > .actions .btn-default:hover, .portlet.box.blue-steel > .portlet-title > .actions .btn-default:hover, .portlet.box.blue-soft > .portlet-title > .actions .btn-default:hover, .portlet.box.blue-dark > .portlet-title > .actions .btn-default:hover, .portlet.box.blue-sharp > .portlet-title > .actions .btn-default:hover, .portlet.box.blue-oleo > .portlet-title > .actions .btn-default:hover, .portlet.box.green > .portlet-title > .actions .btn-default:hover, .portlet.box.green-meadow > .portlet-title > .actions .btn-default:hover, .portlet.box.green-seagreen > .portlet-title > .actions .btn-default:hover, .portlet.box.green-turquoise > .portlet-title > .actions .btn-default:hover, .portlet.box.green-haze > .portlet-title > .actions .btn-default:hover, .portlet.box.green-jungle > .portlet-title > .actions .btn-default:hover, .portlet.box.green-soft > .portlet-title > .actions .btn-default:hover, .portlet.box.green-dark > .portlet-title > .actions .btn-default:hover, .portlet.box.green-sharp > .portlet-title > .actions .btn-default:hover, .portlet.box.green-steel > .portlet-title > .actions .btn-default:hover, .portlet.box.grey > .portlet-title > .actions .btn-default:hover, .portlet.box.grey-steel > .portlet-title > .actions .btn-default:hover, .portlet.box.grey-cararra > .portlet-title > .actions .btn-default:hover, .portlet.box.grey-gallery > .portlet-title > .actions .btn-default:hover, .portlet.box.grey-cascade > .portlet-title > .actions .btn-default:hover, .portlet.box.grey-silver > .portlet-title > .actions .btn-default:hover, .portlet.box.grey-salsa > .portlet-title > .actions .btn-default:hover, .portlet.box.grey-salt > .portlet-title > .actions .btn-default:hover, .portlet.box.grey-mint > .portlet-title > .actions .btn-default:hover, .portlet.box.red > .portlet-title > .actions .btn-default:hover, .portlet.box.red-pink > .portlet-title > .actions .btn-default:hover, .portlet.box.red-sunglo > .portlet-title > .actions .btn-default:hover, .portlet.box.red-intense > .portlet-title > .actions .btn-default:hover, .portlet.box.red-thunderbird > .portlet-title > .actions .btn-default:hover, .portlet.box.red-flamingo > .portlet-title > .actions .btn-default:hover, .portlet.box.red-soft > .portlet-title > .actions .btn-default:hover, .portlet.box.red-haze > .portlet-title > .actions .btn-default:hover, .portlet.box.red-mint > .portlet-title > .actions .btn-default:hover, .portlet.box.yellow > .portlet-title > .actions .btn-default:hover, .portlet.box.yellow-gold > .portlet-title > .actions .btn-default:hover, .portlet.box.yellow-casablanca > .portlet-title > .actions .btn-default:hover, .portlet.box.yellow-crusta > .portlet-title > .actions .btn-default:hover, .portlet.box.yellow-lemon > .portlet-title > .actions .btn-default:hover, .portlet.box.yellow-saffron > .portlet-title > .actions .btn-default:hover, .portlet.box.yellow-soft > .portlet-title > .actions .btn-default:hover, .portlet.box.yellow-haze > .portlet-title > .actions .btn-default:hover, .portlet.box.yellow-mint > .portlet-title > .actions .btn-default:hover, .portlet.box.purple > .portlet-title > .actions .btn-default:hover, .portlet.box.purple-plum > .portlet-title > .actions .btn-default:hover, .portlet.box.purple-medium > .portlet-title > .actions .btn-default:hover, .portlet.box.purple-studio > .portlet-title > .actions .btn-default:hover, .portlet.box.purple-wisteria > .portlet-title > .actions .btn-default:hover, .portlet.box.purple-seance > .portlet-title > .actions .btn-default:hover, .portlet.box.purple-intense > .portlet-title > .actions .btn-default:hover, .portlet.box.purple-sharp > .portlet-title > .actions .btn-default:hover, .portlet.box.purple-soft > .portlet-title > .actions .btn-default:hover, .social-icons li:hover > a, .social-icons.social-icons-color > li > a:hover {
+.md-shadow-z-2-hover, .btn:not(.md-skip):not(.bs-select-all):not(.bs-deselect-all):hover, .icon-btn:hover, .portlet.box.white > .portlet-title > .actions .btn-default:hover, .portlet.box.default > .portlet-title > .actions .btn-default:hover, .portlet.box.dark > .portlet-title > .actions .btn-default:hover, .portlet.box.blue > .portlet-title > .actions .btn-default:hover, .portlet.box.blue-madison > .portlet-title > .actions .btn-default:hover, .portlet.box.blue-chambray > .portlet-title > .actions .btn-default:hover, .portlet.box.blue-ebonyclay > .portlet-title > .actions .btn-default:hover, .portlet.box.blue-hoki > .portlet-title > .actions .btn-default:hover, .portlet.box.blue-steel > .portlet-title > .actions .btn-default:hover, .portlet.box.blue-soft > .portlet-title > .actions .btn-default:hover, .portlet.box.blue-dark > .portlet-title > .actions .btn-default:hover, .portlet.box.blue-sharp > .portlet-title > .actions .btn-default:hover, .portlet.box.blue-oleo > .portlet-title > .actions .btn-default:hover, .portlet.box.green > .portlet-title > .actions .btn-default:hover, .portlet.box.green-meadow > .portlet-title > .actions .btn-default:hover, .portlet.box.green-seagreen > .portlet-title > .actions .btn-default:hover, .portlet.box.green-turquoise > .portlet-title > .actions .btn-default:hover, .portlet.box.green-haze > .portlet-title > .actions .btn-default:hover, .portlet.box.green-jungle > .portlet-title > .actions .btn-default:hover, .portlet.box.green-soft > .portlet-title > .actions .btn-default:hover, .portlet.box.green-dark > .portlet-title > .actions .btn-default:hover, .portlet.box.green-sharp > .portlet-title > .actions .btn-default:hover, .portlet.box.green-steel > .portlet-title > .actions .btn-default:hover, .portlet.box.grey > .portlet-title > .actions .btn-default:hover, .portlet.box.grey-steel > .portlet-title > .actions .btn-default:hover, .portlet.box.grey-cararra > .portlet-title > .actions .btn-default:hover, .portlet.box.grey-gallery > .portlet-title > .actions .btn-default:hover, .portlet.box.grey-cascade > .portlet-title > .actions .btn-default:hover, .portlet.box.grey-silver > .portlet-title > .actions .btn-default:hover, .portlet.box.grey-salsa > .portlet-title > .actions .btn-default:hover, .portlet.box.grey-salt > .portlet-title > .actions .btn-default:hover, .portlet.box.grey-mint > .portlet-title > .actions .btn-default:hover, .portlet.box.red > .portlet-title > .actions .btn-default:hover, .portlet.box.red-pink > .portlet-title > .actions .btn-default:hover, .portlet.box.red-sunglo > .portlet-title > .actions .btn-default:hover, .portlet.box.red-intense > .portlet-title > .actions .btn-default:hover, .portlet.box.red-thunderbird > .portlet-title > .actions .btn-default:hover, .portlet.box.red-flamingo > .portlet-title > .actions .btn-default:hover, .portlet.box.red-soft > .portlet-title > .actions .btn-default:hover, .portlet.box.red-haze > .portlet-title > .actions .btn-default:hover, .portlet.box.red-mint > .portlet-title > .actions .btn-default:hover, .portlet.box.yellow > .portlet-title > .actions .btn-default:hover, .portlet.box.yellow-gold > .portlet-title > .actions .btn-default:hover, .portlet.box.yellow-casablanca > .portlet-title > .actions .btn-default:hover, .portlet.box.yellow-crusta > .portlet-title > .actions .btn-default:hover, .portlet.box.yellow-lemon > .portlet-title > .actions .btn-default:hover, .portlet.box.yellow-saffron > .portlet-title > .actions .btn-default:hover, .portlet.box.yellow-soft > .portlet-title > .actions .btn-default:hover, .portlet.box.yellow-haze > .portlet-title > .actions .btn-default:hover, .portlet.box.yellow-mint > .portlet-title > .actions .btn-default:hover, .portlet.box.purple > .portlet-title > .actions .btn-default:hover, .portlet.box.purple-plum > .portlet-title > .actions .btn-default:hover, .portlet.box.purple-medium > .portlet-title > .actions .btn-default:hover, .portlet.box.purple-studio > .portlet-title > .actions .btn-default:hover, .portlet.box.purple-wisteria > .portlet-title > .actions .btn-default:hover, .portlet.box.purple-seance > .portlet-title > .actions .btn-default:hover, .portlet.box.purple-intense > .portlet-title > .actions .btn-default:hover, .portlet.box.purple-sharp > .portlet-title > .actions .btn-default:hover, .portlet.box.purple-soft > .portlet-title > .actions .btn-default:hover, .social-icons li:hover > a, .social-icons.social-icons-color > li > a:hover {
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2), 0 3px 6px rgba(0, 0, 0, 0.26); }
 
 .md-shadow-z-3, .modal .modal-content {
@@ -65,7 +65,7 @@ body {
 .md-shadow-z-3-i {
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18), 0 6px 6px rgba(0, 0, 0, 0.24) !important; }
 
-.md-shadow-z-3-hover, .btn:not(.md-skip):active, .portlet.box.white > .portlet-title > .actions .btn-default:active, .portlet.box.default > .portlet-title > .actions .btn-default:active, .portlet.box.dark > .portlet-title > .actions .btn-default:active, .portlet.box.blue > .portlet-title > .actions .btn-default:active, .portlet.box.blue-madison > .portlet-title > .actions .btn-default:active, .portlet.box.blue-chambray > .portlet-title > .actions .btn-default:active, .portlet.box.blue-ebonyclay > .portlet-title > .actions .btn-default:active, .portlet.box.blue-hoki > .portlet-title > .actions .btn-default:active, .portlet.box.blue-steel > .portlet-title > .actions .btn-default:active, .portlet.box.blue-soft > .portlet-title > .actions .btn-default:active, .portlet.box.blue-dark > .portlet-title > .actions .btn-default:active, .portlet.box.blue-sharp > .portlet-title > .actions .btn-default:active, .portlet.box.blue-oleo > .portlet-title > .actions .btn-default:active, .portlet.box.green > .portlet-title > .actions .btn-default:active, .portlet.box.green-meadow > .portlet-title > .actions .btn-default:active, .portlet.box.green-seagreen > .portlet-title > .actions .btn-default:active, .portlet.box.green-turquoise > .portlet-title > .actions .btn-default:active, .portlet.box.green-haze > .portlet-title > .actions .btn-default:active, .portlet.box.green-jungle > .portlet-title > .actions .btn-default:active, .portlet.box.green-soft > .portlet-title > .actions .btn-default:active, .portlet.box.green-dark > .portlet-title > .actions .btn-default:active, .portlet.box.green-sharp > .portlet-title > .actions .btn-default:active, .portlet.box.green-steel > .portlet-title > .actions .btn-default:active, .portlet.box.grey > .portlet-title > .actions .btn-default:active, .portlet.box.grey-steel > .portlet-title > .actions .btn-default:active, .portlet.box.grey-cararra > .portlet-title > .actions .btn-default:active, .portlet.box.grey-gallery > .portlet-title > .actions .btn-default:active, .portlet.box.grey-cascade > .portlet-title > .actions .btn-default:active, .portlet.box.grey-silver > .portlet-title > .actions .btn-default:active, .portlet.box.grey-salsa > .portlet-title > .actions .btn-default:active, .portlet.box.grey-salt > .portlet-title > .actions .btn-default:active, .portlet.box.grey-mint > .portlet-title > .actions .btn-default:active, .portlet.box.red > .portlet-title > .actions .btn-default:active, .portlet.box.red-pink > .portlet-title > .actions .btn-default:active, .portlet.box.red-sunglo > .portlet-title > .actions .btn-default:active, .portlet.box.red-intense > .portlet-title > .actions .btn-default:active, .portlet.box.red-thunderbird > .portlet-title > .actions .btn-default:active, .portlet.box.red-flamingo > .portlet-title > .actions .btn-default:active, .portlet.box.red-soft > .portlet-title > .actions .btn-default:active, .portlet.box.red-haze > .portlet-title > .actions .btn-default:active, .portlet.box.red-mint > .portlet-title > .actions .btn-default:active, .portlet.box.yellow > .portlet-title > .actions .btn-default:active, .portlet.box.yellow-gold > .portlet-title > .actions .btn-default:active, .portlet.box.yellow-casablanca > .portlet-title > .actions .btn-default:active, .portlet.box.yellow-crusta > .portlet-title > .actions .btn-default:active, .portlet.box.yellow-lemon > .portlet-title > .actions .btn-default:active, .portlet.box.yellow-saffron > .portlet-title > .actions .btn-default:active, .portlet.box.yellow-soft > .portlet-title > .actions .btn-default:active, .portlet.box.yellow-haze > .portlet-title > .actions .btn-default:active, .portlet.box.yellow-mint > .portlet-title > .actions .btn-default:active, .portlet.box.purple > .portlet-title > .actions .btn-default:active, .portlet.box.purple-plum > .portlet-title > .actions .btn-default:active, .portlet.box.purple-medium > .portlet-title > .actions .btn-default:active, .portlet.box.purple-studio > .portlet-title > .actions .btn-default:active, .portlet.box.purple-wisteria > .portlet-title > .actions .btn-default:active, .portlet.box.purple-seance > .portlet-title > .actions .btn-default:active, .portlet.box.purple-intense > .portlet-title > .actions .btn-default:active, .portlet.box.purple-sharp > .portlet-title > .actions .btn-default:active, .portlet.box.purple-soft > .portlet-title > .actions .btn-default:active {
+.md-shadow-z-3-hover, .btn:not(.md-skip):not(.bs-select-all):not(.bs-deselect-all):active, .portlet.box.white > .portlet-title > .actions .btn-default:active, .portlet.box.default > .portlet-title > .actions .btn-default:active, .portlet.box.dark > .portlet-title > .actions .btn-default:active, .portlet.box.blue > .portlet-title > .actions .btn-default:active, .portlet.box.blue-madison > .portlet-title > .actions .btn-default:active, .portlet.box.blue-chambray > .portlet-title > .actions .btn-default:active, .portlet.box.blue-ebonyclay > .portlet-title > .actions .btn-default:active, .portlet.box.blue-hoki > .portlet-title > .actions .btn-default:active, .portlet.box.blue-steel > .portlet-title > .actions .btn-default:active, .portlet.box.blue-soft > .portlet-title > .actions .btn-default:active, .portlet.box.blue-dark > .portlet-title > .actions .btn-default:active, .portlet.box.blue-sharp > .portlet-title > .actions .btn-default:active, .portlet.box.blue-oleo > .portlet-title > .actions .btn-default:active, .portlet.box.green > .portlet-title > .actions .btn-default:active, .portlet.box.green-meadow > .portlet-title > .actions .btn-default:active, .portlet.box.green-seagreen > .portlet-title > .actions .btn-default:active, .portlet.box.green-turquoise > .portlet-title > .actions .btn-default:active, .portlet.box.green-haze > .portlet-title > .actions .btn-default:active, .portlet.box.green-jungle > .portlet-title > .actions .btn-default:active, .portlet.box.green-soft > .portlet-title > .actions .btn-default:active, .portlet.box.green-dark > .portlet-title > .actions .btn-default:active, .portlet.box.green-sharp > .portlet-title > .actions .btn-default:active, .portlet.box.green-steel > .portlet-title > .actions .btn-default:active, .portlet.box.grey > .portlet-title > .actions .btn-default:active, .portlet.box.grey-steel > .portlet-title > .actions .btn-default:active, .portlet.box.grey-cararra > .portlet-title > .actions .btn-default:active, .portlet.box.grey-gallery > .portlet-title > .actions .btn-default:active, .portlet.box.grey-cascade > .portlet-title > .actions .btn-default:active, .portlet.box.grey-silver > .portlet-title > .actions .btn-default:active, .portlet.box.grey-salsa > .portlet-title > .actions .btn-default:active, .portlet.box.grey-salt > .portlet-title > .actions .btn-default:active, .portlet.box.grey-mint > .portlet-title > .actions .btn-default:active, .portlet.box.red > .portlet-title > .actions .btn-default:active, .portlet.box.red-pink > .portlet-title > .actions .btn-default:active, .portlet.box.red-sunglo > .portlet-title > .actions .btn-default:active, .portlet.box.red-intense > .portlet-title > .actions .btn-default:active, .portlet.box.red-thunderbird > .portlet-title > .actions .btn-default:active, .portlet.box.red-flamingo > .portlet-title > .actions .btn-default:active, .portlet.box.red-soft > .portlet-title > .actions .btn-default:active, .portlet.box.red-haze > .portlet-title > .actions .btn-default:active, .portlet.box.red-mint > .portlet-title > .actions .btn-default:active, .portlet.box.yellow > .portlet-title > .actions .btn-default:active, .portlet.box.yellow-gold > .portlet-title > .actions .btn-default:active, .portlet.box.yellow-casablanca > .portlet-title > .actions .btn-default:active, .portlet.box.yellow-crusta > .portlet-title > .actions .btn-default:active, .portlet.box.yellow-lemon > .portlet-title > .actions .btn-default:active, .portlet.box.yellow-saffron > .portlet-title > .actions .btn-default:active, .portlet.box.yellow-soft > .portlet-title > .actions .btn-default:active, .portlet.box.yellow-haze > .portlet-title > .actions .btn-default:active, .portlet.box.yellow-mint > .portlet-title > .actions .btn-default:active, .portlet.box.purple > .portlet-title > .actions .btn-default:active, .portlet.box.purple-plum > .portlet-title > .actions .btn-default:active, .portlet.box.purple-medium > .portlet-title > .actions .btn-default:active, .portlet.box.purple-studio > .portlet-title > .actions .btn-default:active, .portlet.box.purple-wisteria > .portlet-title > .actions .btn-default:active, .portlet.box.purple-seance > .portlet-title > .actions .btn-default:active, .portlet.box.purple-intense > .portlet-title > .actions .btn-default:active, .portlet.box.purple-sharp > .portlet-title > .actions .btn-default:active, .portlet.box.purple-soft > .portlet-title > .actions .btn-default:active {
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.22), 0 6px 6px rgba(0, 0, 0, 0.26); }
 
 .md-shadow-z-4 {
@@ -1310,6 +1310,377 @@ File dropzone
   text-align: center; }
   .file-drop-zone.file-drop-zone-over {
     border-color: #aaa; }
+
+.m-grid {
+  display: table;
+  width: 100%;
+  table-layout: fixed; }
+  .m-grid.m-grid-auto {
+    width: auto; }
+  .m-grid.m-grid-full-height {
+    height: 100%; }
+    .m-grid.m-grid-full-height > .m-grid-row {
+      height: 100%;
+      position: static; }
+      .m-grid.m-grid-full-height > .m-grid-row > .m-grid-col {
+        height: 100%; }
+    .m-grid.m-grid-full-height > .m-grid-col {
+      height: 100%; }
+  .m-grid .m-grid-row {
+    display: table-row; }
+    .m-grid .m-grid-row.m-grid-row-full-height {
+      height: 100%;
+      position: static; }
+    .m-grid .m-grid-row.m-grid-row-auto-height {
+      height: auto; }
+      .m-grid .m-grid-row.m-grid-row-auto-height > .m-grid-col {
+        height: auto; }
+  .m-grid .m-grid-col {
+    display: table-cell;
+    text-align: left;
+    vertical-align: top; }
+    .m-grid .m-grid-col.m-grid-col-full-width {
+      width: 100%; }
+    .m-grid .m-grid-col.m-grid-col-full-height {
+      height: 100%; }
+    .m-grid .m-grid-col.m-grid-col-auto-height {
+      height: auto; }
+    .m-grid .m-grid-col.m-grid-col-top {
+      vertical-align: top; }
+    .m-grid .m-grid-col.m-grid-col-middle {
+      vertical-align: middle; }
+    .m-grid .m-grid-col.m-grid-col-bottom {
+      vertical-align: bottom; }
+    .m-grid .m-grid-col.m-grid-col-left {
+      text-align: left; }
+    .m-grid .m-grid-col.m-grid-col-center {
+      text-align: center; }
+    .m-grid .m-grid-col.m-grid-col-right {
+      text-align: right; }
+    .m-grid .m-grid-col:not(.m-grid-col-middle):not(.m-grid-col-bottom) {
+      vertical-align: top; }
+    .m-grid .m-grid-col.m-grid-col-xs, .m-grid .m-grid-col.m-grid-col-sm, .m-grid .m-grid-col.m-grid-col-md, .m-grid .m-grid-col.m-grid-col-lg {
+      width: 100%;
+      display: block; }
+
+.m-grid.m-grid-demo .m-grid-col {
+  border: 1px solid #ddd;
+  background: #fafafa;
+  height: 100px; }
+
+.m-grid-col-xs-1 {
+  width: 8.33333%; }
+
+.m-grid-col-xs-2 {
+  width: 16.66667%; }
+
+.m-grid-col-xs-3 {
+  width: 25%; }
+
+.m-grid-col-xs-4 {
+  width: 33.33333%; }
+
+.m-grid-col-xs-5 {
+  width: 41.66667%; }
+
+.m-grid-col-xs-6 {
+  width: 50%; }
+
+.m-grid-col-xs-7 {
+  width: 58.33333%; }
+
+.m-grid-col-xs-8 {
+  width: 66.66667%; }
+
+.m-grid-col-xs-9 {
+  width: 75%; }
+
+.m-grid-col-xs-10 {
+  width: 83.33333%; }
+
+.m-grid-col-xs-11 {
+  width: 91.66667%; }
+
+.m-grid-col-xs-12 {
+  width: 100%; }
+
+@media (min-width: 767px) {
+  .m-grid-col-sm-1 {
+    width: 8.33333%; }
+  .m-grid-col-sm-2 {
+    width: 16.66667%; }
+  .m-grid-col-sm-3 {
+    width: 25%; }
+  .m-grid-col-sm-4 {
+    width: 33.33333%; }
+  .m-grid-col-sm-5 {
+    width: 41.66667%; }
+  .m-grid-col-sm-6 {
+    width: 50%; }
+  .m-grid-col-sm-7 {
+    width: 58.33333%; }
+  .m-grid-col-sm-8 {
+    width: 66.66667%; }
+  .m-grid-col-sm-9 {
+    width: 75%; }
+  .m-grid-col-sm-10 {
+    width: 83.33333%; }
+  .m-grid-col-sm-11 {
+    width: 91.66667%; }
+  .m-grid-col-sm-12 {
+    width: 100%; } }
+
+@media (min-width: 991px) {
+  .m-grid-col-md-1 {
+    width: 8.33333%; }
+  .m-grid-col-md-2 {
+    width: 16.66667%; }
+  .m-grid-col-md-3 {
+    width: 25%; }
+  .m-grid-col-md-4 {
+    width: 33.33333%; }
+  .m-grid-col-md-5 {
+    width: 41.66667%; }
+  .m-grid-col-md-6 {
+    width: 50%; }
+  .m-grid-col-md-7 {
+    width: 58.33333%; }
+  .m-grid-col-md-8 {
+    width: 66.66667%; }
+  .m-grid-col-md-9 {
+    width: 75%; }
+  .m-grid-col-md-10 {
+    width: 83.33333%; }
+  .m-grid-col-md-11 {
+    width: 91.66667%; }
+  .m-grid-col-md-12 {
+    width: 100%; } }
+
+@media (min-width: 1259px) {
+  .m-grid-col-lg-1 {
+    width: 8.33333%; }
+  .m-grid-col-lg-2 {
+    width: 16.66667%; }
+  .m-grid-col-lg-3 {
+    width: 25%; }
+  .m-grid-col-lg-4 {
+    width: 33.33333%; }
+  .m-grid-col-lg-5 {
+    width: 41.66667%; }
+  .m-grid-col-lg-6 {
+    width: 50%; }
+  .m-grid-col-lg-7 {
+    width: 58.33333%; }
+  .m-grid-col-lg-8 {
+    width: 66.66667%; }
+  .m-grid-col-lg-9 {
+    width: 75%; }
+  .m-grid-col-lg-10 {
+    width: 83.33333%; }
+  .m-grid-col-lg-11 {
+    width: 91.66667%; }
+  .m-grid-col-lg-12 {
+    width: 100%; } }
+
+@media (max-width: 479px) {
+  .m-grid.m-grid-responsive-xs {
+    display: block;
+    width: auto; }
+    .m-grid.m-grid-responsive-xs > .m-grid-row,
+    .m-grid.m-grid-responsive-xs > .m-grid-row > .m-grid-col,
+    .m-grid.m-grid-responsive-xs > .m-grid-col {
+      display: block;
+      width: auto;
+      height: auto; }
+    .m-grid.m-grid-responsive-xs > .m-grid-row {
+      display: flex;
+      flex-flow: column; }
+    .m-grid.m-grid-responsive-xs.m-grid-flex {
+      display: flex;
+      flex-flow: column; }
+      .m-grid.m-grid-responsive-xs.m-grid-flex > .m-grid-row > .m-grid-col-order-2,
+      .m-grid.m-grid-responsive-xs.m-grid-flex > .m-grid-col-order-2 {
+        order: 2; }
+      .m-grid.m-grid-responsive-xs.m-grid-flex > .m-grid-row > .m-grid-col-order-3,
+      .m-grid.m-grid-responsive-xs.m-grid-flex > .m-grid-col-order-3 {
+        order: 3; }
+      .m-grid.m-grid-responsive-xs.m-grid-flex > .m-grid-row > .m-grid-col-order-4,
+      .m-grid.m-grid-responsive-xs.m-grid-flex > .m-grid-col-order-4 {
+        order: 4; }
+      .m-grid.m-grid-responsive-xs.m-grid-flex > .m-grid-row > .m-grid-col-order-5,
+      .m-grid.m-grid-responsive-xs.m-grid-flex > .m-grid-col-order-5 {
+        order: 5; }
+      .m-grid.m-grid-responsive-xs.m-grid-flex > .m-grid-row > .m-grid-col-order-6,
+      .m-grid.m-grid-responsive-xs.m-grid-flex > .m-grid-col-order-6 {
+        order: 6; }
+      .m-grid.m-grid-responsive-xs.m-grid-flex > .m-grid-row > .m-grid-col-order-7,
+      .m-grid.m-grid-responsive-xs.m-grid-flex > .m-grid-col-order-7 {
+        order: 7; }
+      .m-grid.m-grid-responsive-xs.m-grid-flex > .m-grid-row > .m-grid-col-order-8,
+      .m-grid.m-grid-responsive-xs.m-grid-flex > .m-grid-col-order-8 {
+        order: 8; }
+      .m-grid.m-grid-responsive-xs.m-grid-flex > .m-grid-row > .m-grid-col-order-9,
+      .m-grid.m-grid-responsive-xs.m-grid-flex > .m-grid-col-order-9 {
+        order: 9; }
+      .m-grid.m-grid-responsive-xs.m-grid-flex > .m-grid-row > .m-grid-col-order-10,
+      .m-grid.m-grid-responsive-xs.m-grid-flex > .m-grid-col-order-10 {
+        order: 10; }
+      .m-grid.m-grid-responsive-xs.m-grid-flex > .m-grid-row > .m-grid-col-order-11,
+      .m-grid.m-grid-responsive-xs.m-grid-flex > .m-grid-col-order-11 {
+        order: 11; }
+      .m-grid.m-grid-responsive-xs.m-grid-flex > .m-grid-row > .m-grid-col-order-12,
+      .m-grid.m-grid-responsive-xs.m-grid-flex > .m-grid-col-order-12 {
+        order: 12; } }
+
+@media (max-width: 767px) {
+  .m-grid.m-grid-responsive-sm {
+    display: block;
+    width: auto; }
+    .m-grid.m-grid-responsive-sm > .m-grid-row,
+    .m-grid.m-grid-responsive-sm > .m-grid-row > .m-grid-col,
+    .m-grid.m-grid-responsive-sm > .m-grid-col {
+      display: block;
+      width: auto;
+      height: auto; }
+    .m-grid.m-grid-responsive-sm > .m-grid-row {
+      display: flex;
+      flex-flow: column; }
+    .m-grid.m-grid-responsive-sm.m-grid-flex {
+      display: flex;
+      flex-flow: column; }
+      .m-grid.m-grid-responsive-sm.m-grid-flex > .m-grid-row > .m-grid-col-order-2,
+      .m-grid.m-grid-responsive-sm.m-grid-flex > .m-grid-col-order-2 {
+        order: 2; }
+      .m-grid.m-grid-responsive-sm.m-grid-flex > .m-grid-row > .m-grid-col-order-3,
+      .m-grid.m-grid-responsive-sm.m-grid-flex > .m-grid-col-order-3 {
+        order: 3; }
+      .m-grid.m-grid-responsive-sm.m-grid-flex > .m-grid-row > .m-grid-col-order-4,
+      .m-grid.m-grid-responsive-sm.m-grid-flex > .m-grid-col-order-4 {
+        order: 4; }
+      .m-grid.m-grid-responsive-sm.m-grid-flex > .m-grid-row > .m-grid-col-order-5,
+      .m-grid.m-grid-responsive-sm.m-grid-flex > .m-grid-col-order-5 {
+        order: 5; }
+      .m-grid.m-grid-responsive-sm.m-grid-flex > .m-grid-row > .m-grid-col-order-6,
+      .m-grid.m-grid-responsive-sm.m-grid-flex > .m-grid-col-order-6 {
+        order: 6; }
+      .m-grid.m-grid-responsive-sm.m-grid-flex > .m-grid-row > .m-grid-col-order-7,
+      .m-grid.m-grid-responsive-sm.m-grid-flex > .m-grid-col-order-7 {
+        order: 7; }
+      .m-grid.m-grid-responsive-sm.m-grid-flex > .m-grid-row > .m-grid-col-order-8,
+      .m-grid.m-grid-responsive-sm.m-grid-flex > .m-grid-col-order-8 {
+        order: 8; }
+      .m-grid.m-grid-responsive-sm.m-grid-flex > .m-grid-row > .m-grid-col-order-9,
+      .m-grid.m-grid-responsive-sm.m-grid-flex > .m-grid-col-order-9 {
+        order: 9; }
+      .m-grid.m-grid-responsive-sm.m-grid-flex > .m-grid-row > .m-grid-col-order-10,
+      .m-grid.m-grid-responsive-sm.m-grid-flex > .m-grid-col-order-10 {
+        order: 10; }
+      .m-grid.m-grid-responsive-sm.m-grid-flex > .m-grid-row > .m-grid-col-order-11,
+      .m-grid.m-grid-responsive-sm.m-grid-flex > .m-grid-col-order-11 {
+        order: 11; }
+      .m-grid.m-grid-responsive-sm.m-grid-flex > .m-grid-row > .m-grid-col-order-12,
+      .m-grid.m-grid-responsive-sm.m-grid-flex > .m-grid-col-order-12 {
+        order: 12; } }
+
+@media (max-width: 991px) {
+  .m-grid.m-grid-responsive-md {
+    display: block;
+    width: auto; }
+    .m-grid.m-grid-responsive-md > .m-grid-row,
+    .m-grid.m-grid-responsive-md > .m-grid-row > .m-grid-col,
+    .m-grid.m-grid-responsive-md > .m-grid-col {
+      display: block;
+      width: auto;
+      height: auto; }
+    .m-grid.m-grid-responsive-md > .m-grid-row {
+      display: flex;
+      flex-flow: column; }
+    .m-grid.m-grid-responsive-md.m-grid-flex {
+      display: flex;
+      flex-flow: column; }
+      .m-grid.m-grid-responsive-md.m-grid-flex > .m-grid-row > .m-grid-col-order-2,
+      .m-grid.m-grid-responsive-md.m-grid-flex > .m-grid-col-order-2 {
+        order: 2; }
+      .m-grid.m-grid-responsive-md.m-grid-flex > .m-grid-row > .m-grid-col-order-3,
+      .m-grid.m-grid-responsive-md.m-grid-flex > .m-grid-col-order-3 {
+        order: 3; }
+      .m-grid.m-grid-responsive-md.m-grid-flex > .m-grid-row > .m-grid-col-order-4,
+      .m-grid.m-grid-responsive-md.m-grid-flex > .m-grid-col-order-4 {
+        order: 4; }
+      .m-grid.m-grid-responsive-md.m-grid-flex > .m-grid-row > .m-grid-col-order-5,
+      .m-grid.m-grid-responsive-md.m-grid-flex > .m-grid-col-order-5 {
+        order: 5; }
+      .m-grid.m-grid-responsive-md.m-grid-flex > .m-grid-row > .m-grid-col-order-6,
+      .m-grid.m-grid-responsive-md.m-grid-flex > .m-grid-col-order-6 {
+        order: 6; }
+      .m-grid.m-grid-responsive-md.m-grid-flex > .m-grid-row > .m-grid-col-order-7,
+      .m-grid.m-grid-responsive-md.m-grid-flex > .m-grid-col-order-7 {
+        order: 7; }
+      .m-grid.m-grid-responsive-md.m-grid-flex > .m-grid-row > .m-grid-col-order-8,
+      .m-grid.m-grid-responsive-md.m-grid-flex > .m-grid-col-order-8 {
+        order: 8; }
+      .m-grid.m-grid-responsive-md.m-grid-flex > .m-grid-row > .m-grid-col-order-9,
+      .m-grid.m-grid-responsive-md.m-grid-flex > .m-grid-col-order-9 {
+        order: 9; }
+      .m-grid.m-grid-responsive-md.m-grid-flex > .m-grid-row > .m-grid-col-order-10,
+      .m-grid.m-grid-responsive-md.m-grid-flex > .m-grid-col-order-10 {
+        order: 10; }
+      .m-grid.m-grid-responsive-md.m-grid-flex > .m-grid-row > .m-grid-col-order-11,
+      .m-grid.m-grid-responsive-md.m-grid-flex > .m-grid-col-order-11 {
+        order: 11; }
+      .m-grid.m-grid-responsive-md.m-grid-flex > .m-grid-row > .m-grid-col-order-12,
+      .m-grid.m-grid-responsive-md.m-grid-flex > .m-grid-col-order-12 {
+        order: 12; } }
+
+@media (max-width: 1259px) {
+  .m-grid.m-grid-responsive-lg {
+    display: block;
+    width: auto; }
+    .m-grid.m-grid-responsive-lg > .m-grid-row,
+    .m-grid.m-grid-responsive-lg > .m-grid-row > .m-grid-col,
+    .m-grid.m-grid-responsive-lg > .m-grid-col {
+      display: block;
+      width: auto;
+      height: auto; }
+    .m-grid.m-grid-responsive-lg > .m-grid-row {
+      display: flex;
+      flex-flow: column; }
+    .m-grid.m-grid-responsive-lg.m-grid-flex {
+      display: flex;
+      flex-flow: column; }
+      .m-grid.m-grid-responsive-lg.m-grid-flex > .m-grid-row > .m-grid-col-order-2,
+      .m-grid.m-grid-responsive-lg.m-grid-flex > .m-grid-col-order-2 {
+        order: 2; }
+      .m-grid.m-grid-responsive-lg.m-grid-flex > .m-grid-row > .m-grid-col-order-3,
+      .m-grid.m-grid-responsive-lg.m-grid-flex > .m-grid-col-order-3 {
+        order: 3; }
+      .m-grid.m-grid-responsive-lg.m-grid-flex > .m-grid-row > .m-grid-col-order-4,
+      .m-grid.m-grid-responsive-lg.m-grid-flex > .m-grid-col-order-4 {
+        order: 4; }
+      .m-grid.m-grid-responsive-lg.m-grid-flex > .m-grid-row > .m-grid-col-order-5,
+      .m-grid.m-grid-responsive-lg.m-grid-flex > .m-grid-col-order-5 {
+        order: 5; }
+      .m-grid.m-grid-responsive-lg.m-grid-flex > .m-grid-row > .m-grid-col-order-6,
+      .m-grid.m-grid-responsive-lg.m-grid-flex > .m-grid-col-order-6 {
+        order: 6; }
+      .m-grid.m-grid-responsive-lg.m-grid-flex > .m-grid-row > .m-grid-col-order-7,
+      .m-grid.m-grid-responsive-lg.m-grid-flex > .m-grid-col-order-7 {
+        order: 7; }
+      .m-grid.m-grid-responsive-lg.m-grid-flex > .m-grid-row > .m-grid-col-order-8,
+      .m-grid.m-grid-responsive-lg.m-grid-flex > .m-grid-col-order-8 {
+        order: 8; }
+      .m-grid.m-grid-responsive-lg.m-grid-flex > .m-grid-row > .m-grid-col-order-9,
+      .m-grid.m-grid-responsive-lg.m-grid-flex > .m-grid-col-order-9 {
+        order: 9; }
+      .m-grid.m-grid-responsive-lg.m-grid-flex > .m-grid-row > .m-grid-col-order-10,
+      .m-grid.m-grid-responsive-lg.m-grid-flex > .m-grid-col-order-10 {
+        order: 10; }
+      .m-grid.m-grid-responsive-lg.m-grid-flex > .m-grid-row > .m-grid-col-order-11,
+      .m-grid.m-grid-responsive-lg.m-grid-flex > .m-grid-col-order-11 {
+        order: 11; }
+      .m-grid.m-grid-responsive-lg.m-grid-flex > .m-grid-row > .m-grid-col-order-12,
+      .m-grid.m-grid-responsive-lg.m-grid-flex > .m-grid-col-order-12 {
+        order: 12; } }
 
 /***
 Fontawesome Icons
@@ -4678,7 +5049,7 @@ Custom color buttons
 .btn-group-vertical.btn-group-vertical-circle > .btn:last-child {
   border-radius: 0 0 25px 25px !important; }
 
-.btn:not(.md-skip) {
+.btn:not(.md-skip):not(.bs-select-all):not(.bs-deselect-all) {
   font-size: 12px;
   font-weight: 600;
   text-transform: uppercase;
@@ -4692,32 +5063,32 @@ Custom color buttons
   position: relative;
   user-select: none;
   padding: 8px 14px 7px 14px; }
-  .search-form .btn:not(.md-skip),
-  .btn-theme-panel .btn:not(.md-skip) {
+  .search-form .btn:not(.md-skip):not(.bs-select-all):not(.bs-deselect-all),
+  .btn-theme-panel .btn:not(.md-skip):not(.bs-select-all):not(.bs-deselect-all) {
     box-shadow: none !important;
     overflow: visible; }
-  .btn:not(.md-skip).btn-link {
+  .btn:not(.md-skip):not(.bs-select-all):not(.bs-deselect-all).btn-link {
     box-shadow: none;
     color: #337ab7; }
-    .btn:not(.md-skip).btn-link:hover {
+    .btn:not(.md-skip):not(.bs-select-all):not(.bs-deselect-all).btn-link:hover {
       text-decoration: none; }
-  .btn:not(.md-skip) > i {
+  .btn:not(.md-skip):not(.bs-select-all):not(.bs-deselect-all) > i {
     margin-top: 0;
     margin-left: 3px;
     margin-right: 3px; }
-  .btn:not(.md-skip).btn-sm {
+  .btn:not(.md-skip):not(.bs-select-all):not(.bs-deselect-all).btn-sm {
     font-size: 11px;
     padding: 6px 18px 6px 18px; }
-  .btn:not(.md-skip).btn-xs {
+  .btn:not(.md-skip):not(.bs-select-all):not(.bs-deselect-all).btn-xs {
     font-size: 11px;
     padding: 3px 8px 3px 8px; }
-  .btn:not(.md-skip).btn-lg {
+  .btn:not(.md-skip):not(.bs-select-all):not(.bs-deselect-all).btn-lg {
     font-size: 16px;
     padding: 12px 26px 10px 26px; }
-  .btn:not(.md-skip).btn-icon-only {
+  .btn:not(.md-skip):not(.bs-select-all):not(.bs-deselect-all).btn-icon-only {
     padding-left: 0;
     padding-right: 0; }
-    .btn:not(.md-skip).btn-icon-only > i {
+    .btn:not(.md-skip):not(.bs-select-all):not(.bs-deselect-all).btn-icon-only > i {
       margin-left: 0;
       margin-right: 0; }
 
@@ -4977,6 +5348,8 @@ Dropdown Menu
   -ms-border-radius: 2px;
   -o-border-radius: 2px;
   border-radius: 2px; }
+  .dropdown-hoverable:hover .dropdown-menu {
+    display: block; }
   .dropdown-menu li.divider {
     background: #f1f3f6; }
   .dropdown-menu li.header {
@@ -5010,7 +5383,7 @@ Dropdown Menu
     bottom: 100%;
     margin-bottom: 2px; }
     .dropdown-menu.bottom-up:before, .dropdown-menu.bottom-up:after {
-      display: none; }
+      display: none !important; }
   .dropdown-menu > li:first-child:hover > a {
     border-radius: 2px 2px 0px 0px; }
   .dropdown-menu > li:last-child:hover > a {
@@ -5578,6 +5951,72 @@ Form Layouts
 
 .form-horizontal .form-group .form-control-static {
   margin-top: 1px; }
+
+/***
+Form Repeater
+****/
+.mt-repeater {
+  display: table;
+  width: 100%; }
+  .mt-repeater .mt-repeater-item {
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 15px;
+    margin-bottom: 15px; }
+    .mt-repeater .mt-repeater-item.mt-overflow {
+      overflow: auto; }
+  .mt-repeater .mt-repeater-title {
+    font-size: 18px;
+    text-transform: uppercase;
+    margin-top: 0;
+    font-weight: 600; }
+  .mt-repeater .mt-repeater-input {
+    display: table-cell;
+    vertical-align: top;
+    padding: 0 10px 10px 10px;
+    width: 1%; }
+    .mt-repeater .mt-repeater-input input[type="text"], .mt-repeater .mt-repeater-input textarea, .mt-repeater .mt-repeater-input select {
+      width: 100%; }
+    .mt-repeater .mt-repeater-input .control-label {
+      padding-top: 0;
+      margin-bottom: 5px; }
+    .mt-repeater .mt-repeater-input.mt-repeater-textarea {
+      width: 3%; }
+    .mt-repeater .mt-repeater-input:first-child {
+      padding-left: 0; }
+    .mt-repeater .mt-repeater-input:last-child {
+      padding-right: 0; }
+  .mt-repeater .mt-repeater-delete {
+    margin-top: 1.8em; }
+    .mt-repeater .mt-repeater-delete.mt-repeater-del-right {
+      float: right;
+      margin-top: 10px; }
+  .mt-repeater .mt-repeater-cell {
+    display: table;
+    width: 100%; }
+    .mt-repeater .mt-repeater-cell .mt-repeater-input-inline,
+    .mt-repeater .mt-repeater-cell .mt-repeater-btn-inline {
+      display: table-cell; }
+    .mt-repeater .mt-repeater-cell .mt-repeater-input-inline {
+      width: 100%;
+      border-right: none; }
+    .mt-repeater .mt-repeater-cell .mt-repeater-btn-inline {
+      width: 1%;
+      float: none; }
+  .mt-repeater .mt-repeater-row {
+    margin-right: 0; }
+
+@media (max-width: 991px) {
+  .mt-repeater .mt-repeater-input {
+    width: 100%;
+    display: block;
+    padding-left: 0;
+    padding-right: 0; }
+    .mt-repeater .mt-repeater-input.mt-repeater-textarea {
+      width: 100%; }
+    .mt-repeater .mt-repeater-input .control-label {
+      text-align: left !important; }
+    .mt-repeater .mt-repeater-input .mt-repeater-delete {
+      margin-top: 0; } }
 
 /***
 Forms
@@ -6170,8 +6609,9 @@ Custom color buttons
   .mt-radio.mt-radio-disabled, .mt-radio.mt-checkbox-disabled,
   .mt-checkbox.mt-radio-disabled,
   .mt-checkbox.mt-checkbox-disabled {
-    opacity: 0.6 ;
-    filter: alpha(opacity=60) ; }
+    opacity: 0.8 ;
+    filter: alpha(opacity=80) ;
+    cursor: not-allowed; }
   .mt-radio > input,
   .mt-checkbox > input {
     position: absolute;
@@ -6182,10 +6622,10 @@ Custom color buttons
   .mt-checkbox > span {
     border: 1px solid transparent;
     position: absolute;
-    top: 0px;
+    top: 1px;
     left: 0;
-    height: 19px;
-    width: 19px;
+    height: 18px;
+    width: 18px;
     background: #E6E6E6; }
     .mt-radio > span:after,
     .mt-checkbox > span:after {
@@ -6264,15 +6704,15 @@ Custom color buttons
   -o-border-radius: 50%!important;
   border-radius: 50%!important; }
   .mt-radio > span:after {
-    left: 6px;
-    top: 6px;
+    left: 5px;
+    top: 5px;
     height: 6px;
     width: 6px;
-    border-radius: 50%;
-    background: #666666; }
+    border-radius: 100% !important;
+    background: #888888; }
 
 .mt-radio > input:disabled ~ span:after {
-  background: #666666; }
+  background: #888888; }
 
 th > .mt-radio.mt-radio-single,
 td > .mt-radio.mt-radio-single {
@@ -6280,15 +6720,15 @@ td > .mt-radio.mt-radio-single {
 
 .mt-checkbox > span:after {
   left: 6px;
-  top: 3px;
+  top: 2px;
   width: 5px;
   height: 10px;
-  border: solid #666666;
+  border: solid #888888;
   border-width: 0 2px 2px 0;
   transform: rotate(45deg); }
 
 .mt-checkbox > input:disabled ~ span:after {
-  border-color: #666666; }
+  border-color: #888888; }
 
 .form-inline .mt-checkbox {
   margin-left: 15px;
@@ -13121,6 +13561,12 @@ Custimized Bootstrap Wells
   -o-border-radius: 2px;
   border-radius: 2px; }
 
+.well-lg {
+  padding: 40px; }
+
+.well-sm {
+  padding: 10px; }
+
 /*--------------------------------------------------
 	[Widgets]
 ----------------------------------------------------*/
@@ -14923,6 +15369,56 @@ Tasks Widget
         border-top-right-radius: 0 !important;
         border-bottom-right-radius: 0 !important;
         border: none !important; }
+
+body.stop-scrolling {
+  height: auto !important;
+  overflow: visible !important; }
+
+.sweet-alert .sa-icon.sa-success .sa-placeholder,
+.sweet-alert .sa-icon {
+  border-radius: 50% !important; }
+
+.sweet-alert h2 {
+  font-size: 20px;
+  padding-top: 5px; }
+
+.sweet-alert p {
+  font-size: 14px; }
+
+.sweet-alert .btn {
+  font-size: 14px;
+  padding: 8px 14px; }
+  .sweet-alert .btn:focus {
+    border-color: transparent; }
+
+.mt-sweetalert {
+  margin: 0 5px 5px 0; }
+  .mt-sweetalert:hover {
+    cursor: pointer; }
+  .mt-sweetalert.mt-italic {
+    font-style: italic; }
+  .mt-sweetalert:focus {
+    outline: none !important;
+    border: 1px solid transparent; }
+
+.mt-sweetalert-title {
+  margin: 30px 0 15px 0; }
+
+.mt-clipboard-container {
+  padding: 20px; }
+  .mt-clipboard-container .mt-clipboard {
+    margin: 10px 10px 10px 0; }
+
+.mt-multiselect {
+  text-align: left;
+  position: relative; }
+  .mt-multiselect .caret {
+    position: absolute;
+    top: 50%;
+    margin-top: -2px;
+    right: 15px; }
+  .mt-multiselect.mt-noicon .caret {
+    display: none; }
 
 .mt-code {
   padding: 3px;

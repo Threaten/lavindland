@@ -391,7 +391,7 @@ router.post('/addProduct/',  requireRole(), requireGroup('staff'), function(req,
     function(project, result) {
       var product = new Product();
       product.project = project._id;
-      
+
       if (req.body.code) product.code = req.body.code;
       product.status = "Available";
       product.rooms = req.body.rooms;
@@ -464,6 +464,9 @@ router.post('/editProduct/:id', requireRole(), requireGroup('staff'), function(r
         product.sellProfit = req.body.sellProfit*1000000;
         product.rentProfit = req.body.rentProfit*1000000;
         product.updatedBy = req.user.email;
+        if (req.body.note) {
+        product.note = req.body.note;
+      }
 
         product.save(function(err) {
           if (err) {
@@ -1262,6 +1265,9 @@ router.post('/editCustomer/:id', requireRole(), requireGroup('staff'), function(
       customer.potential = true;
     } else {
       customer.potential = false;
+    }
+    if (req.body.note) {
+    customer.note = req.body.note;
     }
     customer.updatedBy = req.user.email;
     customer.save(function(err) {

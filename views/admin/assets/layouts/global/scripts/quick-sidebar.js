@@ -118,7 +118,7 @@ var QuickSidebar = function () {
             var alertList = wrapper.find('.page-quick-sidebar-alerts-list');
             var alertListHeight;
 
-            alertListHeight = wrapper.height() - wrapper.find('.nav-justified > .nav-tabs').outerHeight();
+            alertListHeight = wrapper.height() - 80 - wrapper.find('.nav-justified > .nav-tabs').outerHeight();
 
             // alerts list 
             App.destroySlimScroll(alertList);

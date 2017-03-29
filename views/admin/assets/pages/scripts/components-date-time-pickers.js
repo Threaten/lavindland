@@ -30,7 +30,8 @@ var ComponentsDateTimePickers = function () {
 
             $('.timepicker-no-seconds').timepicker({
                 autoclose: true,
-                minuteStep: 5
+                minuteStep: 5,
+                defaultTime: false
             });
 
             $('.timepicker-24').timepicker({

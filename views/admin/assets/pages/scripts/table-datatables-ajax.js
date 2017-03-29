@@ -33,7 +33,30 @@ var TableDatatablesAjax = function () {
                 // So when dropdowns used the scrollable div should be removed. 
                 //"dom": "<'row'<'col-md-8 col-sm-12'pli><'col-md-4 col-sm-12'<'table-group-actions pull-right'>>r>t<'row'<'col-md-8 col-sm-12'pli><'col-md-4 col-sm-12'>>",
                 
-                "bStateSave": true, // save datatable state(pagination, sort, etc) in cookie.
+                // save datatable state(pagination, sort, etc) in cookie.
+                "bStateSave": true, 
+
+                 // save custom filters to the state
+                "fnStateSaveParams":    function ( oSettings, sValue ) {
+                    $("#datatable_ajax tr.filter .form-control").each(function() {
+                        sValue[$(this).attr('name')] = $(this).val();
+                    });
+                   
+                    return sValue;
+                },
+
+                // read the custom filters from saved state and populate the filter inputs
+                "fnStateLoadParams" : function ( oSettings, oData ) {
+                    //Load custom filters
+                    $("#datatable_ajax tr.filter .form-control").each(function() {
+                        var element = $(this);
+                        if (oData[element.attr('name')]) {
+                            element.val( oData[element.attr('name')] );
+                        }
+                    });
+                    
+                    return true;
+                },
 
                 "lengthMenu": [
                     [10, 20, 50, 100, 150, -1],
@@ -110,7 +133,30 @@ var TableDatatablesAjax = function () {
                
                 "dom": "<'row'<'col-md-8 col-sm-12'i><'col-md-4 col-sm-12'<'table-group-actions pull-right'>>r>t<'row'<'col-md-8 col-sm-12'i><'col-md-4 col-sm-12'>>",
 
-                "bStateSave": true, // save datatable state(pagination, sort, etc) in cookie.
+                // save datatable state(pagination, sort, etc) in cookie.
+                "bStateSave": true, 
+
+                 // save custom filters to the state
+                "fnStateSaveParams":    function ( oSettings, sValue ) {
+                    $("#datatable_ajax_2 tr.filter .form-control").each(function() {
+                        sValue[$(this).attr('name')] = $(this).val();
+                    });
+                   
+                    return sValue;
+                },
+
+                // read the custom filters from saved state and populate the filter inputs
+                "fnStateLoadParams" : function ( oSettings, oData ) {
+                    //Load custom filters
+                    $("#datatable_ajax_2 tr.filter .form-control").each(function() {
+                        var element = $(this);
+                        if (oData[element.attr('name')]) {
+                            element.val( oData[element.attr('name')] );
+                        }
+                    });
+                    
+                    return true;
+                },
 
                 "pageLength": 10, // default record count per page
 

@@ -168,8 +168,9 @@
 	"Add Customer": "Thêm khách hàng",
 	"Password Regex": "Mật khảu phải gồm ít nhất 8 chữ số bao gồm chữ viết hoa, viết thường, ít nhất một số và kí tự đặc biệt (!@#$%^&*)",
 	"Change Password": "Đổi mật khẩu",
-	"Filter by:": "Filter by:",
-	"Filter": "Filter",
-	"Consigned": "Consigned",
-	"Information": "Information"
+	"Filter by:": "Lọc theo",
+	"Filter": "Lọc",
+	"Consigned": "Ký gửi",
+	"Information": "Thông tin",
+	"Project Information": "Thông tin dự án"
 }
