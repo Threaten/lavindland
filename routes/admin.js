@@ -960,8 +960,18 @@ router.post('/sellProduct/:id', requireRole(), requireGroup('staff'), function(r
           cCommission.amount = product.sellProfit*product.companyCommissionSell/100;
           cCommission.save(function (err) {
             if (err) return cb(err);
+          })
+          var datetime = new Date();
+          customer.boughtItems.push({
+            item: product.code,
+            date: datetime
+          })
+          customer.save(function (err) {
+            if (err) {
+              return cb(err);
+            } else {
               return res.redirect('/admin/productList')
-
+            }
           })
         })
       }
@@ -1061,7 +1071,18 @@ router.post('/rentProduct/:id', requireRole(), requireGroup('staff'), function(r
           cCommission.amount = product.rentProfit*product.companyCommissionRent/100;
           cCommission.save(function (err) {
             if (err) return cb(err);
-              return res.redirect('/admin/productList')
+            var datetime = new Date();
+            customer.rentedItems.push({
+              item: product.code,
+              date: datetime
+            })
+            customer.save(function (err) {
+              if (err) {
+                return cb(err);
+              } else {
+                return res.redirect('/admin/productList')
+              }
+            })
 
           })
         })

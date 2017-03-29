@@ -13,7 +13,15 @@ var customerSchema = new schema({
   note: { type: String, default: " " },
   updatedBy: {type: String, default: ''},
   deleted: {type: Boolean, default: false},
-  deletedBy: {type: String, default: ''}
+  deletedBy: {type: String, default: ''},
+  boughtItems: [{
+    item: { type: String, default: ''},
+    date: { type: Date, default: ''}
+  }],
+  rentedItems: [{
+    item: { type: String, default: ''},
+    date: { type: Date, default: ''}
+  }]
 }, {timestamps: true});
 
 module.exports = mongoose.model('Customer', customerSchema);

@@ -51,7 +51,9 @@
                         <th class="all"><%= __('Potential') %></th>
                         <th class="all"><%= __('Action') %></th>
                         <th class="none" style="display:none;"><%= __('Date of Birth') %></th>
-                        <th class="none" style="display:none;"><%= __('Notes') %>:</th>
+                        <th class="none" style="display:none;"><%= __('Notes') %></th>
+                        <th class="none" style="display:none;"><%= __('Bought') %></th>
+                        <th class="none" style="display:none;"><%= __('Rented') %></th>
                         <th class="none" style="display:none;"><%= __('Created At') %>:</th>
                         <th class="none" style="display:none;"><%= __('Updated At') %>:</th>
                         <th class="none" style="display:none;"><%= __('Added By') %>:</th>
@@ -88,10 +90,81 @@
                                             </td>
                                             <td><%= customers[i].dob.toISOString().slice(0,10) %></td>
                                             <td><%= customers[i].note %></td>
+                                            <% if (typeof customers[i].boughtItems !== 'undefined' && customers[i].boughtItems.length > 0) { %>
+                                                <td><%= customers[i].boughtItems.length %> <a data-toggle="modal" data-target="#<%= i %>bought"><%= __('Detail') %></a></td>
+                                            <% } else { %>
+                                                <td>0</td>
+                                            <% } %>
+                                            <% if (typeof customers[i].rentedItems !== 'undefined' && customers[i].rentedItems.length > 0) { %>
+                                                <td><%= customers[i].rentedItems.length %> <a data-toggle="modal" data-target="#<%= i %>rented"><%= __('Detail') %></a></td>
+                                            <% } else { %>
+                                                <td>0</td>
+                                            <% } %>
                                             <td><%= customers[i].createdAt.toLocaleString() %></td>
                                             <td><%= customers[i].updatedAt.toLocaleString() %></td>
                                             <td><%= customers[i].addedBy.email %></td>
                                         </tr>
+
+                                        <div class="modal fade" id="<%= i %>bought" role="dialog" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+<h4 class="modal-title"><%= __('Information') %></h4>
+</div>
+<div class="modal-body">
+    <div class="m-grid m-grid-responsive-xs m-grid-demo">
+    <div class="row">
+    <div class="m-grid-col m-grid-col-middle m-grid-col-center" style="width: 100px"><strong><%= __('Apt. Code') %></strong></div>
+    <div class="m-grid-col m-grid-col-middle m-grid-col-center" style="width: 200px"><strong><%= __('Time') %></strong></div>
+    </div>
+    <% for (var j = 0; j < customers[i].boughtItems.length; j++) { %>
+    <div class="row">
+    <div class="m-grid-col m-grid-col-middle m-grid-col-center" style="width: 100px"><%= customers[i].boughtItems[j].item %></div>
+    <div class="m-grid-col m-grid-col-middle m-grid-col-center" style="width: 200px"><%= customers[i].boughtItems[j].date.toLocaleString() %></div>
+    </div>
+    <% } %>
+    </div>
+
+</div>
+<div class="modal-footer">
+<button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
+</div>
+</div>
+<!-- /.modal-content -->
+</div>
+<!-- /.modal-dialog -->
+</div>
+<div class="modal fade" id="<%= i %>rented" role="dialog" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+<h4 class="modal-title"><%= __('Information') %></h4>
+</div>
+<div class="modal-body">
+<div class="m-grid m-grid-responsive-xs m-grid-demo">
+<div class="row">
+<div class="m-grid-col m-grid-col-middle m-grid-col-center" style="width: 100px"><strong><%= __('Apt. Code') %></strong></div>
+<div class="m-grid-col m-grid-col-middle m-grid-col-center" style="width: 200px"><strong><%= __('Time') %></strong></div>
+</div>
+<% for (var j = 0; j < customers[i].rentedItems.length; j++) { %>
+<div class="row">
+<div class="m-grid-col m-grid-col-middle m-grid-col-center" style="width: 100px"><%= customers[i].rentedItems[j].item %></div>
+<div class="m-grid-col m-grid-col-middle m-grid-col-center" style="width: 200px"><%= customers[i].rentedItems[j].date.toLocaleString() %></div>
+</div>
+<% } %>
+</div>
+
+</div>
+<div class="modal-footer">
+<button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
+</div>
+</div>
+<!-- /.modal-content -->
+</div>
+<!-- /.modal-dialog -->
+</div>
                                         <% } %>
                                     </tbody>
                                 </table>

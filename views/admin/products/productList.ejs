@@ -313,14 +313,19 @@ function updateText(type) {
                                                                                                                 <%= products[i].customer.name %> -
                                                                                                                 <%= __('Deposited: ') %>
                                                                                                                 <%= products[i].deposit.toLocaleString() %> VND</td>
-                                                                                                                <% } else {%>
+                                                                                                                <% } else if (products[i].customer != null && !products[i].deposit) {%>
+                                                                                                                    <td>
+                                                                                                                        <%= products[i].customer.name %>
+                                                                                                                    </td>
+                                                                                                                    <% } else { %>
                                                                                                                     <td></td>
                                                                                                                     <% } %>
                                                                                                                     <th>
                                                                                                                         <%= products[i].note %>
                                                                                                                     </th>
                                                                                                                 </tr>
-                                                                                                                <% } %>
+                                                                                                                <% }  %>
+
                                                                                                             </tbody>
                                                                                                         </table>
                                                                                                     </div>
