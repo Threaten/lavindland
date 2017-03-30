@@ -352,9 +352,8 @@ router.get('/productList', requireRole(),requireGroup('staff'), function (req, r
   .find({ 'deleted': false})
   .exec(function(err, projects) {
   Product
-  .find({ 'deleted': false})
+  .find({ 'deleted': 'false'})
   .sort({ 'code': 1})
-  .populate('project')
   .populate('customer')
   .exec(function(err, products) {
     if (err) return cb(err);
@@ -393,7 +392,7 @@ router.post('/addProduct/',  requireRole(), requireGroup('staff'), function(req,
     },
     function(project, result) {
       var product = new Product();
-      product.project = project._id;
+      product.project = project.name;
 
       if (req.body.code) product.code = req.body.code;
       product.status = "Available";
@@ -429,7 +428,6 @@ router.get('/editProduct/:id', requireRole(), requireGroup('staff'), function(re
   .exec(function(err, projects) {
     Product
     .findOne({ _id: req.params.id })
-    .populate('project')
     .exec(function(err, product) {
       res.render('admin/products/editProduct',
       {
@@ -453,7 +451,7 @@ router.post('/editProduct/:id', requireRole(), requireGroup('staff'), function(r
     },
     function(project, result) {
       Product.findOne({ _id: req.params.id }, function(err, product) {
-        product.project = project._id;
+        product.project = project.name;
         if (req.body.code) product.code = req.body.code;
         product.status = "Available";
         product.rooms = req.body.rooms;
@@ -491,7 +489,6 @@ router.get('/deleteProduct/:id', requireRole(), requireGroup('staff'), function(
   .exec(function(err, projects) {
     Product
     .findOne({ _id: req.params.id })
-    .populate('project')
     .exec(function(err, product) {
       res.render('admin/products/deleteProduct',
       {
@@ -516,7 +513,7 @@ router.post('/deleteProduct/:id', requireRole(), requireGroup('staff'), function
     function(project, result) {
       Product.findOne({ _id: req.params.id }, function(err, product) {
         product.deletedBy = req.user.email;
-        product.deleted = true;
+        product.deleted = 'false';
         var seed = crypto.randomBytes(20);
         var authToken = crypto.createHash('sha1').update(seed + req.body.email).digest('hex');
         product.name = product.name + "_Deleted" + "_"+authToken;
@@ -586,9 +583,8 @@ router.post('/productList',requireGroup('staff'), function (req, res, cb) {
             },
             function(project, result) {
         Product
-        .find({ 'deleted': false,project: project._id, rooms: {$eq: req.body.rooms},  sellPrice: {$gte: minSellPrice, $lte: maxSellPrice}, rentPrice: {$gte: minRentPrice, $lte: maxRentPrice}, area: {$gte: minArea, $lte: maxArea} })
+        .find({ 'deleted': 'false',project: project.name, rooms: {$eq: req.body.rooms},  sellPrice: {$gte: minSellPrice, $lte: maxSellPrice}, rentPrice: {$gte: minRentPrice, $lte: maxRentPrice}, area: {$gte: minArea, $lte: maxArea} })
         .sort({ 'code': 1})
-        .populate('project')
         .populate('customer')
         .exec(function(err, products) {
           if (err) return cb(err);
@@ -646,9 +642,8 @@ router.post('/productList',requireGroup('staff'), function (req, res, cb) {
             },
             function(project, result) {
         Product
-        .find({ 'deleted': false,project: project._id, sellPrice: {$gte: minSellPrice, $lte: maxSellPrice}, rentPrice: {$gte: minRentPrice, $lte: maxRentPrice}, area: {$gte: minArea, $lte: maxArea} })
+        .find({ 'deleted': 'false', project: project.name, sellPrice: {$gte: minSellPrice, $lte: maxSellPrice}, rentPrice: {$gte: minRentPrice, $lte: maxRentPrice}, area: {$gte: minArea, $lte: maxArea} })
         .sort({ 'code': 1})
-        .populate('project')
         .populate('customer')
         .exec(function(err, products) {
           if (err) return cb(err);
@@ -700,9 +695,8 @@ router.post('/productList',requireGroup('staff'), function (req, res, cb) {
       .find({ 'deleted': false})
       .exec(function(err, projects) {
       Product
-      .find({ 'deleted': false, rooms: {$eq: req.body.rooms},  sellPrice: {$gte: minSellPrice, $lte: maxSellPrice}, rentPrice: {$gte: minRentPrice, $lte: maxRentPrice} , area: {$gte: minArea, $lte: maxArea} })
+      .find({ 'deleted': 'false', rooms: {$eq: req.body.rooms},  sellPrice: {$gte: minSellPrice, $lte: maxSellPrice}, rentPrice: {$gte: minRentPrice, $lte: maxRentPrice} , area: {$gte: minArea, $lte: maxArea} })
       .sort({ 'code': 1})
-      .populate('project')
       .populate('customer')
       .exec(function(err, products) {
         if (err) return cb(err);
@@ -749,9 +743,8 @@ router.post('/productList',requireGroup('staff'), function (req, res, cb) {
       .find({ 'deleted': false})
       .exec(function(err, projects) {
       Product
-      .find({ 'deleted': false,  sellPrice: {$gte: minSellPrice, $lte: maxSellPrice}, rentPrice: {$gte: minRentPrice, $lte: maxRentPrice}, area: {$gte: minArea, $lte: maxArea} })
+      .find({ 'deleted': 'false',  sellPrice: {$gte: minSellPrice, $lte: maxSellPrice}, rentPrice: {$gte: minRentPrice, $lte: maxRentPrice}, area: {$gte: minArea, $lte: maxArea} })
       .sort({ 'code': 1})
-      .populate('project')
       .populate('customer')
       .exec(function(err, products) {
         if (err) return cb(err);
@@ -774,7 +767,6 @@ router.get('/depositProduct/:id', requireRole(), requireGroup('staff'), function
   .exec(function(err, projects) {
     Product
     .findOne({ _id: req.params.id })
-    .populate('project')
     .exec(function(err, product) {
       if (isManager) {
         Customer
@@ -875,7 +867,6 @@ router.get('/sellProduct/:id', requireRole(), requireGroup('staff'), function(re
   .exec(function(err, projects) {
     Product
     .findOne({ _id: req.params.id })
-    .populate('project')
     .exec(function(err, product) {
       if (isManager) {
         Customer
@@ -986,7 +977,6 @@ router.get('/rentProduct/:id', requireRole(), requireGroup('staff'), function(re
   .exec(function(err, projects) {
     Product
     .findOne({ _id: req.params.id })
-    .populate('project')
     .exec(function(err, product) {
       if (isManager) {
         Customer

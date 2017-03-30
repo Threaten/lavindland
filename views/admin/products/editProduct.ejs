@@ -72,7 +72,7 @@ function updateText(type) {
                                                 <optgroup label="------------------">
                                                     <% var select = 'a' %>
                                                     <% for (var i = 0; i < projects.length; i++) { %>
-                                                        <% if (product.project.name == projects[i].name) { %>
+                                                        <% if (product.project == projects[i].name) { %>
                                                             <option name="pro" selected value="<%= projects[i].name %>"><%= projects[i].name %></option>
                                                             <% } else { %>
                                                                 <option name="pro" value="<%= projects[i].name %>"><%= projects[i].name %></option>

@@ -3,7 +3,7 @@ var schema = mongoose.Schema;
 
 
 var productSchema = new schema({
-  project: { type: schema.Types.ObjectId, ref: 'Project' },
+  project: { type: String, default: '' },
   code: String,
   status: String,
   rooms: Number,
@@ -16,7 +16,7 @@ var productSchema = new schema({
   companyCommissionSell: Number,
   note: {type: String, default: ''},
   updatedBy: {type: String, default: ''},
-  deleted: {type: Boolean, default: false},
+  deleted: {type: String, default: false},
   deletedBy: {type: String, default: ''},
   customer: { type: schema.Types.ObjectId, ref: 'Customer' },
   deposit: Number,
