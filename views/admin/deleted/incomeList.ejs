@@ -1,0 +1,89 @@
+<% layout('/admin/template') -%>
+<title>Income List</title>
+    <!-- BEGIN CONTENT -->
+    <div class="page-content-wrapper">
+        <!-- BEGIN CONTENT BODY -->
+        <div class="page-content">
+            <!-- BEGIN PAGE HEADER-->
+            <!-- BEGIN PAGE BAR -->
+            <div class="page-bar">
+                <ul class="page-breadcrumb">
+                    <li>
+                        <a href="/admin"><%= __('Dashboard') %></a>
+                        <i class="fa fa-circle"></i>
+                    </li>
+                    <li>
+                        <a href="#"><%= __('Income List') %></a>
+                        <i class="fa fa-circle"></i>
+                    </li>
+                </ul>
+            </div>
+            <!-- END PAGE BAR -->
+            <!-- BEGIN PAGE TITLE-->
+            <div class="portlet light bordered">
+                <div class="portlet-title">
+                    <div class="caption font-dark">
+                        <i class="icon-settings font-dark"></i>
+                        <span class="caption-subject bold uppercase"><%= __('List') %></span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="table-toolbar">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="btn-group">
+                                    <a href="/admin/addIncome" id="sample_editable_1_new" class="btn grey">
+                                        <%= __('Add new') %>
+                                        <i class="fa fa-plus"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_1">
+                    <thead>
+                        <tr>
+                            <th class="all"><%= __('Issued By') %></th>
+                            <th class="min-phone-l"><%= __('Amount (VND)') %></th>
+                            <th class="min-tablet"><%= __('Content') %></th>
+                            <th class="all"><%= __('Issued Time') %></th>
+                            <th class="none"><%= __('Notes') %></th>
+                            <th class="all"><%= __('Actions') %></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                     <% for (var i = 0; i < income.length; i++) { %>
+                        <tr>
+                            <td><%= income[i].issuedBy %></td>
+                            <td><%= income[i].amount.toLocaleString() %></td>
+                            <td><%= income[i].content %></td>
+                            <td><%= income[i].date.toLocaleString() %></td>
+                            <td><%= income[i].note %></td>
+                            <td>
+                                <div class="btn-group pull-right">
+                                    <button class="btn green btn-xs btn-outline dropdown-toggle" data-toggle="dropdown">Tools
+                                                <i class="fa fa-angle-down"></i>
+                                            </button>
+                                    <ul class="dropdown-menu pull-right">
+                                        <li>
+                                            <a href="/admin/editIncome/<%= income[i]._id %>">
+                                                <i class="icon-pencil"></i> <%= __('Edit') %> </a>
+                                        </li>
+                                        <li>
+                                            <a href="/admin/deleteIncome/<%= income[i]._id %>">
+                                                <i class="fa fa-trash-o"></i> <%= __('Delete') %> </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                      <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- END CONTENT BODY -->
+    </div>
+    <!-- END CONTENT -->

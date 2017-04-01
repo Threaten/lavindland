@@ -308,6 +308,19 @@
 
                     <% } %>
                 </div>
+                <label for="deleted"><b><%= __('Deleted') %></b></label>
+                <div id="deleted">
+                    <% if(permissions1.indexOf('/deleted') > -1) { %>
+                    <label><%= __('View') %></label> <input type="checkbox" checked id="canViewDeleted" name="canViewDeleted">
+                    <% } else { %>
+                        <label><%= __('View') %></label> <input type="checkbox" id="canViewDeleted" name="canViewDeleted">
+                        <% } %>
+                        <% if(permissions1.indexOf('/restore') > -1) { %>
+                    <label><%= __('Restore') %></label> <input type="checkbox" checked id="canRestore" name="canRestore">
+                    <% } else { %>
+                        <label><%= __('Restore') %></label> <input type="checkbox" id="canRestore" name="canRestore">
+                        <% } %>
+                </div>
                                         </div>
                                     </div>
 

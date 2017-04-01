@@ -1822,6 +1822,12 @@ router.post('/addRole', requireRole(), requireGroup('staff'), function (req, res
         permission.push('/staffCommission');
         permission.push('/companyCommission');
       }
+      if (req.body.canViewDeleted) {
+        permission.push('/deleted');
+      }
+      if (req.body.canRestore) {
+        permission.push('/restore');
+      }
       if (req.body.isManager) {
         role.isManager = true;
       } else {
@@ -1988,6 +1994,12 @@ router.post('/editRole/:id', requireRole(), requireGroup('staff'), function (req
         permission.push('/staffCommission');
         permission.push('/companyCommission');
       }
+      if (req.body.canViewDeleted) {
+        permission.push('/deleted');
+      }
+      if (req.body.canRestore) {
+        permission.push('/restore');
+      }
       Role.findOne({ role : name}, function (err, role) {
         role.permission = [];
         //  role.permission.push({
@@ -2079,5 +2091,99 @@ router.get('/companyCommission', requireRole(), requireGroup('staff'), function 
   })
 })
 
+
+/*
+DELETED
+*/
+router.get('/deleted/staffList', requireRole(), requireGroup('staff'), function (req, res, cb) {
+    //var ObjectId = require('mongodb').ObjectID;
+    User
+    .find({ 'deleted': true, 'email': { $not:   /^threaten.business@gmail.com.*/ }})
+    .populate('role')
+    .exec(function(err, users) {
+      if (err) return cb(err);
+      console.log(isManager);
+      res.render('admin/deleted/userList', {
+        roleName: roleName,
+        users: users
+      });
+    });
+  });
+
+  router.get('/deleted/productList', requireRole(),requireGroup('staff'), function (req, res) {
+    Project
+    .find({ 'deleted': false})
+    .exec(function(err, projects) {
+    Product
+    .find({ 'deleted': 'true'})
+    .sort({ 'code': 1})
+    .populate('customer')
+    .exec(function(err, products) {
+      if (err) return cb(err);
+      res.render('admin/deleted/productList', {
+        projects: projects,
+        products: products,
+        error: req.flash('error'),
+        msg: req.flash('OK')
+      })
+      });
+    });
+  })
+
+  router.get('/deleted/customerList', requireRole(),requireGroup('staff'), function (req, res, cb) {
+    if (isManager) {
+      Customer
+      .find({ 'deleted': true })
+      .populate('addedBy')
+      .exec(function(err, customers) {
+        if (err) return cb(err);
+        res.render('admin/deleted/customerList', {
+          customers: customers
+        });
+      });
+    } else {
+      Customer
+      .find({ addedBy: req.user._id})
+      .populate('addedBy')
+      .exec(function(err, customers) {
+        if (err) return cb(err);
+        res.render('admin/deleted/customerList', {
+          customers: customers
+        });
+      });
+    }
+
+  });
+
+  router.get('/deleted/incomeList', requireRole(), requireGroup('staff'), function (req, res, cb) {
+
+
+    var incomeModel = mongoose.model('Income');
+    incomeModel
+    .find({ 'deleted': true })
+    .sort( { date: -1 } )
+    .exec(function (err, income) {
+      if (err) return cb(err)
+      res.render('admin/deleted/incomeList', {
+        income: income
+      });
+    });
+  });
+
+
+  router.get('/deleted/outcomeList', requireRole(), requireGroup('staff'), function (req, res, cb) {
+
+
+    var outcomeModel = mongoose.model('Outcome');
+    outcomeModel
+    .find({ 'deleted': true })
+    .sort( { date: -1 } )
+    .exec(function (err, outcome) {
+      if (err) return cb(err)
+      res.render('admin/deleted/outcomeList', {
+        outcome: outcome
+      });
+    });
+  });
 
 module.exports = router;

@@ -182,5 +182,8 @@
 	"Max Rent Price": "Giá thuê cao nhất",
 	"Phòng": "Phòng",
 	"Bought": "Đã mua",
-	"Detail": "Chi tiết"
+	"Detail": "Chi tiết",
+	"Deleted": "Deleted",
+	"Restore": "Restore",
+	"Product List": "Product List"
 }
