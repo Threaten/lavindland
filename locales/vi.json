@@ -185,5 +185,17 @@
 	"Detail": "Chi tiết",
 	"Deleted": "Deleted",
 	"Restore": "Restore",
-	"Product List": "Product List"
+	"Product List": "Product List",
+	"News": "News",
+	"News List": "News List",
+	"Add News": "Add News",
+	"Title": "Title",
+	"Description": "Description",
+	"Thumbnail": "Thumbnail",
+	"Edit News": "Edit News",
+	"Delete News": "Delete News",
+	"Author": "Author",
+	"Banner": "Banner",
+	"Banner List": "Banner List",
+	"Add Banner": "Add Banner"
 }

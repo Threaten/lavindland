@@ -24,7 +24,7 @@ var upload = multer({ storage: storage });
 
 router.get('/login', function(req, res) {
   if (req.user) return res.redirect('/');
-  res.render('users/login', { msg: req.flash('msg')});
+  res.render('web/users/login', { msg: req.flash('msg')});
 });
 
 router.post('/login', passport.authenticate('login', {

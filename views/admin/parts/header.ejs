@@ -161,6 +161,20 @@
                         </li>
                     </ul>
                 </li>
+                <li class="nav-item">
+                    <a href="javascript:;" class="nav-link nav-toggle">
+                        <i class="fa fa-newspaper-o"></i>
+                        <span class="title"><%= __('News') %></span>
+                        <span class="arrow"></span>
+                    </a>
+                    <ul class="sub-menu">
+                        <li class="nav-item  ">
+                            <a href="/admin/newsList" class="nav-link ">
+                                <span class="title"><%= __('News List') %></span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 <li class="nav-item  ">
                     <a href="javascript:;" class="nav-link nav-toggle">
                         <i class="icon-wallet"></i>
@@ -219,6 +233,12 @@
                     </ul>
                 </li>
                 <li class="nav-item">
+                    <a href="/admin/bannerList"  class="nav-link ">
+                            <i class="fa fa-file-image-o"></i><span class="title"><%= __('Banner') %></span>
+                        <span class="arrow"></span>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="javascript:;" class="nav-link nav-toggle">
                         <i class="icon-trash"></i>
                         <span class="title"><%= __('Deleted') %></span>
@@ -250,7 +270,11 @@
                                 <span class="title"><%= __('Outcome List') %></span>
                             </a>
                         </li>
-
+                        <li class="nav-item">
+                            <a href="/admin/deleted/newsList" class="nav-link ">
+                                <span class="title"><%= __('News List') %></span>
+                            </a>
+                        </li>
                     </ul>
                 </li>
             </ul>

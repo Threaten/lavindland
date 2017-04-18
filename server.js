@@ -20,7 +20,7 @@ var config = require('./configs/config');
 // var History = require('./models/history');
 var User = require('./models/user');
 // var Category = require('./models/category');
-
+var Project = require('./models/project');
 var app = express();
 
 i18n.configure({
@@ -53,6 +53,20 @@ app.use(session({
   secret: config.key,
   store: new connectMongo({ url: config.database, autoReconnect: true})
 }));
+
+app.use(function(req, res, cb) {
+  // Category.find( {}, function(err, categories) {
+  //   if (err) return cb(err);
+  //   res.locals.categories = categories;
+  //   cb();
+  // })
+  Project
+  .find({ 'deleted': false})
+  .exec(function (err, projects) {
+        res.locals.projects = projects;
+        cb();
+});
+})
 
 //passport
 app.use(passport.initialize());

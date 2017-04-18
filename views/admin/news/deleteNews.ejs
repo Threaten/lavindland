@@ -1,0 +1,138 @@
+<% layout('/admin/template') -%>
+<title>Delete News</title>
+
+<script type="text/javascript">
+function updateText(type) {
+    var id = type+'Text';
+    document.getElementById(id).value = document.getElementById(type).value;
+}
+</script>
+
+<!-- BEGIN CONTENT -->
+<div class="page-content-wrapper">
+    <!-- BEGIN CONTENT BODY -->
+    <div class="page-content">
+        <!-- BEGIN PAGE HEADER-->
+        <!-- BEGIN PAGE BAR -->
+        <div class="page-bar">
+            <ul class="page-breadcrumb">
+                <li>
+                    <a href="/admin">Home</a>
+                    <i class="fa fa-circle"></i>
+                </li>
+                <li>
+                    <a href="/admin/newsList"><%= __('News List') %></a>
+                    <i class="fa fa-circle"></i>
+                </li>
+                <li>
+                    <a href="#"><%= __('Delete News') %></a>
+                    <i class="fa fa-circle"></i>
+                </li>
+            </ul>
+        </div>
+        <!-- END PAGE BAR -->
+        <!-- BEGIN PAGE TITLE-->
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="icon-equalizer font-blue-hoki"></i>
+                    <span class="caption-subject font-blue-hoki bold uppercase"><%= __('Delete News') %></span>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                <form method="post" class="horizontal-form">
+                    <div class="form-body">
+                        <% if (msg.length > 0) { %>
+                            <div class="alert alert-success alert-dismissible">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+
+                                <%= msg %>
+
+                            </div>
+                            <% } %>
+                            <% if (error.length > 0) { %>
+                                <div class="alert alert-danger alert-dismissible">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+
+                                    <%= error %>
+
+                                </div>
+                                <% } %>
+                                <h3 class="form-section"><%= __('News') %></h3>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="name"><%= __('Title') %></label>
+                                            <input type="text" class="form-control" disabled id="title" value="<%= news.title %>" required name="title" placeholder="title">
+                                        </div>
+                                    </div>
+                                    <!--/span-->
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="name"><%= __('Description') %></label>
+                                            <textarea rows=5 style="resize:none" disabled  class="form-control" id="description" required name="description" placeholder="title"><%= news.shortDescription %></textarea>
+                                        </div>
+                                    </div>
+                                    <!--/span-->
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="thumb"><%= __('Thumbnail') %></label>
+                                        </div>
+                                        <input id="thumb" disabled type='file'>
+                                        <textarea id="b64" style="display:none" name="b64"><%= news.thumb %></textarea>
+                                        <img id="img" src="<%= news.thumb %>" height="150">
+                                    </div>
+                                </div>
+                                <!--/row-->
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="content"><%= __('Content') %></label>
+                                        </div>
+                                        <div><%- news.content %></div>
+                                    </div>
+                                </div>
+
+                                <div class="form-actions right">
+                                    <a href="javascript:history.back()" class="btn default">Cancel</a>
+                                    <button type="submit" class="btn blue">
+                                        <i class="fa fa-check"></i> <%= __('Delete') %></button>
+                                    </div>
+                                </form>
+                                <!-- END FORM-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END CONTENT BODY -->
+            </div>
+            <!-- END CONTENT -->
+
+            <script type="text/javascript">
+            function readFile() {
+
+                if (this.files && this.files[0]) {
+
+                    var FR= new FileReader();
+
+                    FR.addEventListener("load", function(e) {
+                        document.getElementById("img").src       = e.target.result;
+                        document.getElementById("b64").innerHTML = e.target.result;
+                    });
+
+                    FR.readAsDataURL( this.files[0] );
+                }
+
+            }
+
+            document.getElementById("thumb").addEventListener("change", readFile);
+            </script>

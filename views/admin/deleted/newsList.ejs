@@ -1,0 +1,78 @@
+<% layout('/admin/template') -%>
+<title>News List</title>
+<!-- BEGIN CONTENT -->
+<div class="page-content-wrapper">
+    <!-- BEGIN CONTENT BODY -->
+    <div class="page-content">
+        <!-- BEGIN PAGE HEADER-->
+        <!-- BEGIN PAGE BAR -->
+        <div class="page-bar">
+            <ul class="page-breadcrumb">
+                <li>
+                    <a href="/admin"><%= __('Dashboard') %></a>
+                    <i class="fa fa-circle"></i>
+                </li>
+                <li>
+                    <a href="#"><%= __('News List') %></a>
+                    <i class="fa fa-circle"></i>
+                </li>
+            </ul>
+        </div>
+        <!-- END PAGE BAR -->
+        <!-- BEGIN PAGE TITLE-->
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption font-dark">
+                    <i class="icon-settings font-dark"></i>
+                    <span class="caption-subject bold uppercase"><%= __('List') %></span>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="table-toolbar">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="btn-group">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_1">
+              <thead>
+<tr>
+<th class="all"><%= __('Title') %></th>
+<th class="all"><%= __('Author') %></th>
+<th class="all"><%= __('Created At') %></th>
+<th class="all"><%= __('Action') %></th>
+<th class="none" style="display:none;">Thumb</th>
+<th class="none" style="display:none;"><%= __('Content') %></th>
+</tr>
+</thead>
+<tbody>
+<% for (var i = 0; i < news.length; i++) { %>
+<tr class="gradeA">
+<td><%= news[i].title %></td>
+<td><%= news[i].author %></td>
+<td><%= news[i].updatedAt %></td>
+<td>
+    <div class="btn-group pull-right">
+        <button class="btn green btn-xs btn-outline dropdown-toggle" data-toggle="dropdown">Tools
+            <i class="fa fa-angle-down"></i>
+        </button>
+        <ul class="dropdown-menu pull-right">
+                </ul>
+            </div>
+        </td>
+        <td class="center hidden-phone" style="display: none;"><p><img src="<%= news[i].thumb %>" style=" width: 180px"></p></td>
+<td class="center hidden-phone" style="display: none;"><%- news[i].content %></td>
+</tr>
+<% } %>
+</tbody>
+</table>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END CONTENT BODY -->
+                </div>
+                <!-- END CONTENT -->

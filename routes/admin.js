@@ -13,6 +13,8 @@ var Outcome = require('../models/outcome');
 var Role = require('../models/role');
 var SCommission = require('../models/staffCommission');
 var CCommission = require('../models/companyCommission');
+var News = require('../models/news');
+var Banner = require('../models/banner');
 
 var permissions = [];
 var roleName;
@@ -2185,5 +2187,140 @@ router.get('/deleted/staffList', requireRole(), requireGroup('staff'), function 
       });
     });
   });
+
+  router.get('/deleted/newsList', requireRole(), requireGroup('staff'), function (req, res, cb) {
+      //var ObjectId = require('mongodb').ObjectID;
+      News
+      .find({ 'deleted': true})
+      .exec(function(err, news) {
+        if (err) return cb(err);
+        res.render('admin/deleted/newsList', {
+          news: news
+        });
+      });
+    });
+
+  router.get('/newsList', requireGroup('staff'), function (req, res, cb) {
+    News
+    .find({ 'deleted': false})
+    .exec(function (err, news) {
+      res.render('admin/news/newsList', {
+        news: news
+      })
+    })
+  })
+
+  router.get('/addNews', requireGroup('staff'), function(req, res, cb) {
+    res.render('admin/news/addNews', {error: req.flash('error'), msg: req.flash('OK')});
+  });
+
+  router.post('/addNews', requireGroup('staff'), function(req, res, cb) {
+    var news = new News();
+    news.title = req.body.title;
+    news.thumb = req.body.b64;
+    news.shortDescription = req.body.description
+    news.author = req.user.name;
+    news.content = req.body.summernote;
+    news.save(function(err) {
+      if (err) {
+        req.flash('error', 'Error');
+        return res.redirect('/admin/addIncome');
+      }
+      req.flash('OK', 'Income added');
+      return res.redirect('/admin/newsList');
+    });
+  });
+
+  router.get('/editNews/:id', requireGroup('staff'), function(req, res, cb) {
+    News.findOne({ _id: req.params.id }, function(err, news) {
+      res.render('admin/news/editNews',
+      {
+        news: news,
+        error: req.flash('error'),
+        msg: req.flash('OK')
+      });
+    });
+
+  });
+
+  router.post('/editNews/:id', requireGroup('staff'), function(req, res ,cb) {
+    News.findOne({ _id: req.params.id }, function(err, news) {
+      if (err) return cb(err);
+      news.title = req.body.title;
+      news.thumb = req.body.b64;
+      news.shortDescription = req.body.description
+      news.author = req.user.name;
+      news.content = req.body.summernote;
+      news.save(function(err) {
+        if (err) {
+          req.flash('error', 'Duplicated Income');
+          return res.redirect(req.get('referer'));
+        }
+        req.flash('OK', "Income edited");
+        return res.redirect('/admin/newsList');
+      });
+    });
+  });
+
+  router.get('/deleteNews/:id', requireGroup('staff'), function(req, res, cb) {
+    News.findOne({ _id: req.params.id }, function(err, news) {
+      res.render('admin/news/deleteNews',
+      {
+        news: news,
+        error: req.flash('error'),
+        msg: req.flash('OK')
+      });
+    });
+
+  });
+
+  router.post('/deleteNews/:id', requireGroup('staff'), function(req, res ,cb) {
+    News.findOne({ _id: req.params.id }, function(err, news) {
+      if (err) return cb(err);
+      news.deleted = true;
+      var seed = crypto.randomBytes(20);
+      var authToken = crypto.createHash('sha1').update(seed + req.body.email).digest('hex');
+      news.title = news.title + "_Deleted" + "_"+authToken;
+      news.deletedBy = req.user.email;
+      news.save(function(err) {
+        if (err) {
+          req.flash('error', 'Duplicated Customer');
+          return res.redirect(req.get('referer'));
+        }
+        req.flash('OK', "Customer Deleted");
+        return res.redirect('/admin/newsList');
+      });
+
+    });
+  });
+
+  router.get('/bannerList', requireGroup('staff'), function (req, res, cb) {
+    Banner
+    .find()
+    .exec(function (err, banner) {
+      res.render('admin/banner/bannerList', {
+        banner: banner
+      })
+    })
+  })
+
+  router.get('/addBanner', requireGroup('staff'), function(req, res, cb) {
+    res.render('admin/banner/addBanner', {error: req.flash('error'), msg: req.flash('OK')});
+  });
+
+  router.post('/addBanner', requireGroup('staff'), function(req, res, cb) {
+    var banner = new Banner();
+    banner.thumb = req.body.b64;
+    banner.shortDescription = req.body.description
+    banner.save(function(err) {
+      if (err) {
+        req.flash('error', 'Error');
+        return res.redirect('/admin/addIncome');
+      }
+      req.flash('OK', 'Income added');
+      return res.redirect('/admin/bannerList');
+    });
+  });
+
 
 module.exports = router;

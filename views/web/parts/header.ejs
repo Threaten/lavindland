@@ -1,0 +1,199 @@
+
+<!-- Top Bar
+============================================= -->
+
+<div id="top-bar" class="hidden-xs">
+
+  <div class="container clearfix">
+
+    <div class="col_half nobottommargin">
+
+      <p class="nobottommargin"><strong>Call:</strong> 093-752-6776 | <strong>Email:</strong> threaten.business@gmail.com</p>
+
+    </div>
+
+    <div class="col_half col_last fright nobottommargin">
+
+      <!-- Top Links
+      ============================================= -->
+      <div class="top-links">
+        <ul>
+          <li><a href="#">Language</a>
+            <ul>
+              <li><a href="/en"><img src="/views/web/assets/images/icons/flags/us.png" alt="English"> EN</a></li>
+              <li><a href="/vi"><img src="/views/web/assets/images/icons/flags/vn.png" alt="Vietnamese"> VI</a></li>
+            </ul>
+          </li>
+          <% if (!user) { %>
+          <li><a href="/login">Login</a>
+          </li>
+          <% } else if (user.group == "user") { %>
+            <li><a href="#"><%= user.name %></a>
+              <ul>
+                <li><a href="/profile">Profile</a></li>
+                <li><a href="/logout"><%= __('Logout') %></a></li>
+              </ul>
+            </li>
+          <% } else if (user.group == "staff") { %>
+            <li><a href="#"><%= user.name %></a>
+              <ul>
+                <li><a href="/admin">Admin</a></li>
+                <li><a href="/profile">Profile</a></li>
+                <li><a href="/logout"><%= __('Logout') %></a></li>
+              </ul>
+            </li>
+          <% } %>
+        </ul>
+      </div><!-- .top-links end -->
+
+    </div>
+
+  </div>
+
+</div><!-- #top-bar end -->
+
+<!-- Header
+============================================= -->
+<header id="header">
+
+  <div id="header-wrap">
+
+    <div class="container clearfix">
+
+      <div id="primary-menu-trigger"><i class="icon-reorder"></i></div>
+
+      <!-- Logo
+      ============================================= -->
+      <div id="logo">
+        <a href="/" class="standard-logo" data-dark-logo="/views/web/assets/images/download.png"><img src="/views/web/assets/images/download.png" alt="Canvas Logo"></a>
+        <a href="/" class="retina-logo" data-dark-logo="/views/web/assets/images/download.png"><img src="/views/web/assets/images/download.png" alt="Canvas Logo"></a>
+      </div><!-- #logo end -->
+
+      <!-- Primary Navigation
+      ============================================= -->
+      <!-- Primary Navigation
+      ============================================= -->
+      <nav id="primary-menu">
+
+        <ul>
+          <li><a href="#"><div><%= __('Home') %></div></a>
+          </li>
+          <li><a href="#"><div><%= __('About us') %></div></a>
+          </li>
+
+          <li class="mega-menu"><a href="#"><div><%= __('Projects') %></div></a>
+            <div class="mega-menu-content style-2 clearfix">
+              <% if (projects.length < 8) { %>
+              <ul class="mega-menu-column col-md-12">
+                  <ul>
+                    <% for (var i = 0; i < projects.length; i++) { %>
+                      <li><a href="#"><div><%= projects[i].name %></div></a></li>
+                    <% } %>
+                  </ul>
+                </li>
+              </ul>
+              <% } else if (projects.length < 16) {%>
+              <ul class="mega-menu-column col-md-6">
+                  <ul>
+                    <% for (var i = 0; i < 8; i++) { %>
+                      <li><a href="#"><div><%= projects[i].name %></div></a></li>
+                    <% } %>
+                  </ul>
+                </li>
+              </ul>
+              <ul class="mega-menu-column col-md-6">
+                  <ul>
+                    <% for (var i = 8; i < 16; i++) { %>
+                      <li><a href="#"><div><%= projects[i].name %></div></a></li>
+                    <% } %>
+                  </ul>
+                </li>
+              </ul>
+              <% } else if (projects.length < 24) {%>
+              <ul class="mega-menu-column col-md-4">
+                  <ul>
+                    <% for (var i = 0; i < 8; i++) { %>
+                      <li><a href="#"><div><%= projects[i].name %></div></a></li>
+                    <% } %>
+                  </ul>
+                </li>
+              </ul>
+              <ul class="mega-menu-column col-md-4">
+                  <ul>
+                    <% for (var i = 8; i < 16; i++) { %>
+                      <li><a href="#"><div><%= projects[i].name %></div></a></li>
+                    <% } %>
+                  </ul>
+                </li>
+              </ul>
+              <ul class="mega-menu-column col-md-4">
+                  <ul>
+                    <% for (var i = 16; i < 24; i++) { %>
+                      <li><a href="#"><div><%= projects[i].name %></div></a></li>
+                    <% } %>
+                  </ul>
+                </li>
+              </ul>
+              <% } else if (projects.length < 32) {%>
+              <ul class="mega-menu-column col-md-3">
+                  <ul>
+                    <% for (var i = 0; i < 8; i++) { %>
+                      <li><a href="#"><div><%= projects[i].name %></div></a></li>
+                    <% } %>
+                  </ul>
+                </li>
+              </ul>
+              <ul class="mega-menu-column col-md-3">
+                  <ul>
+                    <% for (var i = 8; i < 16; i++) { %>
+                      <li><a href="#"><div><%= projects[i].name %></div></a></li>
+                    <% } %>
+                  </ul>
+                </li>
+              </ul>
+              <ul class="mega-menu-column col-md-3">
+                  <ul>
+                    <% for (var i = 16; i < 24; i++) { %>
+                      <li><a href="#"><div><%= projects[i].name %></div></a></li>
+                    <% } %>
+                  </ul>
+                </li>
+              </ul>
+              <ul class="mega-menu-column col-md-3">
+                  <ul>
+                    <% for (var i = 24; i < 32; i++) { %>
+                      <li><a href="#"><div><%= projects[i].name %></div></a></li>
+                    <% } %>
+                  </ul>
+                </li>
+              </ul>
+              <% } %>
+            </div>
+          </li><!-- .mega-menu end -->
+
+          <li><a href="#"><div><%= __('News') %></div></a>
+          </li>
+          <li><a href="#"><div><%= __('Contact') %></div></a>
+          </li>
+
+        </ul>
+
+        <!-- Top Cart
+        ============================================= -->
+
+        <!-- Top Search
+        ============================================= -->
+        <div id="top-search">
+          <a href="#" id="top-search-trigger"><i class="icon-search3"></i><i class="icon-line-cross"></i></a>
+          <form action="search.html" method="get">
+            <input type="text" name="q" class="form-control" value="" placeholder="Type &amp; Hit Enter..">
+          </form>
+        </div><!-- #top-search end -->
+
+      </nav><!-- #primary-menu end -->
+
+    </div>
+
+  </div>
+
+</header><!-- #header end -->
